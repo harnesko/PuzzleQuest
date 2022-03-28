@@ -1,4 +1,0 @@
-testa testa testa
-
-
-system.out.println("testa)";

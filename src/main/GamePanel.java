@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setPreferredSize(new Dimension(screenWidth +30, screenHeight + 30));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true); // att göra detta true ger bättre rendering performance
         this.addKeyListener(keyH);
@@ -86,10 +86,35 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponentt(Graphics g) { // ta EJ bort detta
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
+
+        g2.setColor(Color.white);
+
+        g2.fillRect(playerX, playerY, tileSize, tileSize);
+
+        g2.dispose();
+    }
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        int x = 5;
+        int y = 5;
+
+
+        for (int i = 0; i < maxScreenRow; i++) {
+            for (int j = 0; j < maxScreenCol; j++) {
+                g2.drawRect(x,y,tileSize,tileSize);
+                x += tileSize;
+            }
+            x = 5;
+            y += tileSize;
+        }
 
         g2.setColor(Color.white);
 

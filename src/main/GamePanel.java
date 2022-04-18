@@ -1,5 +1,8 @@
 package main;
 
+import entity.Player;
+import tile.TileManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,23 +13,19 @@ public class GamePanel extends JPanel implements Runnable {
     final int scale = 3; // detta skapar vi eftersom vi kommer skala upp storleken på alla tiles
     // så de blir tile x scale = 16 x 3 = 48. alltså 48 pixel x 48 pixel
 
-    final int tileSize = originalTileSize * scale; // 48x48 tile, den riktiga size
-    final int maxScreenCol = 16; // mappen blir 16 tiles horizontalt
-    final int maxScreenRow = 12; // och 12 tiles vertikalt
-    final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
-    final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
+    public final int tileSize = originalTileSize * scale; // 48x48 tile, den riktiga size
+    public final int maxScreenCol = 16; // mappen blir 16 tiles horizontalt
+    public final int maxScreenRow = 12; // och 12 tiles vertikalt
+    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
+    public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
 
     // FPS
     int FPS = 60;
 
+    TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; // tiden för spelet
-
-    // set player's default position
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
-
+    Player player = new Player(this, keyH);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth +30, screenHeight + 30));
@@ -75,34 +74,22 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        if (keyH.upPressed) {
-            playerY -= playerSpeed;
-        } else if (keyH.downPressed) {
-            playerY += playerSpeed;
-        } else if (keyH.leftPressed) {
-            playerX -= playerSpeed;
-        } else if (keyH.rightPressed) {
-            playerX += playerSpeed;
-        }
+        player.update();
     }
 
-    public void paintComponentt(Graphics g) { // ta EJ bort detta
+    public void paintComponent(Graphics g) { // allt ritas här
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
 
-        g2.setColor(Color.white);
-
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
+        player.draw(g2);
+        showGrid(g2); //kan tas bort
 
         g2.dispose();
     }
 
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-
-        Graphics2D g2 = (Graphics2D) g;
-
+    public void showGrid(Graphics2D g2){ // debug replacement. vi kan ta bort denna
         int x = 5;
         int y = 5;
 
@@ -115,13 +102,8 @@ public class GamePanel extends JPanel implements Runnable {
             x = 5;
             y += tileSize;
         }
-
-        g2.setColor(Color.white);
-
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
-
-        g2.dispose();
     }
 
     // kan va en ide att inte begränsa storleken på panelen till mappens storlek. men idk !
+    // update 1: tiles ligger utanför the grid
 }

@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    // Screen settings
+    // SCREEN SETTINGS ändra helst inte dessa
     final int originalTileSize = 16; // 16x16 tile
     final int scale = 3; // detta skapar vi eftersom vi kommer skala upp storleken på alla tiles
     // så de blir tile x scale = 16 x 3 = 48. alltså 48 pixel x 48 pixel
@@ -19,16 +19,22 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
 
+    // WORLD SETTINGS dessa kan ändras
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
+
     // FPS
     int FPS = 60;
 
     TileManager tileManager = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(); // knapparna WASD
     Thread gameThread; // tiden för spelet
-    Player player = new Player(this, keyH);
+    public Player player = new Player(this, keyH);
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth +30, screenHeight + 30));
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // här förstorade jag skärmen
         this.setBackground(Color.black);
         this.setDoubleBuffered(true); // att göra detta true ger bättre rendering performance
         this.addKeyListener(keyH);
@@ -84,14 +90,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
         player.draw(g2);
-        showGrid(g2); //kan tas bort
+        //showGrid(g2); //kan tas bort
 
         g2.dispose();
     }
 
     public void showGrid(Graphics2D g2){ // debug replacement. vi kan ta bort denna
-        int x = 5;
-        int y = 5;
+        int x = 0;
+        int y = 0;
 
 
         for (int i = 0; i < maxScreenRow; i++) {
@@ -99,11 +105,15 @@ public class GamePanel extends JPanel implements Runnable {
                 g2.drawRect(x,y,tileSize,tileSize);
                 x += tileSize;
             }
-            x = 5;
+            x = 0;
             y += tileSize;
         }
     }
 
     // kan va en ide att inte begränsa storleken på panelen till mappens storlek. men idk !
     // update 1: tiles ligger utanför the grid
+    // update 2: grid är ändrat tbx, vet inte om det är lönt att köra större skärm storlek än mappen
+    // update 3: grid behlvde tas bort. behöver fixas på världen inte gubben. // TODO: kinda ?
+    // update 4: ok, skärmens storlek e samma som mappen nu pga better rendering performance uppdateringen :(
+    // grid kanske inte behövs mer? idk yet.
 }

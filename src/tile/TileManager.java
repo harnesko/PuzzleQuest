@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class TileManager {
 
@@ -19,22 +20,31 @@ public class TileManager {
         this.gp = gp;
 
         tile = new Tile[10];
-        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/map01.txt");
+        loadMap("/maps/world01.txt");
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
         try {
             tile[0] = new Tile(); // GRASS
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
 
             tile[1] = new Tile(); // WALL
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
 
             tile[2] = new Tile(); // WATER
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
+
+            tile[3] = new Tile(); // EARTH
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
+
+            tile[4] = new Tile(); // TREE
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
+
+            tile[5] = new Tile(); // SAND
+            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,24 +69,23 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+            while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
 
                 String line = null;
-
                 line = br.readLine(); // här läses en line
 
-                while (col < gp.maxScreenCol) {
+                while (col < gp.maxWorldCol) {
 
                     String numbers[] = line.split(" "); // vi säger åt systemet att separera siffrorna
-                                                                // efter varje space, så att den behandlar
-                                                                // varje siffra enskilt
+                    // efter varje space, så att den behandlar
+                    // varje siffra enskilt
 
                     int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
 
                     mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
                     col++;
                 }
-                if (col == gp.maxScreenCol) {
+                if (col == gp.maxWorldCol) {
                     col = 0;
                     row++;
                 }
@@ -89,28 +98,40 @@ public class TileManager {
 
     public void draw(Graphics2D g2) {
 
+        /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
+
         g2.drawImage(tile[0].image, 0, 0, gp.tileSize, gp.tileSize, null);
 
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
+        int worldCol = 0;
+        int worldRow = 0;
 
         // TODO: för kinda, ändra detta till en for-loop lmao
 
-        while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+        while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
 
-            int tileNum = mapTileNum[col][row];
+            int tileNum = mapTileNum[worldCol][worldRow];
 
-            g2.drawImage(tile[tileNum].image, x, y, gp.tileSize, gp.tileSize, null);
-            col++;
-            x += gp.tileSize;
+            // TODO: för kinda, förklara dessa sen
+            //  snabb tldr: har med hur kameran + mappen + player gubben reagerar me varan
 
-            if (col == gp.maxScreenCol) {
-                col = 0;
-                x = 0;
-                row++;
-                y += gp.tileSize;
+            int worldX = worldCol * gp.tileSize;
+            int worldY = worldRow * gp.tileSize;
+            int screenX = worldX - gp.player.worldX + gp.player.screenX;
+            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+            if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && // denna if-satsen säkerställer att mappen
+                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX && // ritas ENDAST där kameran ser för att
+                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY && // förbättra performance och slippa rita
+                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) { // 500 pixlar vi inte ser + ger lag
+
+                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            }
+
+            worldCol++;
+
+            if (worldCol == gp.maxWorldCol) {
+                worldCol = 0;
+                worldRow++;
             }
         }
     }

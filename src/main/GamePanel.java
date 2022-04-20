@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import gameObject.GameObject;
 import tile.TileManager;
 
 import javax.swing.*;
@@ -31,7 +32,10 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler(); // knapparna WASD
     Thread gameThread; // tiden för spelet
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
+    public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
+    public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // här förstorade jag skärmen
@@ -41,6 +45,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
+    public void setupGame(){
+        assetSetter.setObject();
+    }
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -89,20 +96,25 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
+        for (int i = 0; i < obj.length; i++) {
+            if (obj[i] != null){
+                obj[i].draw(g2,this);
+            }
+        }
         player.draw(g2);
         //showGrid(g2); //kan tas bort
 
         g2.dispose();
     }
 
-    public void showGrid(Graphics2D g2){ // debug replacement. vi kan ta bort denna
+    public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
         int x = 0;
         int y = 0;
 
 
         for (int i = 0; i < maxScreenRow; i++) {
             for (int j = 0; j < maxScreenCol; j++) {
-                g2.drawRect(x,y,tileSize,tileSize);
+                g2.drawRect(x, y, tileSize, tileSize);
                 x += tileSize;
             }
             x = 0;

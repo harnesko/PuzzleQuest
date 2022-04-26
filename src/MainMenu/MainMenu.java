@@ -264,7 +264,7 @@ public class MainMenu extends JPanel {
             //Start of "Buttons"
 
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            String text = "Musik: < " +df.format(musicVolume)+" >";
+            String text = "Music: < " +df.format(musicVolume)+" >";
             y += 150;
             int yPlank =290;
             Image plank5 = new ImageIcon("Images/62Z_2107.w032.n003.24A.p1.24.png").getImage();

@@ -200,6 +200,9 @@ public class Player extends Entity {
             }
         }
     }
+    public void interactWithNPC(){
+
+    }
 
     public String setMovement(boolean shift){
         if (shift){

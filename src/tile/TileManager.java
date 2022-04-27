@@ -15,18 +15,15 @@ public class TileManager {
     GamePanel gp;
     public Tile[] tile;
     public int[][] mapTileNum;
-    public int[][] mapTileObj;
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
 
         tile = new Tile[10];
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];  // kanske för ba background?
-        mapTileObj = new int[gp.maxWorldCol][gp.maxWorldRow];
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
         loadMap("/maps/world01.txt");
-        loadMap("/maps/world001.txt"); // test
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
@@ -46,18 +43,11 @@ public class TileManager {
             tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
 
             tile[4] = new Tile(); // TREE
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree_test.png")));
-            // TODO: problem här med att bakgrunden är en sak och objekten (t.ex träd) är en annan)
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
             tile[4].collision = true;
 
             tile[5] = new Tile(); // SAND
             tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
-
-            tile[6] = new Tile(); // EMPTY
-            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/empty.png")));
-
-            tile[7] = new Tile(); // KINDAS TEST TRÄD
-            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree_test.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,13 +79,13 @@ public class TileManager {
 
                 while (col < gp.maxWorldCol) {
 
-                    String[] numbers = line.split(" "); // vi säger åt systemet att separera siffrorna
+                    String numbers[] = line.split(" "); // vi säger åt systemet att separera siffrorna
                     // efter varje space, så att den behandlar
                     // varje siffra enskilt
 
                     int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
 
-                    mapTileObj[col][row] = num;     // och sedan sparar siffran i vår map array
+                    mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
                     col++;
                 }
                 if (col == gp.maxWorldCol) {
@@ -107,26 +97,6 @@ public class TileManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void loadMapObjects(String filepath) throws IOException { // gjorde basically det ovan men ?? enklare kanske?
-        InputStream inputStream = getClass().getResourceAsStream(filepath);
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-
-        for (int i = 0; i < gp.maxWorldRow; i++) {
-
-            String line = null;
-            line = br.readLine();
-
-            for (int j = 0; j < gp.maxWorldCol; j++) {
-                String[] numbers = line.split(" ");
-
-                int num = Integer.parseInt(numbers[j]);
-
-                mapTileNum[j][i] = num;
-            }
-        }
-        br.close();
     }
 
     public void draw(Graphics2D g2) {

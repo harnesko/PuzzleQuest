@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPC;
 import entity.Player;
 import gameObject.GameObject;
 import tile.TileManager;
@@ -35,6 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
+    private NPC npcTEST = new NPC(this);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
 
     public GamePanel() {
@@ -74,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (remainingTime < 0) {
                     remainingTime = 0;
                 }
-
+               // System.out.println("Going to sleep..");
                 Thread.sleep((long) remainingTime);
 
                 nextDrawTime += drawInterval;

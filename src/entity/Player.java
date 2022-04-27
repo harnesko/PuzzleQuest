@@ -29,12 +29,12 @@ public class Player extends Entity {
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
         solidArea = new Rectangle(); // kan justeras så klart
-        solidArea.x = 8;
-        solidArea.y = 16;
+        solidArea.x = 8 * gp.scale;
+        solidArea.y = 21 * gp.scale;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 32;
-        solidArea.height = 32;
+        solidArea.width = 16 * gp.scale;
+        solidArea.height = 10 * gp.scale;
         /** solid area är kroppen som ska importeras hos playern för att fixa fysiken hos han. anledningen vi kör
          * dessa värden är för att vi vill inte hela player-tile:n ska vara fysisk eftersom det skapar problem när
          * man t.ex vill gå igenom två väggar. man måste vara precis och inte ens 1 pixel fel annars kolliderar man så
@@ -364,6 +364,8 @@ public class Player extends Entity {
             }
         }
         g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+        g2.setColor(Color.red);
+        g2.drawRect(screenX + solidArea.x,screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }
 

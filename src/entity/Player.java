@@ -135,7 +135,7 @@ public class Player extends Entity {
             gp.collisionChecker.checkTile(this);
 
             // CHECK OBJECT COLLISION
-            int objIndex = gp.collisionChecker.checkObject(this, true);
+            int objIndex = gp.collisionChecker.checkObject(this, EntityType.PLAYER);
             pickUpObject(objIndex);
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
@@ -199,6 +199,9 @@ public class Player extends Entity {
                     }
             }
         }
+    }
+    public void interactWithNPC(){
+
     }
 
     public String setMovement(boolean shift){

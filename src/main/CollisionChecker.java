@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import entity.EntityType;
 
 public class CollisionChecker {
 
@@ -62,7 +63,7 @@ public class CollisionChecker {
         }
     }
 
-    public int checkObject(Entity entity, boolean player) {
+    public int checkObject(Entity entity, EntityType type) {
         int index = 999;
 
         for (int i = 0; i < gp.obj.length; i++) {
@@ -84,7 +85,7 @@ public class CollisionChecker {
                             if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-                            if (player) {
+                            if (type == EntityType.PLAYER) {
                                 index = i;
                             }
                         }
@@ -95,7 +96,7 @@ public class CollisionChecker {
                             if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-                            if (player) {
+                            if (type == EntityType.PLAYER) {
                                 index = i;
                             }
                         }
@@ -106,7 +107,7 @@ public class CollisionChecker {
                             if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-                            if (player) {
+                            if (type == EntityType.PLAYER) {
                                 index = i;
                             }
                         }
@@ -117,7 +118,7 @@ public class CollisionChecker {
                             if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-                            if (player) {
+                            if (type == EntityType.PLAYER) {
                                 index = i;
                             }
                         }

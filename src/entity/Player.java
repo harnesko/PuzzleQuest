@@ -57,8 +57,8 @@ public class Player extends Entity {
         // int värden = index på tiles
         // int värden kan ändras för att positionera han olika ställen. exempel: vill du ha han längst
         // upp till vänster? direkt i första tile:en som skapas? byt ut värden med 0 och 0.
-        worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
+        worldX = gp.tileSize * 9;
+        worldY = gp.tileSize * 7;
         direction = "idledown";
     }
 
@@ -100,9 +100,6 @@ public class Player extends Entity {
     }
 
     public void update() {
-        // TODO: 5 sprint, 15 walk, 30 idle........... men riktigt låg prio - k
-        // TODO: om shift, speed change, animation change
-
         spriteCounter++;
         speed = 3;
 
@@ -165,11 +162,7 @@ public class Player extends Entity {
 
 
         if (spriteCounter > 30) {
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 1;
-            }
+            spriteNum = spriteNum == 1 ? 2 : 1;
             spriteCounter = 0;
         }
 

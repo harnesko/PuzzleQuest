@@ -21,8 +21,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
 
     // WORLD SETTINGS dessa kan ändras
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
+    public final int maxWorldCol = 17;
+    public final int maxWorldRow = 13;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler(); // knapparna WASD
     Thread gameThread; // tiden för spelet
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public AssetSetter assetSetter = new AssetSetter(this);
+    //public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
 
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        assetSetter.setObject();
+        //assetSetter.setObject();
     }
 
     public void startGameThread() {
@@ -112,26 +112,4 @@ public class GamePanel extends JPanel implements Runnable {
 
         g2.dispose();
     }
-
-    public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
-        int x = 0;
-        int y = 0;
-
-
-        for (int i = 0; i < maxScreenRow; i++) {
-            for (int j = 0; j < maxScreenCol; j++) {
-                g2.drawRect(x, y, tileSize, tileSize);
-                x += tileSize;
-            }
-            x = 0;
-            y += tileSize;
-        }
-    }
-
-    // kan va en ide att inte begränsa storleken på panelen till mappens storlek. men idk !
-    // update 1: tiles ligger utanför the grid
-    // update 2: grid är ändrat tbx, vet inte om det är lönt att köra större skärm storlek än mappen
-    // update 3: grid behlvde tas bort. behöver fixas på världen inte gubben. // TODO: kinda ?
-    // update 4: ok, skärmens storlek e samma som mappen nu pga better rendering performance uppdateringen :(
-    // grid kanske inte behövs mer? idk yet.
 }

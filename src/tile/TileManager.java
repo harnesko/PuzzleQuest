@@ -17,14 +17,18 @@ public class TileManager {
     public Tile[] tile;
     public int[][] mapTileNum;
 
+    // TILE ANIMATION SETTINGS
+    int frame = 0;
+    int tileNum = 1;
+
     public TileManager(GamePanel gp) {
         this.gp = gp;
 
-        tile = new Tile[10];
+        tile = new Tile[1200];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
-        getTileImage();
-        loadMap("/maps/world01.txt");
+        getTileImages();
+        loadMap("/maps/world001.txt");
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
@@ -54,20 +58,68 @@ public class TileManager {
         }
     }
 
-    public void getTileImages() { // debug
+    public void getTileImages() { // debug, testa här först sen kopiera över uppåt
         try {
             int i = 0;
 
-            tile[i] = new Tile(); // GRASS
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("")));
+            tile[i] = new Tile(); // TRANSPARENT
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/empty.png")));
+            tile[i].collision = true;
             i++;
 
-            tile[i] = new Tile(); // TREE
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("")));
+            tile[i] = new Tile(); // BOT RIGHT WATER CORNER
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_4.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // MID WATER
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_mid.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // TOP RIGHT WATER CORNER
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_2.png")));
+            tile[i].collision = true;
             i++;
 
             tile[i] = new Tile(); // GRASS
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("")));
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/grass2.png")));
+            i++;
+
+            ////// ANIMATION SECTION ////// // TODO: detta måste fixas, jätte reduntant o fuckt / kinda
+
+            // WATER 2
+            i = 101;
+            tile[i] = new Tile(); // BOT RIGHT WATER CORNER
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_4.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // MID WATER 101
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_mid.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // TOP RIGHT WATER CORNER 102
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_2.png")));
+            tile[i].collision = true;
+            i++;
+
+            // WATER 3
+            i = 1001;
+            tile[i] = new Tile(); // BOT RIGHT WATER CORNER 103
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_4.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // MID WATER 104
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_mid.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // TOP RIGHT WATER CORNER 105
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_2.png")));
+            tile[i].collision = true;
             i++;
 
         } catch (IOException e) {
@@ -130,7 +182,7 @@ public class TileManager {
         for (int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
             for (int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
 
-                int tileNum = mapTileNum[worldCol][worldRow];
+                int tileIndex = mapTileNum[worldCol][worldRow];
 
                 /** här blir worldCol & worldRow mängden av tiles.
                  *
@@ -152,18 +204,35 @@ public class TileManager {
                  *
                  * detta ger bättre rendering performance.*/
 
+
                 if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
                         worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                         worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                         worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-                    g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                    tileIndex = playTileAnimations(tileIndex);
+
+                    g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
                 }
+
                 if (debugON) { // OK att ta bort
-                    debug.showMapTiles(g2,screenX,screenY,gp.tileSize);
+                    debug.showMapTiles(g2, screenX, screenY, gp.tileSize);
                 }
             }
         }
+    }
+
+    public int playTileAnimations(int i) { // TODO: fixa lol
+        frame++;
+
+        if (frame > 30) {
+            i = i == 1 ? 101 : i == 2 ? 102 : i == 3 ? 103 :
+                    i == 101 ? 1001 : i == 102 ? 1002 : i == 103 ? 1003 :
+                            i == 1001 ? 1 : i == 1002 ? 2 : i == 1003 ? 3 : i;
+
+            frame = 0;
+        }
+        return i;
     }
 
 }

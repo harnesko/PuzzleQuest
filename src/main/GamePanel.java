@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     // så de blir tile x scale = 16 x 3 = 48. alltså 48 pixel x 48 pixel
 
     public final int tileSize = originalTileSize * scale; // 48x48 tile, den riktiga size
-    public final int maxScreenCol = 16; // mappen blir 16 tiles horizontalt
+    public final int maxScreenCol = 16; // gui:t blir 16 tiles horizontalt
     public final int maxScreenRow = 12; // och 12 tiles vertikalt
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
@@ -25,6 +25,9 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxWorldRow = 50;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
+
+    // EXTRA SETTINGS
+    boolean debugOn; // kan tas bort
 
     // FPS
     int FPS = 60;
@@ -45,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-    public void setupGame(){
+    public void setupGame() {
         assetSetter.setObject();
     }
 
@@ -87,6 +90,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+
+        debugOn = keyH.fPressed; // kan tas bort
+
         player.update();
     }
 
@@ -95,14 +101,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
+        tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
+
         for (int i = 0; i < obj.length; i++) {
-            if (obj[i] != null){
-                obj[i].draw(g2,this);
+            if (obj[i] != null) {
+                obj[i].draw(g2, this);
             }
         }
-        player.draw(g2);
-        //showGrid(g2); //kan tas bort
+        player.draw(g2, debugOn);
 
         g2.dispose();
     }

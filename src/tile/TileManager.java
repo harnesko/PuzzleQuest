@@ -1,5 +1,6 @@
 package tile;
 
+import main.Debug;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -53,6 +54,27 @@ public class TileManager {
         }
     }
 
+    public void getTileImages() { // debug
+        try {
+            int i = 0;
+
+            tile[i] = new Tile(); // GRASS
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("")));
+            i++;
+
+            tile[i] = new Tile(); // TREE
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("")));
+            i++;
+
+            tile[i] = new Tile(); // GRASS
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("")));
+            i++;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void loadMap(String filePath) { // om du inte fattar nåt här, skit i det. ändra bara inget
         try {
 
@@ -99,43 +121,49 @@ public class TileManager {
         }
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, boolean debugON) {
+
+        Debug debug = new Debug(); // DELETE LATER
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
 
-        g2.drawImage(tile[0].image, 0, 0, gp.tileSize, gp.tileSize, null);
+        for (int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
+            for (int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
 
-        int worldCol = 0;
-        int worldRow = 0;
+                int tileNum = mapTileNum[worldCol][worldRow];
 
-        // TODO: för kinda, ändra detta till en for-loop lmao
+                /** här blir worldCol & worldRow mängden av tiles.
+                 *
+                 * Så en 50x50 tiled mapp får max 50 worldCol och worldRow
+                 * Man kan säga att worldX och worldY är höjd och längden på mappen i pixel prefix. så tile nr 25
+                 * som då är 25 * tilesize (64 just nu) blir 1600 pixlar.
+                 * */
 
-        while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
+                int worldX = worldCol * gp.tileSize;
+                int worldY = worldRow * gp.tileSize;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX; // spelarskärmens x axel + dens bredd
+                int screenY = worldY - gp.player.worldY + gp.player.screenY; // spelarskärmens y axel + dens längd
+                // ovan variabler ger oss "världens kamera" som brukar kunna vara utanför gui:n
+                // därför kan screenX/Y bli negativ. Eftersom mappen kan vara större än bara måtten som gui:n visar oss
 
-            int tileNum = mapTileNum[worldCol][worldRow];
+                /** Det som egentligen görs här är att måtten på världskameran (i pixlar) jämförs med spelarens
+                 * kamera och säkerställer att vi ritar ENDAST pixlarna/tiles:en som vi kan se inuti GUI:t. Resten
+                 * ritas endast där spelarkameran rör sig till, alltså när vi rör på gubben.
+                 *
+                 * detta ger bättre rendering performance.*/
 
-            // TODO: för kinda, förklara dessa sen
-            //  snabb tldr: har med hur kameran + mappen + player gubben reagerar me varan
+                if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+                        worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                        worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+                        worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-            int worldX = worldCol * gp.tileSize;
-            int worldY = worldRow * gp.tileSize;
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
-            if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && // denna if-satsen säkerställer att mappen
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX && // ritas ENDAST där kameran ser för att
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY && // förbättra performance och slippa rita
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) { // 500 pixlar vi inte ser + ger lag
-
-                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-            }
-
-            worldCol++;
-
-            if (worldCol == gp.maxWorldCol) {
-                worldCol = 0;
-                worldRow++;
+                    g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                }
+                if (debugON) { // OK att ta bort
+                    debug.showMapTiles(g2,screenX,screenY,gp.tileSize);
+                }
             }
         }
     }
+
 }

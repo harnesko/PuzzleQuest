@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.NPC;
 import entity.Player;
 import gameObject.GameObject;
@@ -35,9 +36,10 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread; // tiden för spelet
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter = new AssetSetter(this);
+    public NPC npcTEST = new NPC(this);
     public Player player = new Player(this, keyH);
-    private NPC npcTEST = new NPC(this);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
+    public Entity[] npcList = new Entity[10];
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // här förstorade jag skärmen
@@ -49,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame(){
         assetSetter.setObject();
+        assetSetter.setNPC();
     }
 
     public void startGameThread() {
@@ -90,6 +93,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
+
+        //NPC update
+        for (int i = 0; i < npcList.length; i++){
+            if(npcList[i] != null){
+                npcList[i].update();
+            }
+        }
     }
 
     public void paintComponent(Graphics g) { // allt ritas här
@@ -101,6 +111,13 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < obj.length; i++) {
             if (obj[i] != null){
                 obj[i].draw(g2,this);
+
+            }
+        }
+        //NPC
+        for (int i = 0; i < npcList.length; i++) {
+            if (npcList[i] != null) {
+                npcList[i].draw(g2);
             }
         }
         player.draw(g2);

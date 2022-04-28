@@ -20,6 +20,7 @@ public class Player extends Entity {
     int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
 
@@ -158,6 +159,9 @@ public class Player extends Entity {
             }
         }
 
+        //check npc collision
+        int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
+        interactWithNPC(npcIndex);
 
         if (spriteCounter > 30) {
             if (spriteNum == 1) {
@@ -200,8 +204,10 @@ public class Player extends Entity {
             }
         }
     }
-    public void interactWithNPC(){
-
+    public void interactWithNPC(int npcIndex){
+        if(npcIndex != 999){
+            //Allow player to interact with npc using "e" key or something
+        }
     }
 
     public String setMovement(boolean shift){

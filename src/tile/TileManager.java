@@ -129,7 +129,6 @@ public class TileManager {
 
                 g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
-            //TODO Måns
 
             worldCol++;
 

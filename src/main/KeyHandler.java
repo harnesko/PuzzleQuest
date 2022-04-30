@@ -108,6 +108,9 @@ public class KeyHandler implements KeyListener {
                 //enter save 4
             }
         }
+        /**
+         * Denna!!!
+         */
         if (code == KeyEvent.VK_ESCAPE){
             gp.gameState = gp.playState;
         }
@@ -288,6 +291,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_SHIFT){
             shiftPressed = true;
         }
+        /**
+         * Denna!!!
+         */
         if (code == KeyEvent.VK_ESCAPE){
             gp.gameState = gp.optionsState;
         }

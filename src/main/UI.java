@@ -47,6 +47,9 @@ public class UI {
         }
 
 
+        /**
+         * Denna!!!
+         */
         if(gp.gameState == gp.optionsState){
             drawOptionsScreen();
             g2.fillRect(0,0,200,200);
@@ -57,7 +60,9 @@ public class UI {
         }
 
     }
-
+    /**
+     * Denna!!!
+     */
     public void drawOptionsScreen() {
 
         //Sub window
@@ -68,7 +73,9 @@ public class UI {
        // drawSubWindow(frameX,frameY,frameWidth,frameHeight);
         g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
     }
-
+    /**
+     * Testa även denna i ovan metod
+     */
    public void drawSubWindow(int frameX, int frameY, int frameWidth, int frameHeight) {
         Color c = new Color(0,0,0);
         g2.setColor(c);

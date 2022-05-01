@@ -37,10 +37,10 @@ public class UI {
         //g2.setFont(); //todo later
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);
-
+/*
         if(gp.gameState == gp.titleState){
             drawMainMenu();
-        }
+        }*/
 
         if(gp.gameState == gp.playState){
             drawOptionsScreen();
@@ -54,10 +54,10 @@ public class UI {
             drawOptionsScreen();
             g2.fillRect(0,0,200,200);
         }
-
+/*
         if(gp.gameState == gp.dialogState){
             //todo later
-        }
+        }*/
 
     }
     /**

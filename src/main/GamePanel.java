@@ -35,12 +35,13 @@ public class GamePanel extends JPanel implements Runnable {
     BufferedImage tempScreen;
     Graphics2D g2;
 
-    // GAME STATES
+    // GAME STATES editer här lite / k
     public int gameState;
-    public final int titleState = 0;
+    // public final int titleState = 0;
+    public final int waitingState = 0;
     public final int playState = 1;
     public final int optionsState = 2;
-    public final int dialogState = 3;
+    // public final int dialogState = 3;
 
     // FPS
     int FPS = 60;
@@ -68,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame(){
         assetSetter.setObject();
         playMusik(0);
-        gameState = optionsState;
+        gameState = playState;
 
         tempScreen = new BufferedImage(screenWidth,screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
@@ -89,9 +90,27 @@ public class GamePanel extends JPanel implements Runnable {
         double drawInterval = 1000000000 / FPS; // 1,000,000,000 nanosekunder
         double nextDrawTime = System.nanoTime() + drawInterval;
 
+        int menuSituationStage = 0;
+
         while (gameThread != null) {
 
-            update();
+            if (gameState != waitingState){
+                if (gameState == playState){
+                    menuSituationStage = playState;
+                    System.out.println("Playing");
+                } else if (gameState == optionsState){
+                    System.out.println("Opened in-game menu");
+                    menuSituationStage = optionsState;
+                }
+                gameState = waitingState;
+            }
+
+            if (menuSituationStage == playState){
+                update();
+            } else if (menuSituationStage == optionsState){
+
+            }
+
 
             //repaint(); // denna kallar på paintComponent metoden
             drawToTempScreen(); //ritar allt till image buffer
@@ -122,10 +141,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void drawToTempScreen(){
-        if(gameState == titleState){ //MainMenu
+        /*if(gameState == titleState){ //MainMenu
             ui.draw(g2);
         }
-        else { // allt annat till spelet
+        else {*/ // allt annat till spelet
             stopMusik();
 
             tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
@@ -136,7 +155,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             player.draw(g2);
             //showGrid(g2); //kan tas bort
-        }
+        //}
     }
 
     public void drawToScreen(){

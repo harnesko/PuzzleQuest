@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp){
@@ -22,10 +22,10 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-
+/*
         if(gp.gameState == gp.titleState) {
         mainMenuKeys(code);
-        }
+        }*/
         if(gp.gameState == gp.playState) {
             gamePlayKeys(code);
         }
@@ -99,7 +99,7 @@ public class KeyHandler implements KeyListener {
                 }else{
                     gp.ui.fullscreen = true;
                 }
-                gp.playSoundEffect(2);;
+                gp.playSoundEffect(2);
             }
             if (gp.ui.commandNumber == 3) {
                 gp.ui.titleScreenState = 0;
@@ -137,7 +137,6 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.commandNumber == 0) {
                     gp.gameState = gp.playState;
                     gp.playSoundEffect(2);
-                    ;
                 }
                 if (gp.ui.commandNumber == 1) {
                     gp.ui.titleScreenState = 1;
@@ -264,7 +263,7 @@ public class KeyHandler implements KeyListener {
                     }else{
                         gp.ui.fullscreen = true;
                     }
-                    gp.playSoundEffect(2);;
+                    gp.playSoundEffect(2);
                 }
                 if (gp.ui.commandNumber == 3) {
                     gp.ui.titleScreenState = 0;
@@ -295,7 +294,7 @@ public class KeyHandler implements KeyListener {
          * Denna!!!
          */
         if (code == KeyEvent.VK_ESCAPE){
-            gp.gameState = gp.optionsState;
+            escPressed = !escPressed;
         }
     }
 

@@ -43,7 +43,7 @@ public class UI {
         }*/
 
         if(gp.gameState == gp.playState){
-            drawOptionsScreen();
+            drawOptionsScreen(g2);
         }
 
 
@@ -51,7 +51,7 @@ public class UI {
          * Denna!!!
          */
         if(gp.gameState == gp.optionsState){
-            drawOptionsScreen();
+            drawOptionsScreen(g2);
             g2.fillRect(0,0,200,200);
         }
 /*
@@ -62,8 +62,9 @@ public class UI {
     }
     /**
      * Denna!!!
+     * @param g2
      */
-    public void drawOptionsScreen() {
+    public void drawOptionsScreen(Graphics2D g2) {
 
         //Sub window
         int frameX = gp.tileSize*6;

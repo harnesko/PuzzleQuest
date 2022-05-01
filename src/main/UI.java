@@ -66,6 +66,8 @@ public class UI {
      */
     public void drawOptionsScreen(Graphics2D g2) {
 
+        // inget ändrat här förutom g2 parameter
+
         //Sub window
         int frameX = gp.tileSize*6;
         int frameY = gp.tileSize;

@@ -36,11 +36,9 @@ public class GamePanel extends JPanel implements Runnable {
     BufferedImage tempScreen;
     Graphics2D g2;
 
-    // GAME STATES editer här lite / k
-    public boolean gameStateChange = false;
+    // GAME STATES kommenterat lite saker här, ba ändra tbx / k
     public int gameState;
     // public final int titleState = 0;
-    public final int waitingState = 0;
     public final int playState = 1;
     public final int optionsState = 2;
     // public final int dialogState = 3;
@@ -93,22 +91,21 @@ public class GamePanel extends JPanel implements Runnable {
         double drawInterval = 1000000000 / FPS; // 1,000,000,000 nanosekunder
         double nextDrawTime = System.nanoTime() + drawInterval;
 
-        boolean ingameMenuOpen = false;
-
-
         while (gameThread != null) {
 
-
+            // // // dessa lades till / k
             if (keyH.escPressed) {
                 gameState = optionsState;
+                System.out.println("true");
             } else {
+                System.out.println("false");
                 gameState = playState;
             }
 
             if (gameState != optionsState) {
                 update();
             }
-
+            // // //
             repaint(); // denna kallar på paintComponent metoden
 
             try {
@@ -134,6 +131,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.update();
     }
+
+    /**kommenterat bort dessa, vanliga repaint används / k*/
 
     public void drawToTempScreen() {
         /*if(gameState == titleState){ //MainMenu
@@ -174,17 +173,19 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
 
-        if (gameState != optionsState) {
+        // dessa lades till / k
+        if (gameState == playState) {
             player.draw(g2);
         }
         if (gameState == optionsState) {
-            ui.drawOptionsScreen(g2);
+            ui.drawOptionsScreen(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
         }
 
         //showGrid(g2); //kan tas bort
         g2.dispose();
 
     }
+
 
     public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
         int x = 0;

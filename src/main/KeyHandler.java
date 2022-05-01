@@ -109,10 +109,10 @@ public class KeyHandler implements KeyListener {
             }
         }
         /**
-         * Denna!!!
+         * escPressed boolean lades till, när man trycker det i option så blir den false men... scrolla ner
          */
         if (code == KeyEvent.VK_ESCAPE){
-            gp.gameState = gp.playState;
+            escPressed = false;
         }
     }
 
@@ -291,10 +291,10 @@ public class KeyHandler implements KeyListener {
             shiftPressed = true;
         }
         /**
-         * Denna!!!
+         * .... när man klickar den i spelet så blir den true för o öppna menyn. pog
          */
         if (code == KeyEvent.VK_ESCAPE){
-            escPressed = !escPressed;
+            escPressed = true;
         }
     }
 

@@ -16,11 +16,11 @@ public class GameStarter {
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
-/*
+
         gamePanel.config.loadConfig();
         if(gamePanel.ui.fullscreen){
             window.setUndecorated(true);
-        }*/
+        }
         window.pack();
 
         window.setLocationRelativeTo(null);

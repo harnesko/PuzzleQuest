@@ -7,7 +7,6 @@ import tile.TileManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
 /**
  * Fixat i denna klassen
  */
@@ -36,20 +35,20 @@ public class GamePanel extends JPanel implements Runnable {
     BufferedImage tempScreen;
     Graphics2D g2;
 
-    // GAME STATES kommenterat lite saker här, ba ändra tbx / k
+    // GAME STATES
     public int gameState;
-     public final int titleState = 0;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int optionsState = 2;
-    // public final int dialogState = 3;
+    public final int dialogState = 3;
 
     // FPS
-    int FPS = 60;
+    int FPS = 9;
 
     TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this); // knapparna WASD
     Thread gameThread; // tiden för spelet
-    UI ui;
+    UI ui = new UI(this);
     Sound music = new Sound();
     Sound soundEffects = new Sound();
     Config config = new Config(this);
@@ -64,18 +63,17 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true); // att göra detta true ger bättre rendering performance
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        ui = new UI(this);
     }
 
-    public void setupGame() {
+    public void setupGame(){
         assetSetter.setObject();
         playMusik(0);
         gameState = titleState;
 
-        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+        tempScreen = new BufferedImage(screenWidth,screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
 
-        if (ui.fullscreen) {
+        if(ui.fullscreen){
             setFullScreen();
         }
     }
@@ -93,20 +91,12 @@ public class GamePanel extends JPanel implements Runnable {
 
         while (gameThread != null) {
 
-            // // // dessa lades till / k
-            if (keyH.escPressed) {
-                gameState = optionsState;
-                System.out.println("true");
-            } else {
-                System.out.println("false");
-                gameState = playState;
-            }
+           update();
 
-            if (gameState != optionsState) {
-                update();
-            }
-            // // //
-            repaint(); // denna kallar på paintComponent metoden
+
+            //repaint(); // denna kallar på paintComponent metoden
+            drawToTempScreen(); //ritar allt till image buffer
+            drawToScreen(); // ritar av det som finns i bufferten till skärmen
 
             try {
                 // dessa saker säkerställer att FPS är 60 och inte 6092318492174...
@@ -132,60 +122,59 @@ public class GamePanel extends JPanel implements Runnable {
         player.update();
     }
 
-    /**kommenterat bort dessa, vanliga repaint används / k*/
-
-    public void drawToTempScreen() {
-        /*if(gameState == titleState){ //MainMenu
+    public void drawToTempScreen(){
+        if(gameState == titleState){ //MainMenu
             ui.draw(g2);
         }
-        else {*/ // allt annat till spelet
-        stopMusik();
+        else { // allt annat till spelet
+            stopMusik();
 
-        tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
-        for (int i = 0; i < obj.length; i++) {
-            if (obj[i] != null) {
-                obj[i].draw(g2, this);
+            tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
             }
+            if (gameState == playState) {
+                player.draw(g2);
+            }
+            if (gameState == optionsState) {
+                ui.drawOptionsScreen(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
+            }
+
+
+            //showGrid(g2); //kan tas bort
         }
-        player.draw(g2);
-        //showGrid(g2); //kan tas bort
-        //}
     }
 
-    public void drawToScreen() {
+    public void drawToScreen(){
         Graphics g = getGraphics();
-        g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+        g.drawImage(tempScreen, 0 , 0, screenWidth2,screenHeight2, null);
         g.dispose();
     }
 
-    public void paintComponent(Graphics g) { // allt ritas här
+    /*public void paintComponent(Graphics g) { // allt ritas här
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
+        if(gameState == titleState){ //MainMenu
+            ui.draw(g2);
+        }
+        else { // allt annat till spelet
+            stopMusik();
 
-        // allt annat till spelet
-        stopMusik();
-
-        tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
-        for (int i = 0; i < obj.length; i++) {
-            if (obj[i] != null) {
-                obj[i].draw(g2, this);
+            tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
             }
-        }
-
-        // dessa lades till / k
-        if (gameState == playState) {
             player.draw(g2);
+            //showGrid(g2); //kan tas bort
+            g2.dispose();
+
         }
-        if (gameState == optionsState) {
-            ui.drawOptionsScreen(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
-        }
-
-        //showGrid(g2); //kan tas bort
-        g2.dispose();
-
-    }
-
+    }*/
 
     public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
         int x = 0;
@@ -202,22 +191,22 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void playMusik(int i) {
+    public void playMusik(int i){
         music.setClip(i);
         music.playAudio();
         music.loopAudio();
     }
 
-    public void stopMusik() {
+    public void stopMusik(){
         music.stopAudio();
     }
 
-    public void playSoundEffect(int i) {
+    public void playSoundEffect(int i){
         soundEffects.setClip(i);
         soundEffects.playAudio();
     }
 
-    public void setFullScreen() {
+    public void setFullScreen(){
         //Get local screen device
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();

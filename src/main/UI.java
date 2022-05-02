@@ -37,33 +37,26 @@ public class UI {
         //g2.setFont(); //todo later
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);
-/*
+
         if(gp.gameState == gp.titleState){
             drawMainMenu();
-        }*/
+        }
 
         if(gp.gameState == gp.playState){
-            drawOptionsScreen(g2);
         }
 
 
-        /**
-         * Denna!!!
-         */
         if(gp.gameState == gp.optionsState){
             drawOptionsScreen(g2);
             g2.fillRect(0,0,200,200);
         }
-/*
+
         if(gp.gameState == gp.dialogState){
             //todo later
-        }*/
+        }
 
     }
-    /**
-     * Denna!!!
-     * @param g2
-     */
+
     public void drawOptionsScreen(Graphics2D g2) {
 
         // inget ändrat här förutom g2 parameter
@@ -73,13 +66,70 @@ public class UI {
         int frameY = gp.tileSize;
         int frameWidth = gp.tileSize*8;
         int frameHeight = gp.tileSize*10;
-       // drawSubWindow(frameX,frameY,frameWidth,frameHeight);
+        //drawSubWindow(g2,frameX,frameY,frameWidth,frameHeight);
         g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55F));
+        String title = "Settings";
+        int x = 525;
+        int y = gp.tileSize * 3 - 50;
+        g2.drawString(title,x,y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
+
+        String text = "Music: < " + gp.music.volumeScale + " >";
+       // x = getXForCenteredText(title);
+        /**
+         * Försök fixa denna. G2 blir null för den är efterbliven
+         */
+        x = gp.tileSize*8;
+        y = gp.tileSize * 4 + (gp.tileSize/2);
+        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        g2.drawString(text, x + 20 , y);
+        if (commandNumber == 0) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            g2.drawString(">", x - 60 , y);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
+        }
+
+        text = "Sound: < " +gp.soundEffects.volumeScale + " >";
+        y += 100;
+        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        g2.drawString(text, x + 20 , y);
+        if (commandNumber == 1) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            g2.drawString(">", x - 60 , y);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
+        }
+
+        if(!fullscreen){
+            text = "FullScreen [ ]";
+        }else{
+            text = "FullScreen [X]";
+        }
+
+        y += 100;
+        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        g2.drawString(text, x + 20 , y);
+        if (commandNumber == 2) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            g2.drawString(">", x - 60 , y);
+        }
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+        text = "Return to Menu";
+        y += 100;
+        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        g2.drawString(text, x, y+2);
+        if (commandNumber == 3) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            g2.drawString(">", x - 60 , y);
+        }
+        gp.config.saveConfig();
     }
-    /**
-     * Testa även denna i ovan metod
-     */
-   public void drawSubWindow(int frameX, int frameY, int frameWidth, int frameHeight) {
+
+
+   public void drawSubWindow(Graphics2D g2, int frameX, int frameY, int frameWidth, int frameHeight) {
         Color c = new Color(0,0,0);
         g2.setColor(c);
         g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,35,35);

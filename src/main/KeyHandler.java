@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed;;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp){
@@ -22,10 +22,10 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-/*
+
         if(gp.gameState == gp.titleState) {
         mainMenuKeys(code);
-        }*/
+        }
         if(gp.gameState == gp.playState) {
             gamePlayKeys(code);
         }
@@ -99,20 +99,18 @@ public class KeyHandler implements KeyListener {
                 }else{
                     gp.ui.fullscreen = true;
                 }
-                gp.playSoundEffect(2);
+                gp.playSoundEffect(2);;
             }
             if (gp.ui.commandNumber == 3) {
-                gp.ui.titleScreenState = 0;
+                gp.gameState= gp.titleState;
                 gp.ui.commandNumber = 0;
                 gp.playSoundEffect(2);
-                //enter save 4
+
             }
         }
-        /**
-         * escPressed boolean lades till, när man trycker det i option så blir den false men... scrolla ner
-         */
         if (code == KeyEvent.VK_ESCAPE){
             escPressed = false;
+            gp.gameState = gp.playState;
         }
     }
 
@@ -137,6 +135,7 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.commandNumber == 0) {
                     gp.gameState = gp.playState;
                     gp.playSoundEffect(2);
+                    ;
                 }
                 if (gp.ui.commandNumber == 1) {
                     gp.ui.titleScreenState = 1;
@@ -263,7 +262,7 @@ public class KeyHandler implements KeyListener {
                     }else{
                         gp.ui.fullscreen = true;
                     }
-                    gp.playSoundEffect(2);
+                    gp.playSoundEffect(2);;
                 }
                 if (gp.ui.commandNumber == 3) {
                     gp.ui.titleScreenState = 0;
@@ -290,11 +289,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_SHIFT){
             shiftPressed = true;
         }
-        /**
-         * .... när man klickar den i spelet så blir den true för o öppna menyn. pog
-         */
-        if (code == KeyEvent.VK_ESCAPE){
+        if (code == KeyEvent.VK_P){
             escPressed = true;
+            gp.gameState =gp.optionsState;
         }
     }
 

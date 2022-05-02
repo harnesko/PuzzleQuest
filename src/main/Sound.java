@@ -12,7 +12,7 @@ import java.net.URL;
  * @auther Kristoffer
  */
 public class Sound {
-    Clip clip;
+    Clip clip = null;
     URL[] soundURL = new URL[30];
     FloatControl fC;
     int volumeScale = 5;
@@ -46,10 +46,7 @@ public class Sound {
     }
 
     public void stopAudio(){
-        if (clip != null){
-            clip.stop();
-        }
-
+        clip.stop();
     }
 
     public void ceckVolume(){

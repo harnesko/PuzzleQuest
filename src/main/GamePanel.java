@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // GAME STATES kommenterat lite saker här, ba ändra tbx / k
     public int gameState;
-    // public final int titleState = 0;
+     public final int titleState = 0;
     public final int playState = 1;
     public final int optionsState = 2;
     // public final int dialogState = 3;
@@ -70,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         assetSetter.setObject();
         playMusik(0);
-        gameState = playState;
+        gameState = titleState;
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();

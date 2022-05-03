@@ -8,7 +8,8 @@ public class GameStarter {
     /**
      * Bla bla bla
      *  @author Kinda
-     *
+     *  Added an if statment so if fullscreen is activated setUndecorated is activated.
+     *  This removes the borders so that the screen is just the game.
      *  @author Kristoffer
      */
     public static void main(String[] args) {

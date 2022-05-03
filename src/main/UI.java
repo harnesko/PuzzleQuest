@@ -48,9 +48,10 @@ public class UI {
     }
 
     /**
-     *
-     * @param g2
-     *  @author Kristoffer & Gustav
+     * This method is used to draw the different Ui's.
+     * With the help of GamePanel's game states we can draw what is needed for that specifik state.
+     * @param g2 We send in Graphics2D to be able to draw the different objekts.
+     * @author Kristoffer & Gustav
      */
     public void draw(Graphics2D g2){
         if(gameFinished){
@@ -105,7 +106,7 @@ public class UI {
 
 
             if (gp.gameState == gp.optionsState) {
-                drawOptionsScreen(g2);
+                drawSettingsMenu(g2);
                 g2.fillRect(0, 0, 200, 200);
             }
 
@@ -117,11 +118,12 @@ public class UI {
     }
 
     /**
-     *
-     * @param g2
+     * This method is used to draw the Settings menu.
+     * By using commandNumber varaible combiend with the Key handler class we can choose what option to change.
+     * @param g2 We send in Graphics2D to be able to draw the different objekts.
      * @author Kristoffer
      */
-    public void drawOptionsScreen(Graphics2D g2) {
+    public void drawSettingsMenu(Graphics2D g2) {
 
         // inget ändrat här förutom g2 parameter
 
@@ -193,22 +195,28 @@ public class UI {
     }
 
     /**
-     *
-     * @param g2
+     * This method draws a small sub frame to be able to be used for example the dialog frame.
+     * @param g2 We send in Graphics2D to be able to draw the different objekts.
+     * @param x The X coordinate position for the window
+     * @param y The Y coordinate position for the window
+     * @param width The width size of the window
+     * @param height height size of the window
      * @author Kristoffer
      */
-   public void drawSubWindow(Graphics2D g2, int frameX, int frameY, int frameWidth, int frameHeight) {
+   public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
         Color c = new Color(0,0,0);
         g2.setColor(c);
-        g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,35,35);
+        g2.fillRoundRect(x,y,width,height,35,35);
+
 
         c = new Color(255,255,255);
         g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
-        g2.drawRoundRect(frameX+5,frameY+5,frameWidth-10,frameHeight-10,25,25);
+        g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
     }
     /**
-     *
+     * This is an organised method to dictate what is being drawn in the MainMenu.
+     * By using the game title states we control if the MainMenu is drawn or the settings Menu or the Saves menu.
      * @author Kristoffer
      */
     public void drawMainMenu() {
@@ -225,7 +233,8 @@ public class UI {
         }
     }
     /**
-     *
+     * This method draws the MainMenu screen with the possible sub Menus the player could choose.
+     * Its being draw by the g2 variable to draw the different objekts.
      * @author Kristoffer
      */
     public void startMenu(){
@@ -289,8 +298,11 @@ public class UI {
             //scrollAudio();
         }
     }
+
     /**
-     *
+     * This Menu draws the savesMenu and its options to choose what save to enter.
+     * It also contains a return option.
+     * It is drawn by using the g2 variable
      * @author Kristoffer
      */
     public void savesMenu(){
@@ -386,7 +398,10 @@ public class UI {
         }
     }
     /**
-     *
+     * This Menu draws the SettingsMenu and its options to change.
+     * Then these variables are written in the config file to be saved once the player starts the game again.
+     * It also contains a return option.
+     * It is drawn by using the g2 variable
      * @author Kristoffer
      */
     public void settingsMenu(){
@@ -459,14 +474,14 @@ public class UI {
     }
 
     /**
-     *
-     * @param frameX
-     * @param frameY
+     * This method is used to notify the user that the game needs to be restarted for the fullscreen to take affekt.
+     * @param x coordinate
+     * @param y coordinate
      * * @author Kristoffer
      */
-    public void fullScreenNotification(int frameX, int frameY){
-        int textX = frameX + gp.tileSize;
-        int textY = frameY + gp.tileSize*3;
+    public void fullScreenNotification(int x, int y){
+        int textX = x + gp.tileSize;
+        int textY = y + gp.tileSize*3;
 
         currentDialog = "The change will take \n effect after restarting the game";
         for(String line: currentDialog.split("\n")){
@@ -477,9 +492,9 @@ public class UI {
     }
 
     /**
-     *
-     * @param text
-     * @return
+     * This method is used to find the center based on the text length.
+     * @param text the text we want to use to center.
+     * @return return the x value with a centered coordinate.
      * * @author Kristoffer
      */
     public int getXForCenteredText(String text){

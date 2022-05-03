@@ -69,6 +69,8 @@ public class GamePanel extends JPanel implements Runnable {
      * Bla Bla Bla
      *  @author Kinda
      *
+     *  Added a new way to paint the game using a BuffertImage anda temporary screen for effektivness.
+     *  Also added an if statement so that if fullscreen = true fullscreen is drawn instead.
      *  @author Kristoffer
      */
     public void setupGame(){
@@ -129,6 +131,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
+     * This is method used to temporarily draw everything so that resizing becomes smoother and more effective.
+     * if the gameStare = titleState then the MainMenu is drawn else the game is drawn.
      * @author Kristoffer
      */
     public void drawToTempScreen(){
@@ -149,7 +153,7 @@ public class GamePanel extends JPanel implements Runnable {
                 ui.draw(g2); //Gustav
             }
             if (gameState == optionsState) {
-                ui.drawOptionsScreen(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
+                ui.drawSettingsMenu(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
             }
 
 
@@ -158,6 +162,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
+     * This draws everything from the drawToTempScreen().
      * @author Kristoffer
      */
     public void drawToScreen(){
@@ -205,31 +210,36 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     *
-     * @param i
+     * Method to play and loop the music by choosing what number from the URL[].
+     * @param soundChooser what track to play from the array in the Sound class.
      * @author Kristoffer
      */
-    public void playMusik(int i){
-        music.setClip(i);
+    public void playMusik(int soundChooser){
+        music.setClip(soundChooser);
         music.playAudio();
         music.loopAudio();
     }
 
+    /**
+     * Stops the music from playing
+     * @author Kristoffer
+     */
     public void stopMusik(){
         music.stopAudio();
     }
 
     /**
-     *
-     * @param i
+     * Method used to play sound effects
+     * @param soundChooser what track to play from the array in the Sound class.
      * @author Kristoffer
      */
-    public void playSoundEffect(int i){
-        soundEffects.setClip(i);
+    public void playSoundEffect(int soundChooser){
+        soundEffects.setClip(soundChooser);
         soundEffects.playAudio();
     }
 
     /**
+     * Method used to sett fullscreen based on the monitors' resolution.
      * @author Kristoffer
      */
     public void setFullScreen(){

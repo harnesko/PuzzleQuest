@@ -10,8 +10,8 @@ public class Config {
     GamePanel gp;
 
     /**
-     *
-     * @param gp
+     * Constructor setting the GamePanel class.
+     * @param gp we send in the GamePanel class
      * @author Kristoffer
      */
     public Config(GamePanel gp) {
@@ -19,7 +19,9 @@ public class Config {
     }
 
     /**
-     *
+     * Method used to write down the variables for if fullscreen,musicVolume and soundEffectVolume.
+     * This is done by using a BuffertWriter that writs this into the config.txt file.
+     * So that next time the player starts the game the settings will be saved.
      * @author Kristoffer
      */
     public void saveConfig(){
@@ -50,7 +52,8 @@ public class Config {
     }
 
     /**
-     *
+     * This method is used to set the variables we previously saved by using a BuffertReader.
+     * It reads the Config.txt file and applies the respective variabels the value stored.
      * @author Kristoffer
      */
     public void loadConfig(){

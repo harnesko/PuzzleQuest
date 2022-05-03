@@ -19,10 +19,11 @@ public class NPC_Mario extends NPC{
     private int screenX; // Are these needed for an NPC or is it only for Player?
     private int screenY;
     public BufferedImage marioLeft, marioRight;
+    public GamePanel gp;
 
     public NPC_Mario(GamePanel gp){
         super(gp);
-
+        this.gp = gp;           //I dont understand why this line needs to be here but if it's not it goes to shit
         direction = "down";
         speed = 1;
 
@@ -120,7 +121,9 @@ public class NPC_Mario extends NPC{
                 break;  //fix this mess later
             }
         }
-        image = loadNpcImage();     //only for debug purposes
+        int screenX = worldX - gp.player.worldX + gp.player.screenX;
+        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+        image = loadNpcImage();     //only for debug purposes, replace this with the switch case above later
         //System.out.println("Image is : " + image);      //Image is sometimes null??
         g2.drawImage(image, screenX, screenY, 32, 32, null);
 
@@ -129,8 +132,6 @@ public class NPC_Mario extends NPC{
 
 
     public void setDefaultNpcPosition(){
-       /* this.worldX = gp.tileSize * 32;
-        this.worldY = gp.tileSize * 30;*/
         this.worldX = 1464;
         this.worldY = 356;
     }

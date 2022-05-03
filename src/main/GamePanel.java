@@ -68,8 +68,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame(){
-        assetSetter.setNPC();
         assetSetter.setObject();
+        assetSetter.setNPC();
         playMusik(0);
         gameState = titleState;
 
@@ -123,14 +123,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
-        //System.out.println("Length: " + npcList.length);
+        //System.out.println("Npc list Length: " + npcList.length);
 
         for (NPC npc : npcList) {
-            //assetSetter.setNPC();
-            if(npc != null){
+            if(npc != null) {
                 npc.update();
-            }else{
-                //System.out.println("null");
             }
         }
     }
@@ -155,7 +152,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                 for (NPC npc : npcList){
                     if(npc != null){
-                        npc.draw(g2);       //NullPointerException atm      ¯\_(ツ)_/¯
+                        npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
                     }
                 }
             }

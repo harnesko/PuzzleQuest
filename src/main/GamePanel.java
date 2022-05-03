@@ -1,7 +1,7 @@
 package main;
 
 import entity.Entity;
-import entity.NPC;
+import entity.NPC_Mario;
 import entity.Player;
 import gameObject.GameObject;
 import tile.TileManager;
@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread; // tiden för spelet
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter = new AssetSetter(this);
-    public NPC npcTEST = new NPC(this);
+    public NPC_Mario npcTEST = new NPC_Mario(this);
     public Player player = new Player(this, keyH);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
     public Entity[] npcList = new Entity[10];
@@ -47,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true); // att göra detta true ger bättre rendering performance
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
     }
 
     public void setupGame(){
@@ -87,7 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            // System.out.println(FPS);
+            //System.out.println(FPS);      //60
         }
     }
 
@@ -120,6 +121,7 @@ public class GamePanel extends JPanel implements Runnable {
                 npcList[i].draw(g2);
             }
         }
+        npcTEST.draw(g2);
         player.draw(g2);
         //showGrid(g2); //kan tas bort
 

@@ -46,9 +46,12 @@ public class AssetSetter {
         gp.obj[6].worldY = 7 * gp.tileSize;
 
     }
+
     public void setNPC(){
         gp.npcList[0] = new NPC_Mario(gp);
         gp.npcList[0].worldX = gp.tileSize * 20;
         gp.npcList[0].worldY = gp.tileSize * 20;
+
+
     }
 }

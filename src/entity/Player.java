@@ -138,6 +138,7 @@ public class Player extends Entity {
             // CHECK OBJECT COLLISION
             int objIndex = gp.collisionChecker.checkObject(this, EntityType.PLAYER);
             pickUpObject(objIndex);
+            //todo Måns fixa detta
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
@@ -207,6 +208,8 @@ public class Player extends Entity {
     public void interactWithNPC(int npcIndex){
         if(npcIndex != 999){
             //Allow player to interact with npc using "e" key or something
+            //todo
+
         }
     }
 

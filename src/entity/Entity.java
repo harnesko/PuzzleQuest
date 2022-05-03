@@ -28,6 +28,9 @@ public class Entity {
     public Entity(GamePanel gp){
         this.gp = gp;
     }
+    public Entity(){
+
+    }
     public void draw(Graphics2D g2){
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;

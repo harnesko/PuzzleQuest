@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 
 /**
  * UI class is for the interface.
- * @auther Kristoffer, Gustav
  */
 
 public class UI {
@@ -41,14 +40,20 @@ public class UI {
         keyImage = key.image;;
     }
 
+
     public void showMessage(String text){
         message = text;
         messagesOn = true;
 
     }
 
+    /**
+     *
+     * @param g2
+     *  @author Kristoffer & Gustav
+     */
     public void draw(Graphics2D g2){
-        if(gameFinished == true){
+        if(gameFinished){
             g2.setFont(arial_40);
             g2.setColor(Color.white);
 
@@ -79,7 +84,7 @@ public class UI {
             g2.drawString("x " + gp.player.hasKey, 95, 77);
 
             //message
-            if (messagesOn == true) {
+            if (messagesOn) {
                 g2.setFont(g2.getFont().deriveFont(30F));
                 g2.drawString(message, gp.tileSize / 2, gp.tileSize * 5);
 
@@ -111,6 +116,11 @@ public class UI {
 
     }
 
+    /**
+     *
+     * @param g2
+     * @author Kristoffer
+     */
     public void drawOptionsScreen(Graphics2D g2) {
 
         // inget ändrat här förutom g2 parameter
@@ -182,7 +192,11 @@ public class UI {
         gp.config.saveConfig();
     }
 
-
+    /**
+     *
+     * @param g2
+     * @author Kristoffer
+     */
    public void drawSubWindow(Graphics2D g2, int frameX, int frameY, int frameWidth, int frameHeight) {
         Color c = new Color(0,0,0);
         g2.setColor(c);
@@ -193,7 +207,10 @@ public class UI {
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(frameX+5,frameY+5,frameWidth-10,frameHeight-10,25,25);
     }
-
+    /**
+     *
+     * @author Kristoffer
+     */
     public void drawMainMenu() {
         if (titleScreenState ==0) {
             startMenu();
@@ -207,7 +224,10 @@ public class UI {
             settingsMenu();
         }
     }
-
+    /**
+     *
+     * @author Kristoffer
+     */
     public void startMenu(){
         //background
         g2.setColor(new Color(70, 120, 80));
@@ -269,7 +289,10 @@ public class UI {
             //scrollAudio();
         }
     }
-
+    /**
+     *
+     * @author Kristoffer
+     */
     public void savesMenu(){
         //background
         g2.setColor(new Color(70, 120, 80));
@@ -362,7 +385,10 @@ public class UI {
             //scrollAudio();
         }
     }
-
+    /**
+     *
+     * @author Kristoffer
+     */
     public void settingsMenu(){
         //background
         g2.setColor(new Color(70, 120, 80));
@@ -432,6 +458,12 @@ public class UI {
         gp.config.saveConfig();
     }
 
+    /**
+     *
+     * @param frameX
+     * @param frameY
+     * * @author Kristoffer
+     */
     public void fullScreenNotification(int frameX, int frameY){
         int textX = frameX + gp.tileSize;
         int textY = frameY + gp.tileSize*3;
@@ -444,6 +476,12 @@ public class UI {
 
     }
 
+    /**
+     *
+     * @param text
+     * @return
+     * * @author Kristoffer
+     */
     public int getXForCenteredText(String text){
        int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
        int x = gp.screenWidth/2 - length/2;

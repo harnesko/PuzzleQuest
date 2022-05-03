@@ -6,7 +6,10 @@ import java.awt.*;
 public class GameStarter {
     public static JFrame window;
     /**
-     * Fixat i denna klassen
+     * Bla bla bla
+     *  @author Kinda
+     *
+     *  @author Kristoffer
      */
     public static void main(String[] args) {
         window = new JFrame();

@@ -34,6 +34,12 @@ public class KeyHandler implements KeyListener {
         }
 
     }
+
+    /**
+     *
+     * @param code
+     * @author Kristoffer
+     */
     public void mainMenuKeys(int code){
         if (gp.ui.titleScreenState == 0) {
             startKeys(code);
@@ -47,6 +53,11 @@ public class KeyHandler implements KeyListener {
 
     }
 
+    /**
+     *
+     * @param code
+     * @author Kristoffer
+     */
     private void optionKey(int code) {
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gp.ui.commandNumber--;
@@ -114,6 +125,11 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    /**
+     *
+     * @param code
+     * @author Kristoffer
+     */
     public void startKeys(int code) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 gp.ui.commandNumber--;
@@ -155,6 +171,11 @@ public class KeyHandler implements KeyListener {
             }
     }
 
+    /**
+     *
+     * @param code
+     * @author Kristoffer
+     */
     public void savesKeys(int code) {
 
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -210,6 +231,11 @@ public class KeyHandler implements KeyListener {
             }
     }
 
+    /**
+     *
+     * @param code
+     * @author Kristoffer
+     */
     public void settingsKeys(int code) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 gp.ui.commandNumber--;

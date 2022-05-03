@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogState = 3;
 
     // FPS
-    int FPS = 60;
+    int FPS = 5;
 
     TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this); // knapparna WASD
@@ -65,6 +65,12 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
+    /**
+     * Bla Bla Bla
+     *  @author Kinda
+     *
+     *  @author Kristoffer
+     */
     public void setupGame(){
         assetSetter.setObject();
         playMusik(0);
@@ -122,6 +128,9 @@ public class GamePanel extends JPanel implements Runnable {
         player.update();
     }
 
+    /**
+     * @author Kristoffer
+     */
     public void drawToTempScreen(){
         if(gameState == titleState){ //MainMenu
             ui.draw(g2);
@@ -148,6 +157,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * @author Kristoffer
+     */
     public void drawToScreen(){
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0 , 0, screenWidth2,screenHeight2, null);
@@ -192,6 +204,11 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param i
+     * @author Kristoffer
+     */
     public void playMusik(int i){
         music.setClip(i);
         music.playAudio();
@@ -202,11 +219,19 @@ public class GamePanel extends JPanel implements Runnable {
         music.stopAudio();
     }
 
+    /**
+     *
+     * @param i
+     * @author Kristoffer
+     */
     public void playSoundEffect(int i){
         soundEffects.setClip(i);
         soundEffects.playAudio();
     }
 
+    /**
+     * @author Kristoffer
+     */
     public void setFullScreen(){
         //Get local screen device
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

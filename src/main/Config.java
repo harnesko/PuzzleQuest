@@ -4,15 +4,24 @@ import java.io.*;
 
 /**
  * Config reader/writer.
- * @auther Kristoffer
+ * @author Kristoffer
  */
 public class Config {
     GamePanel gp;
 
+    /**
+     *
+     * @param gp
+     * @author Kristoffer
+     */
     public Config(GamePanel gp) {
         this.gp = gp;
     }
 
+    /**
+     *
+     * @author Kristoffer
+     */
     public void saveConfig(){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("config.txt"));
@@ -40,6 +49,10 @@ public class Config {
         }
     }
 
+    /**
+     *
+     * @author Kristoffer
+     */
     public void loadConfig(){
         try {
             BufferedReader br = new BufferedReader(new FileReader("config.txt"));
@@ -64,9 +77,6 @@ public class Config {
             gp.soundEffects.volumeScale = Integer.parseInt(s);
 
             br.close();
-
-
-
 
         } catch (IOException e) {
             e.printStackTrace();

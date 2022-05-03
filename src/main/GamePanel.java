@@ -43,12 +43,12 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogState = 3;
 
     // FPS
-    int FPS = 9;
+    int FPS = 60;
 
     TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this); // knapparna WASD
     Thread gameThread; // tiden för spelet
-    UI ui = new UI(this);
+    public UI ui = new UI(this); //lade till public
     Sound music = new Sound();
     Sound soundEffects = new Sound();
     Config config = new Config(this);
@@ -137,6 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             if (gameState == playState) {
                 player.draw(g2);
+                ui.draw(g2); //Gustav
             }
             if (gameState == optionsState) {
                 ui.drawOptionsScreen(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort

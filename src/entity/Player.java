@@ -17,7 +17,7 @@ public class Player extends Entity {
 
     public final int screenX; // dessa två variabler är kameran, och de ändras inte
     public final int screenY;
-    int hasKey = 0;
+    public int hasKey = 0; //Gustav gjorde till public
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -190,6 +190,7 @@ public class Player extends Entity {
                     hasKey++;
                     gp.obj[index] = null;
                     System.out.println("Keys: " + hasKey);
+                    gp.ui.showMessage("This dude got a Key!");
                     break;
                 case "Door":
                     if (hasKey > 0) {
@@ -197,6 +198,9 @@ public class Player extends Entity {
                         hasKey--;
                         break;
                     }
+                case "Chest":
+                    gp.ui.gameFinished = true;
+                    break;
             }
         }
     }

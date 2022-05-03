@@ -135,8 +135,13 @@ public class Player extends Entity {
             gp.collisionChecker.checkTile(this);
 
             // CHECK OBJECT COLLISION
-            int objIndex = gp.collisionChecker.checkObject(this, true);
+            int objIndex = gp.collisionChecker.checkObject(this, EntityType.PLAYER);
             pickUpObject(objIndex);
+
+            //CHECK NPC COLLISION
+            int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
+            //interactWithNpc(npcIndex);
+            System.out.println("Npc index = " + npcIndex);
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {

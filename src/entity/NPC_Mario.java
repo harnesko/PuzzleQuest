@@ -20,6 +20,7 @@ public class NPC_Mario extends NPC{
     private int screenY;
     public BufferedImage marioLeft, marioRight;
     public GamePanel gp;
+    public String[] npcMarioDialogue = new String[5];
 
     public NPC_Mario(GamePanel gp){
         super(gp);
@@ -29,7 +30,7 @@ public class NPC_Mario extends NPC{
 
         solidArea = new Rectangle(4, 8, 8, 16);
         collisionOn = true;
-
+        createDialogue();
         loadNpcImage();
         setDefaultNpcPosition();
 
@@ -45,6 +46,21 @@ public class NPC_Mario extends NPC{
             e.printStackTrace();
         }
         return npcImage1;   //todo make void i guess
+    }
+
+    /**
+     * (Notes)
+     * Fix broken npc detection and collision
+     * Start with displaying dialogue using the already made UI.showMessage() method
+     * Later work on a dialogue box or something
+     */
+    public void createDialogue(){
+        //Mostly for testing purposes rn, do it properly later or something
+        npcMarioDialogue[0] = "Hello";
+        npcMarioDialogue[1] = "Nintendo couldn't make this game if they tried";
+        npcMarioDialogue[2] = "bla bla bla";
+        npcMarioDialogue[3] = "bla bla bla";
+        npcMarioDialogue[4] = "bla bla bla";
     }
 
     /**

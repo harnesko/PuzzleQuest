@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import entity.EntityType;
 
 public class CollisionChecker {
 
@@ -62,7 +63,7 @@ public class CollisionChecker {
         }
     }
 
-    public int checkObject(Entity entity, boolean player) {
+    public int checkObject(Entity entity, EntityType type) {
         int index = 999;
 
         for (int i = 0; i < gp.obj.length; i++) {
@@ -84,7 +85,7 @@ public class CollisionChecker {
                             if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-                            if (player) {
+                            if (type == EntityType.PLAYER) {
                                 index = i;
                             }
                         }
@@ -95,7 +96,7 @@ public class CollisionChecker {
                             if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-                            if (player) {
+                            if (type == EntityType.PLAYER) {
                                 index = i;
                             }
                         }
@@ -106,7 +107,7 @@ public class CollisionChecker {
                             if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-                            if (player) {
+                            if (type == EntityType.PLAYER) {
                                 index = i;
                             }
                         }
@@ -117,7 +118,7 @@ public class CollisionChecker {
                             if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-                            if (player) {
+                            if (type == EntityType.PLAYER) {
                                 index = i;
                             }
                         }
@@ -133,4 +134,60 @@ public class CollisionChecker {
         return index;
 
     }
+
+
+    public int checkEntity(Entity entity, Entity[] target){
+        int index = 999;
+
+        for (int i = 0; i < target.length; i++) {
+            if (target[i] != null){
+
+                // Get entity's solid area position
+                entity.solidArea.x = entity.worldX + entity.solidArea.x;
+                entity.solidArea.y = entity.worldY + entity.solidArea.y;
+
+                // Get the object's solid area position
+                target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
+                target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
+
+                switch (entity.direction) {
+                    case "walkup", "runup" -> {
+                        entity.solidArea.y -= entity.speed;
+                        if (entity.solidArea.intersects(target[i].solidArea)) { // intersects är en solidArea metod
+                            entity.collisionOn = true;
+                            index = i;
+                        }
+                    }
+                    case "walkdown", "rundown" -> {
+                        entity.solidArea.y += entity.speed;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                            entity.collisionOn = true;
+                            index = i;
+                        }
+                    }
+                    case "walkleft", "runleft" -> {
+                        entity.solidArea.x -= entity.speed;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                            entity.collisionOn = true;
+                            index = i;
+                        }
+                    }
+                    case "walkright", "runright" -> {
+                        entity.solidArea.x += entity.speed;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                            entity.collisionOn = true;
+                            index = i;
+                        }
+                    }
+                }
+                entity.solidArea.x = entity.solidAreaDefaultX;
+                entity.solidArea.y = entity.solidAreaDefaultY;
+                target[i].solidArea.x = target[i].solidAreaDefaultX;
+                target[i].solidArea.y = target[i].solidAreaDefaultY;
+            }
+
+        }
+        return index;
+    }
+
 }

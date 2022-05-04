@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * Class for npc 1, currently a placeholder .png image
  * @author Måns Harnesk
- * @version 1.0
+ * @version 1.4
  */
 
 public class NPC_Mario extends NPC{
@@ -60,7 +60,7 @@ public class NPC_Mario extends NPC{
         npcMarioDialogue[1] = "Nintendo couldn't make this game if they tried";
         npcMarioDialogue[2] = "bla bla bla";
         npcMarioDialogue[3] = "bla bla bla";
-        npcMarioDialogue[4] = "bla bla bla                                                                                                                                                        1241254135432523";
+        npcMarioDialogue[4] = "Please bring this item back to Luigi?";
     }
     @Override
     public  void speak(){

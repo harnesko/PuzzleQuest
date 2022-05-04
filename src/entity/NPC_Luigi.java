@@ -7,13 +7,20 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public class NPC_Luigi extends NPC{
 
+/**
+ * Class for npc 2, currently a placeholder .png image
+ * @author Måns Harnesk
+ * @version 1.1
+ */
+public class NPC_Luigi extends NPC{
     public GamePanel gp;
     public String[] npcLuigiDialogue = new String[10];
     private int screenX; // Are these needed for an NPC or is it only for Player?
     private int screenY;
     BufferedImage luigi_image1 = null;
+    public boolean isQuestDone = false;
+    public boolean[] questProgress = {false, false, false};
 
     public NPC_Luigi(GamePanel gp) {
         super(gp);
@@ -35,8 +42,18 @@ public class NPC_Luigi extends NPC{
             }
         }
     }
-    //Make this return void later i guess
+    public void progressQuest(){
+        for (int i = 0; i < questProgress.length; i++){
+            if(!questProgress[i]) {
+                questProgress[i] = true;
+                break;
+            }
+        }
+    }
 
+
+
+    //Make this return void later i guess
     public BufferedImage loadNpcImage(){
         //BufferedImage luigi_image1 = null;
         BufferedImage npcImage2 = null;
@@ -81,7 +98,7 @@ public class NPC_Luigi extends NPC{
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = luigi_image1;          //fix marioLeft2 later
+                    image = luigi_image1;          //fix luigiLeft2 later
                     break;
                 }
             }
@@ -102,8 +119,8 @@ public class NPC_Luigi extends NPC{
             }
             case "down" -> {
                 image = luigi_image1;
-                System.out.println("npc looks down");
-                break;  //fix this mess later
+                //fix this when we have more images
+                //fix this mess later
             }
         }
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -120,6 +137,6 @@ public class NPC_Luigi extends NPC{
         npcLuigiDialogue[1] = "Nintendo couldn't make this game if they tried";
         npcLuigiDialogue[2] = "bla bla bla";
         npcLuigiDialogue[3] = "bla bla bla";
-        npcLuigiDialogue[4] = "bla bla bla                                                                                                                                                        1241254135432523";
+        npcLuigiDialogue[4] = "You need go and speak with Mario!";
     }
 }

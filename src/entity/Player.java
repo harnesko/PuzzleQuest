@@ -1,5 +1,6 @@
 package entity;
 
+import gameObject.GameObject;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -141,7 +142,20 @@ public class Player extends Entity {
             //CHECK NPC COLLISION
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
             interactWithNpc(npcIndex);
+            //todo Se om vi kan ta bort parametrar, köra alla objekt i samma array och kolla typ med "instanceof" metoden
+            //Checka igenom CollisionChecker
+            if(keyH.ePressed){
+
+                if (npcIndex != -1){
+                    gp.npcList[npcIndex].speak();
+
+                }
+                keyH.ePressed = false;
+                System.out.println("Key E pressed");
+            }
+
             System.out.println("Npc index = " + npcIndex);
+
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
@@ -162,6 +176,8 @@ public class Player extends Entity {
                 direction = lastBtnPressed;
             }
         }
+
+
 
 
         if (spriteCounter > 30) {
@@ -196,7 +212,7 @@ public class Player extends Entity {
     }
 
     public void pickUpObject(int index) {
-        if (index != 999) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
+        if (index != -1) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
             // om index är ej empty alltså innehåller ett objekt
             String objectName = gp.obj[index].name;
 

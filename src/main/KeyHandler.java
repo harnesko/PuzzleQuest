@@ -319,7 +319,8 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_E){
             ePressed = true;
             //gp.npcList[0].speak();
-
+        } else {
+            ePressed = false;
         }
     }
 

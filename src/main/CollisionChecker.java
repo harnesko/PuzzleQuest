@@ -64,7 +64,7 @@ public class CollisionChecker {
     }
 
     public int checkObject(Entity entity, EntityType type) {
-        int index = 999;
+        int index = -1;
 
         for (int i = 0; i < gp.obj.length; i++) {
             if (gp.obj[i] != null){
@@ -80,14 +80,15 @@ public class CollisionChecker {
                 switch (entity.direction) {
                     case "walkup", "runup" -> {
                         entity.solidArea.y -= entity.speed;
-                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) { // intersects är en solidArea metod
+                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) { // intersects är en solidArea metod, kollar om de överlappar
                             // som checkar om objekt kolliderar
                             if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-                            if (type == EntityType.PLAYER) {
+                            //if (type == EntityType.PLAYER) {
                                 index = i;
-                            }
+                            System.out.println("Index: " + index);
+                            //}
                         }
                     }
                     case "walkdown", "rundown" -> {
@@ -137,7 +138,7 @@ public class CollisionChecker {
 
 
     public int checkEntity(Entity entity, Entity[] target){
-        int index = 999;
+        int index = -1;
 
         for (int i = 0; i < target.length; i++) {
             if (target[i] != null){

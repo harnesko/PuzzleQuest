@@ -1,7 +1,7 @@
 package entity;
 
-import main.GamePanel;
-import main.KeyHandler;
+import main.*;
+
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -196,8 +196,13 @@ public class Player extends Entity {
                     if (hasKey > 0) {
                         gp.obj[index] = null;
                         hasKey--;
-                        break;
+                        gp.ui.showMessage("Oi! The key opened the door!");
+
                     }
+                    else{
+                        gp.ui.showMessage("Oi bruv you need a key to open this door");
+                    }
+                    break;
                 case "Chest":
                     gp.ui.gameFinished = true;
                     break;

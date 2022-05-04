@@ -1,6 +1,7 @@
 package main;
 
-import gameObject.Key;
+import gameObject.*;
+import entity.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class UI {
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         Key key = new Key();
-        keyImage = key.image;;
+        keyImage = key.image;
     }
 
     public void showMessage(String text){

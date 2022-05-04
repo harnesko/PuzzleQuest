@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPC;
 import entity.Player;
 import gameObject.GameObject;
 import tile.TileManager;
@@ -56,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
+    public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // här förstorade jag skärmen
@@ -75,6 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
      */
     public void setupGame(){
         assetSetter.setObject();
+        assetSetter.setNPC();
         playMusik(0);
         gameState = titleState;
 
@@ -82,13 +85,16 @@ public class GamePanel extends JPanel implements Runnable {
         g2 = (Graphics2D) tempScreen.getGraphics();
 
         if(ui.fullscreen){
-            setFullScreen();
+            //setFullScreen();
         }
     }
 
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
+    }
+    public void npcSpeak(int npcIndex){
+
     }
 
     @Override
@@ -128,6 +134,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
+        //System.out.println("Npc list Length: " + npcList.length);
+
+        for (NPC npc : npcList) {
+            if(npc != null) {
+                npc.update();
+            }
+        }
     }
 
     /**
@@ -148,9 +161,16 @@ public class GamePanel extends JPanel implements Runnable {
                     obj[i].draw(g2, this);
                 }
             }
+
             if (gameState == playState) {
                 player.draw(g2);
                 ui.draw(g2); //Gustav
+
+                for (NPC npc : npcList){
+                    if(npc != null){
+                        npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
+                    }
+                }
             }
             if (gameState == optionsState) {
                 ui.drawSettingsMenu(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
@@ -171,7 +191,7 @@ public class GamePanel extends JPanel implements Runnable {
         g.dispose();
     }
 
-    /*public void paintComponent(Graphics g) { // allt ritas här
+    public void paintComponent(Graphics g) { // allt ritas här
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
@@ -187,12 +207,17 @@ public class GamePanel extends JPanel implements Runnable {
                     obj[i].draw(g2, this);
                 }
             }
+            for (NPC npc : npcList){
+                if(npc != null){
+                    npc.draw(g2);
+                }
+            }
             player.draw(g2);
             //showGrid(g2); //kan tas bort
             g2.dispose();
 
         }
-    }*/
+    }
 
     public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
         int x = 0;

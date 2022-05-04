@@ -135,8 +135,13 @@ public class Player extends Entity {
             gp.collisionChecker.checkTile(this);
 
             // CHECK OBJECT COLLISION
-            int objIndex = gp.collisionChecker.checkObject(this, true);
+            int objIndex = gp.collisionChecker.checkObject(this, EntityType.PLAYER);
             pickUpObject(objIndex);
+
+            //CHECK NPC COLLISION
+            int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
+            interactWithNpc(npcIndex);
+            System.out.println("Npc index = " + npcIndex);
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
@@ -178,6 +183,16 @@ public class Player extends Entity {
         // TODO: k - uppdatera texten här
 
 
+    }
+
+    private void interactWithNpc(int npcIndex) {
+        if (npcIndex != 999){
+            if(keyH.ePressed){
+
+                gp.npcList[npcIndex].speak();
+                //keyH.ePressed = false;
+            }
+        }
     }
 
     public void pickUpObject(int index) {

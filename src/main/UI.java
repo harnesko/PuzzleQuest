@@ -263,7 +263,12 @@ public class UI {
         text = "Quit";
         y += gp.tileSize + 25;
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 70, y + 2);
+        try{
+            g2.drawString(text, x + 70, y + 2);
+        }catch (ClassCastException e){
+            System.out.println("This error drives me CRAZY");   //Todo måns lös detta eller nåts
+
+        }
         if (commandNumber == 3) {
             g2.drawString(">", x - 45, y);
             //scrollAudio();

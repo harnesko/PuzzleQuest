@@ -61,5 +61,7 @@ public abstract class NPC extends Entity{       //Super class for all npc's
     public void update() {
         this.collisionOn = true;
     }
+    public abstract void speak();
+
 
 }

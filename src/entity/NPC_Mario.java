@@ -60,8 +60,16 @@ public class NPC_Mario extends NPC{
         npcMarioDialogue[1] = "Nintendo couldn't make this game if they tried";
         npcMarioDialogue[2] = "bla bla bla";
         npcMarioDialogue[3] = "bla bla bla";
-        npcMarioDialogue[4] = "bla bla bla";
+        npcMarioDialogue[4] = "bla bla bla                                                                                                                                                        1241254135432523";
     }
+    @Override
+    public  void speak(){
+        for (String str : npcMarioDialogue){
+            if(str != null)               //ClassCastException ibland i ui???? :(
+                gp.ui.showMessage(str);
+        }
+    }
+
 
     /**
      * Randomize a direction the NPC will use and pretend its pathfinding

@@ -85,6 +85,9 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
+    public void npcSpeak(int npcIndex){
+
+    }
 
     @Override
     public void run() {

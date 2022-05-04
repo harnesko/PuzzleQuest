@@ -137,7 +137,7 @@ public class CollisionChecker {
 
 
     public int checkEntity(Entity entity, Entity[] target){
-        int index = 999;
+        int index = -1;
 
         for (int i = 0; i < target.length; i++) {
             if (target[i] != null){

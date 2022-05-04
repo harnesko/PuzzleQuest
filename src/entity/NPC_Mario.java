@@ -40,8 +40,8 @@ public class NPC_Mario extends NPC{
         BufferedImage npcImage2 = null;
 
         try{
-           npcImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/npc_mario_left.png")));
-           npcImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/NPC/npc_mario_right.png")));
+           npcImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcOne/npc_mario_left.png")));
+           npcImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcOne/npc_mario_right.png")));
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -27,7 +27,7 @@ public abstract class NPC extends Entity{       //Super class for all npc's
         speed = 1;
 
         //loadNpcImage();
-        setDefaultNpcPosition();
+        //setDefaultNpcPosition();
 
         solidArea = new Rectangle();        //Hitbox?
         solidArea.x = 8;                    //Defines center of hitbox?

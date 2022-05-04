@@ -197,7 +197,6 @@ public class Player extends Entity {
                         gp.obj[index] = null;
                         hasKey--;
                         gp.ui.showMessage("Oi! The key opened the door!");
-
                     }
                     else{
                         gp.ui.showMessage("Oi bruv you need a key to open this door");

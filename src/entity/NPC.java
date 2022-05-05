@@ -13,9 +13,15 @@ import entity.Entity;
 /**
  * Abstract superclass for all NPC implementation
  * @author Måns Harnesk
- * @version 1.1
+ * @version 1.2
  */
 
+
+/**
+ * (Notes)
+ * NPC currently doesn't properly detect player in their moveset, check the collisionchecker later
+ *
+ */
 public abstract class NPC extends Entity{       //Super class for all npc's
 
     public GamePanel gp;
@@ -53,10 +59,6 @@ public abstract class NPC extends Entity{       //Super class for all npc's
         image = walkDown1;
         g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
     }
-    public void setDefaultNpcPosition(){
-        this.worldX = gp.tileSize * 32;
-        this.worldY = gp.tileSize * 30;
-    }
 
     /**
      * Randomize a direction the NPC will use and pretend its pathfinding
@@ -91,8 +93,10 @@ public abstract class NPC extends Entity{       //Super class for all npc's
         this.collisionOn = false;
         gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance
 
+        //This is probably a better solution than the above line of code
+        //gp.collisionChecker.checkObject(this, EntityType.NPC);
 
-        // IF COLLISION IS FALSE, PLAYER CAN MOVE
+        // IF COLLISION IS FALSE, NPC CAN MOVE
         if (!collisionOn) {
             switch (direction) {
                 case "walkup" -> worldY -= speed;
@@ -116,6 +120,8 @@ public abstract class NPC extends Entity{       //Super class for all npc's
 
 
     }
+
+    //Every NPC should say something, this is just to make sure that they know that
     public abstract void speak();
 
 

@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * Class for npc 2, currently a placeholder .png image. Please don't tell Nintendo
  * @author Måns Harnesk
- * @version 1.1
+ * @version 1.2
  */
 public class NPC_Luigi extends NPC{
     public GamePanel gp;
@@ -73,7 +73,7 @@ public class NPC_Luigi extends NPC{
     }
     @Override
     public void update() {
-        //super.update();     //fix this mess later, super method gives nullpointer on gamepanel instance
+        //super.update();     //fix this mess later, super method gives nullpointer on gamepanel instance for some reason, i cba to check rn
         setAction();
         collisionOn = false;
         gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance
@@ -102,6 +102,7 @@ public class NPC_Luigi extends NPC{
 
     }
 
+    //Set NPC spawn point (remember npc can move!)
     public void setDefaultNpcPosition(){
         this.worldX = gp.tileSize * 35;
         this.worldY = gp.tileSize * 32;

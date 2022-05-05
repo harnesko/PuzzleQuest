@@ -24,7 +24,7 @@ public class NPC_Mario extends NPC{
 
     public NPC_Mario(GamePanel gp){
         super(gp);
-        this.gp = gp;           //I dont understand why this line needs to be here but if it's not it goes to shit
+        this.gp = gp;           //I don't understand why this line needs to be here but if it's not it goes to shit
         direction = "down";
         speed = 1;
 
@@ -50,9 +50,9 @@ public class NPC_Mario extends NPC{
 
     /**
      * (Notes)
-     * Fix broken npc detection and collision
-     * Start with displaying dialogue using the already made UI.showMessage() method
-     * Later work on a dialogue box or something
+     * Fix broken npc detection and collision - DONE
+     * Start with displaying dialogue using the already made UI.showMessage() method    - DONE
+     * Later work on a dialogue box or something    - NOPE
      */
     public void createDialogue(){
         //Mostly for testing purposes rn, do it properly later or something
@@ -73,7 +73,8 @@ public class NPC_Mario extends NPC{
 
     /**
      * Randomize a direction the NPC will use and pretend its pathfinding
-     * Update direction after a few seconds (WIP)
+     * Update direction after a few seconds
+     * Change picture to match walking direction (WIP)
      */
     //Remove and put in super later I guess
     @Override

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 
 /**
- * Class for npc 2, currently a placeholder .png image
+ * Class for npc 2, currently a placeholder .png image. Please don't tell Nintendo
  * @author Måns Harnesk
  * @version 1.1
  */
@@ -20,12 +20,14 @@ public class NPC_Luigi extends NPC{
     private int screenY;
     BufferedImage luigi_image1 = null;
     public boolean isQuestDone = false;
+    public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
     public boolean[] questProgress = {false, false, false};
+
 
     public NPC_Luigi(GamePanel gp) {
         super(gp);
         this.gp = gp;           //I dont understand why this line needs to be here but if it's not it goes to shit
-        direction = "down";
+        direction = "walkdown";
         speed = 1;
         createDialogue();
 
@@ -59,10 +61,6 @@ public class NPC_Luigi extends NPC{
         BufferedImage npcImage2 = null;
 
         try{
-            /*
-            luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("npc/npcTwo/npc_luigi_left.png")));
-            npcImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("npc/npcTwo/npc_luigi_right.png")));
-            */
             luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcTwo/npc_luigi_left.png")));
             if(luigi_image1 == null){
                 System.out.println("here");
@@ -74,20 +72,41 @@ public class NPC_Luigi extends NPC{
         return luigi_image1;   //todo make void i guess
     }
     @Override
-    public void update(){
-        collisionOn = true;
+    public void update() {
+        //super.update();     //fix this mess later, super method gives nullpointer on gamepanel instance
         setAction();
+        collisionOn = false;
+        gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance
+
+        // IF COLLISION IS FALSE, NPC CAN MOVE
+        if (!collisionOn) {
+            switch (direction) {
+                case "walkup" -> worldY -= speed;
+                case "runup" -> worldY -= speed;
+                case "walkdown" -> worldY += speed;
+                case "rundown" -> worldY += speed;
+                case "walkleft" -> worldX -= speed;
+                case "runleft" -> worldX -= speed;
+                case "walkright" -> worldX += speed;
+                case "runright" -> worldX += speed;
+            }
+        }
+        if (spriteCounter > 30) {
+            if (spriteNum == 1) {
+                spriteNum = 2;
+            } else if (spriteNum == 2) {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
+
     }
 
     public void setDefaultNpcPosition(){
         this.worldX = gp.tileSize * 35;
         this.worldY = gp.tileSize * 32;
     }
-   /* public void draw(Graphics2D g2){
-        BufferedImage image = null;
 
-        g2.drawImage(luigi_image1,screenX,screenY,gp.tileSize,gp.tileSize,null);
-    }*/
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         switch (direction) {

@@ -6,6 +6,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
+import java.util.Random;
+
 import entity.Entity;
 
 /**
@@ -20,11 +22,12 @@ public abstract class NPC extends Entity{       //Super class for all npc's
 
     private int screenX; // Are these needed for an NPC or is it only for Player?
     private int screenY;
+    public int directionalDelay = 0;
 
     public NPC (GamePanel gp){
         super(gp);
         //this.gp = gp;
-        speed = 1;
+        speed = 5;
 
         //loadNpcImage();
         //setDefaultNpcPosition();
@@ -54,12 +57,64 @@ public abstract class NPC extends Entity{       //Super class for all npc's
         this.worldX = gp.tileSize * 32;
         this.worldY = gp.tileSize * 30;
     }
+
+    /**
+     * Randomize a direction the NPC will use and pretend its pathfinding
+     * Update direction after a few seconds
+     * Npc needs to check collision properly
+     */
     public void setAction(){
-        //Todo randomize direction and pretend its pathfinding
+        directionalDelay++;
+
+        if (directionalDelay > 100) {
+            Random random = new Random();
+            int i = random.nextInt(4);
+
+            if(i == 0){
+                direction = "walkup";
+            }
+            if(i == 1){
+                direction = "walkdown";
+            }
+            if(i == 2){
+                direction = "walkleft";     //set image to npc_mario_left.png todo
+            }
+            if(i == 3){
+                direction = "walkright";     //set image to npc_mario_right.png
+            }
+            directionalDelay = 0;
+        }
     }
 
     public void update() {
-        this.collisionOn = true;
+        setAction();
+        this.collisionOn = false;
+        gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance
+
+
+        // IF COLLISION IS FALSE, PLAYER CAN MOVE
+        if (!collisionOn) {
+            switch (direction) {
+                case "walkup" -> worldY -= speed;
+                case "runup" -> worldY -= speed;
+                case "walkdown" -> worldY += speed;
+                case "rundown" -> worldY += speed;
+                case "walkleft" -> worldX -= speed;
+                case "runleft" -> worldX -= speed;
+                case "walkright" -> worldX += speed;
+                case "runright" -> worldX += speed;
+            }
+        }
+        if (spriteCounter > 30) {
+            if (spriteNum == 1) {
+                spriteNum = 2;
+            } else if (spriteNum == 2) {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
+
+
     }
     public abstract void speak();
 

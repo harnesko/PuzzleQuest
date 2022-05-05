@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- * Class for npc 1, currently a placeholder .png image
+ * Class for npc 1, currently a placeholder .png image. Please don't tell Nintendo
  * @author Måns Harnesk
  * @version 1.4
  */
@@ -75,28 +75,36 @@ public class NPC_Mario extends NPC{
      * Randomize a direction the NPC will use and pretend its pathfinding
      * Update direction after a few seconds (WIP)
      */
-    public void setAction(){
-        Random random = new Random();
-        int i = random.nextInt(4);
-
-        if(i == 0){
-            direction = "up";
-        }
-        if(i == 1){
-            direction = "down";
-        }
-        if(i == 2){
-            direction = "left";     //set image to npc_mario_left.png todo
-        }
-        if(i == 3){
-            direction = "right";     //set image to npc_mario_right.png
-        }
-    }
-
+    //Remove and put in super later I guess
     @Override
-    public void update(){
-        collisionOn = true;
+    public void update() {
+        //super.update();     //fix this mess later, super method gives nullpointer on gamepanel instance
         setAction();
+        collisionOn = false;
+        gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance
+
+        // IF COLLISION IS FALSE, NPC CAN MOVE
+        if (!collisionOn) {
+            switch (direction) {
+                case "walkup" -> worldY -= speed;
+                case "runup" -> worldY -= speed;
+                case "walkdown" -> worldY += speed;
+                case "rundown" -> worldY += speed;
+                case "walkleft" -> worldX -= speed;
+                case "runleft" -> worldX -= speed;
+                case "walkright" -> worldX += speed;
+                case "runright" -> worldX += speed;
+            }
+        }
+        if (spriteCounter > 30) {
+            if (spriteNum == 1) {
+                spriteNum = 2;
+            } else if (spriteNum == 2) {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
+
     }
 
     //v1, this code is a fucking mess

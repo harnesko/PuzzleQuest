@@ -125,14 +125,17 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
-        //System.out.println("Npc list Length: " + npcList.length);
+        //Don't update player/npc if the game is paused
+        if(gameState == playState){
+            player.update();
 
-        for (NPC npc : npcList) {
-            if(npc != null) {
-                npc.update();
+            for (NPC npc : npcList) {
+                if(npc != null) {
+                    npc.update();       //Update the npc movement
+                }
             }
         }
+
     }
 
     public void drawToTempScreen(){

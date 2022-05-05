@@ -48,7 +48,7 @@ public class UI {
     }
 
     public void draw(Graphics2D g2){
-        if(gameFinished == true){
+        if(gameFinished){
             g2.setFont(arial_40);
             g2.setColor(Color.white);
 
@@ -266,7 +266,7 @@ public class UI {
         try{
             g2.drawString(text, x + 70, y + 2);
         }catch (ClassCastException e){
-            System.out.println("This error drives me CRAZY");   //Todo måns lös detta eller nåts
+            System.out.println("This error drives me CRAZY");   //Todo måns lös detta eller nåt
 
         }
         if (commandNumber == 3) {

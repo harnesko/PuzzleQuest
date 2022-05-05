@@ -9,7 +9,7 @@ import java.net.URL;
  * The sound class is divided into two parts in GamePanel.
  * The sound effects and Music.
  * This is so that we are able to adjust the volume for each sound category of sound
- * @auther Kristoffer
+ * @author Kristoffer
  */
 public class Sound {
     Clip clip = null;
@@ -31,7 +31,7 @@ public class Sound {
             clip = AudioSystem.getClip();
             clip.open(ais);
             fC = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
-            ceckVolume();
+            checkVolume();
         }catch (Exception e){
 
         }
@@ -49,7 +49,7 @@ public class Sound {
         clip.stop();
     }
 
-    public void ceckVolume(){
+    public void checkVolume(){
         switch (volumeScale) {
             case 0 -> volume = -80f;
             case 1 -> volume = -35f;

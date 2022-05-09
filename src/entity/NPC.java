@@ -42,7 +42,7 @@ public abstract class NPC extends Entity{       //Super class for all npc's
         solidArea.x = 8;                    //Defines center of hitbox?
         solidArea.y = 16;
         solidArea.width = 32;               //Smaller size than a tile to avoid collision problems
-        solidArea.height = 32;              //Check solidAreaFörklaring.png för guide
+        solidArea.height = 32;              //Check solidAreaFörklaring.png for guide
     }
     public BufferedImage loadNpcImage(){
         BufferedImage image = null;

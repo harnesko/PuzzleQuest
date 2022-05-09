@@ -195,7 +195,7 @@ public class Player extends Entity {
     }
 
     public void pickUpObject(int index) {
-        if (index != 999) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
+        if (index != -1) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
             // om index är ej empty alltså innehåller ett objekt
             String objectName = gp.obj[index].name;
 

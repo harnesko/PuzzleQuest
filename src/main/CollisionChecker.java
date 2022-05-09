@@ -64,7 +64,7 @@ public class CollisionChecker {
     }
 
     public int checkObject(Entity entity, EntityType type) {
-        int index = 999;
+        int index = -1;
 
         for (int i = 0; i < gp.obj.length; i++) {
             if (gp.obj[i] != null){

@@ -27,6 +27,7 @@ public class UI {
     private final Image woodPlankImage = new ImageIcon("resource/Images/woodplank.png").getImage();
     private final Image woodBackground = new ImageIcon("resource/Images/woodframe.png").getImage();
     private final Image woodFrame = new ImageIcon("resource/Images/woodframe.png").getImage();
+    private final Image woodFrame2 = new ImageIcon("resource/Images/woodFrame2.png").getImage();
 
     //Different states
     public int commandNumber = 0;
@@ -112,16 +113,18 @@ public class UI {
         int frameWidth = gp.tileSize*8;
         int frameHeight = gp.tileSize*10;
         //drawSubWindow(g2,frameX,frameY,frameWidth,frameHeight);
-        g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
 
         if(settingsState == 0){
+            g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
             optionsMenu();
         }
         else if (settingsState == 1 && gp.gameState == gp.noneState){
+            g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
             fullScreenNotification(frameX, frameY);
         }
 
     }
+
 
     public void optionsMenu(){
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55F));
@@ -369,7 +372,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 3) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
@@ -380,7 +382,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 4) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
     }
     /**
@@ -406,6 +407,7 @@ public class UI {
         //Shadow of title
         g2.setColor(Color.black);
         g2.drawString(title, x + 5, y + 5);
+
         //Main color
         g2.setColor(Color.white);
         g2.drawString(title, x, y);
@@ -457,6 +459,15 @@ public class UI {
             g2.drawString(">", x - 45 , y);
         }
         gp.config.saveConfig();
+
+        if (gp.keyH.enterPressed){
+            int frameX = gp.tileSize * 6;
+            int frameY = gp.tileSize * 3 + (gp.tileSize/2) ;
+            int frameWidth = gp.tileSize * 8;
+            int frameHeight = gp.tileSize * 8;
+            g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
+            fullScreenNotification(frameX, frameY);
+        }
     }
 
     /**
@@ -466,32 +477,23 @@ public class UI {
      * * @author Kristoffer
      */
     public void fullScreenNotification(int x, int y){
-        g2.setColor(Color.WHITE);
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55F));
-        String title = "Settings";
-        int xAxis = 525;
-        int yAxis = gp.tileSize * 3 - 50;
-        g2.drawString(title,xAxis,yAxis);
-
 
         g2.setColor(Color.black);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
         String text = "The change will take effect";
-        g2.drawString(text, gp.tileSize*7, gp.tileSize*5);
+        g2.drawString(text, gp.tileSize*7, gp.tileSize*6);
         text = "after restarting the game";
-        g2.drawString(text, gp.tileSize*7, gp.tileSize*5+50);
+        g2.drawString(text, gp.tileSize*7, gp.tileSize*6+50);
 
         //back
         g2.setColor(Color.WHITE);
         x = gp.tileSize*8;
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
         text = "Return";
-        y = gp.tileSize*9;
+        y = gp.tileSize*10;
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
         g2.drawString(text, x + 50, y+2);
-        if (commandNumber == 0) {
-            g2.drawString(">", x - 45 , y);
-        }
+        g2.drawString(">", x - 45 , y);
     }
     public void gameWon(){
         g2.setFont(arial_40);

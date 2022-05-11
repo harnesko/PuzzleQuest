@@ -167,7 +167,7 @@ public class KeyHandler implements KeyListener {
      * @author Kristoffer
      */
     public void settingsKeys(int code) {
-        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+        if ((code == KeyEvent.VK_W || code == KeyEvent.VK_UP) && !enterPressed) {
             gp.ui.commandNumber--;
             gp.playSoundEffect(3);
             if (gp.ui.commandNumber < 0) {
@@ -175,18 +175,19 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+        if ((code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) && !enterPressed) {
             gp.ui.commandNumber++;
             gp.playSoundEffect(3);
             if (gp.ui.commandNumber > 3) {
                 gp.ui.commandNumber = 0;
             }
         }
-        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+
+        if ((code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) && !enterPressed) {
             //Lower Music
             if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
                 gp.music.volumeScale --;
-                gp.music.volumeChanger();;
+                gp.music.volumeChanger();
                 gp.playSoundEffect(2);
             }
             //Lower Volume
@@ -196,7 +197,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+        if ((code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) && !enterPressed) {
             //Increase Music
             if (gp.ui.commandNumber == 0 && gp.music.volumeScale < 10) {
                 gp.music.volumeScale++;
@@ -209,23 +210,26 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_ENTER) {
+        if ((code == KeyEvent.VK_ENTER) && !enterPressed) {
             if (gp.ui.commandNumber == 2) {
-                //FullScreen
                 if(gp.ui.fullscreen) {
                     gp.ui.fullscreen = false;
                     gp.playSoundEffect(2);
                 }else{
                     gp.ui.fullscreen = true;
                 }
+                enterPressed = true;
+                gp.ui.commandNumber = 0;
                 gp.playSoundEffect(2);;
             }
             if (gp.ui.commandNumber == 3) {
                 gp.ui.titleScreenState = 0;
                 gp.ui.commandNumber = 0;
                 gp.playSoundEffect(2);
-                //enter save 4
             }
+        }
+        if (code == KeyEvent.VK_BACK_SPACE){ //Denna Fungerar inte med ESC!!!!!!!
+            enterPressed = false;
         }
     }
 

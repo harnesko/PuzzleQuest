@@ -203,7 +203,6 @@ public class UI {
    public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
         g2.drawImage(woodFrame,x,y,width,height,null);
 
-
     }
     /**
      * This is an organised method to dictate what is being drawn in the MainMenu.
@@ -391,74 +390,7 @@ public class UI {
      * It is drawn by using the g2 variable
      * @author Kristoffer
      */
-    public void settingsMenu(){
-        //background
-        g2.setColor(new Color(70, 120, 80));
-        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-        Image bk = new ImageIcon("resource/Images/battleback1.png").getImage();
-        g2.drawImage(bk, 0, 0, gp.screenWidth, gp.screenHeight, null);
-
-        //title Name
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String title = "PuzzleQuest";
-        int x = getXForCenteredText(title);
-        int y = gp.tileSize * 3;
-
-        //Shadow of title
-        g2.setColor(Color.black);
-        g2.drawString(title, x + 5, y + 5);
-        //Main color
-        g2.setColor(Color.white);
-        g2.drawString(title, x, y);
-
-        //Start of "Buttons"
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
-
-        String text = "Music: < " + gp.music.volumeScale + " >";
-        x = getXForCenteredText(title);
-        y = gp.tileSize * 5 + (gp.tileSize/2);
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 20 , y);
-        if (commandNumber == 0) {
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 45 , y);
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
-        }
-
-        text = "Sound: < " +gp.soundEffects.volumeScale + " >";
-        y += 80;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 20 , y);
-        if (commandNumber == 1) {
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 45 , y);
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
-        }
-
-        if(!fullscreen){
-            text = "FullScreen [ ]";
-        }else{
-            text = "FullScreen [X]";
-        }
-
-        y += 80;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 20 , y);
-        if (commandNumber == 2) {
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 45 , y);
-        }
-
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-        text = "Return";
-        y += 80;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 50, y+2);
-        if (commandNumber == 3) {
-            g2.drawString(">", x - 45 , y);
-        }
-        gp.config.saveConfig();
-    }
+    
 
     /**
      * This method is used to notify the user that the game needs to be restarted for the fullscreen to take affekt.

@@ -3,6 +3,9 @@ package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Fixat i denna klassen
+ */
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed, ePressed;
@@ -31,12 +34,6 @@ public class KeyHandler implements KeyListener {
         }
 
     }
-
-    /**
-     * Method to organize the keys for the mainMenu.
-     * @param code used to determine what key we use.
-     * @author Kristoffer
-     */
     public void mainMenuKeys(int code){
         if (gp.ui.titleScreenState == 0) {
             startKeys(code);
@@ -50,11 +47,6 @@ public class KeyHandler implements KeyListener {
 
     }
 
-    /**
-     * The keys used in the options menu.
-     * @param code used to determine what key we use.
-     * @author Kristoffer
-     */
     private void optionKey(int code) {
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gp.ui.commandNumber--;
@@ -122,11 +114,6 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    /**
-     * The keys used in the MainMenu start screen.
-     * @param code used to determine what key we use.
-     * @author Kristoffer
-     */
     public void startKeys(int code) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 gp.ui.commandNumber--;
@@ -168,11 +155,6 @@ public class KeyHandler implements KeyListener {
             }
     }
 
-    /**
-     * The keys used in the saves' menu.
-     * @param code used to determine what key we use.
-     * @author Kristoffer
-     */
     public void savesKeys(int code) {
 
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -228,11 +210,6 @@ public class KeyHandler implements KeyListener {
             }
     }
 
-    /**
-     * The keys used in the settings menu.
-     * @param code used to determine what key we use.
-     * @author Kristoffer
-     */
     public void settingsKeys(int code) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 gp.ui.commandNumber--;
@@ -253,7 +230,7 @@ public class KeyHandler implements KeyListener {
                 //Lower Music
                 if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
                     gp.music.volumeScale --;
-                    gp.music.volumeChanger();
+                    gp.music.volumeChanger();;
                     gp.playSoundEffect(2);
                 }
                 //Lower Volume
@@ -319,8 +296,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_E){
             ePressed = true;
             //gp.npcList[0].speak();
-        } else {
-            ePressed = false;
+
         }
     }
 

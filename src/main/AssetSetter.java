@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPC_Luigi;
 import entity.NPC_Mario;
 import gameObject.Chest;
 import gameObject.Door;
@@ -49,12 +50,14 @@ public class AssetSetter {
     }
 
     public void setNPC(){
+        //Mario
         gp.npcList[0] = new NPC_Mario(gp);
-
-      /*  gp.npcList[0].worldX = gp.tileSize * 20;
-        gp.npcList[0].worldY = gp.tileSize * 20;*/
-
         gp.npcList[0].worldX = 1460;
         gp.npcList[0].worldY = 1355;
+
+        //Luigi
+        gp.npcList[1] = new NPC_Luigi(gp);
+        gp.npcList[1].worldX = 1390;
+        gp.npcList[1].worldY = 1355;
     }
 }

@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // FPS
     int FPS = 60;
+
     TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this); // knapparna WASD
     Thread gameThread; // tiden för spelet
@@ -66,14 +67,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-    /**
-     * Bla Bla Bla
-     *  @author Kinda
-     *
-     *  Added a new way to paint the game using a BuffertImage anda temporary screen for effektivness.
-     *  Also added an if statement so that if fullscreen = true fullscreen is drawn instead.
-     *  @author Kristoffer
-     */
     public void setupGame(){
         assetSetter.setObject();
         assetSetter.setNPC();
@@ -132,21 +125,19 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
-        //System.out.println("Npc list Length: " + npcList.length);
+        //Don't update player/npc if the game is paused
+        if(gameState == playState){
+            player.update();
 
-        for (NPC npc : npcList) {
-            if(npc != null) {
-                npc.update();
+            for (NPC npc : npcList) {
+                if(npc != null) {
+                    npc.update();       //Update the npc movement
+                }
             }
         }
+
     }
 
-    /**
-     * This is method used to temporarily draw everything so that resizing becomes smoother and more effective.
-     * if the gameStare = titleState then the MainMenu is drawn else the game is drawn.
-     * @author Kristoffer
-     */
     public void drawToTempScreen(){
         if(gameState == titleState){ //MainMenu
             ui.draw(g2);
@@ -171,19 +162,15 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
-            if (gameState == optionsState) {
-                ui.drawSettingsMenu(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
-            }
+            /*if (gameState == optionsState) {
+                ui.drawOptionsScreen(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
+            }*/
 
 
             //showGrid(g2); //kan tas bort
         }
     }
 
-    /**
-     * This draws everything from the drawToTempScreen().
-     * @author Kristoffer
-     */
     public void drawToScreen(){
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0 , 0, screenWidth2,screenHeight2, null);
@@ -233,39 +220,21 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    /**
-     * Method to play and loop the music by choosing what number from the URL[].
-     * @param soundChooser what track to play from the array in the Sound class.
-     * @author Kristoffer
-     */
-    public void playMusik(int soundChooser){
-        music.setClip(soundChooser);
+    public void playMusik(int i){
+        music.setClip(i);
         music.playAudio();
         music.loopAudio();
     }
 
-    /**
-     * Stops the music from playing
-     * @author Kristoffer
-     */
     public void stopMusik(){
         music.stopAudio();
     }
 
-    /**
-     * Method used to play sound effects
-     * @param soundChooser what track to play from the array in the Sound class.
-     * @author Kristoffer
-     */
-    public void playSoundEffect(int soundChooser){
-        soundEffects.setClip(soundChooser);
+    public void playSoundEffect(int i){
+        soundEffects.setClip(i);
         soundEffects.playAudio();
     }
 
-    /**
-     * Method used to sett fullscreen based on the monitors' resolution.
-     * @author Kristoffer
-     */
     public void setFullScreen(){
         //Get local screen device
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPC;
 import entity.Player;
 import gameObject.GameObject;
 import tile.TileManager;
@@ -41,10 +42,9 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 1;
     public final int optionsState = 2;
     public final int dialogState = 3;
-    public final int noneState = 4;
 
     // FPS
-    int FPS = 5;
+    int FPS = 60;
 
     TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this); // knapparna WASD
@@ -57,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
+    public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // här förstorade jag skärmen
@@ -66,16 +67,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-    /**
-     * Bla Bla Bla
-     *  @author Kinda
-     *
-     *  Added a new way to paint the game using a BuffertImage anda temporary screen for effektivness.
-     *  Also added an if statement so that if fullscreen = true fullscreen is drawn instead.
-     *  @author Kristoffer
-     */
     public void setupGame(){
         assetSetter.setObject();
+        assetSetter.setNPC();
         playMusik(0);
         gameState = titleState;
 
@@ -83,13 +77,16 @@ public class GamePanel extends JPanel implements Runnable {
         g2 = (Graphics2D) tempScreen.getGraphics();
 
         if(ui.fullscreen){
-            setFullScreen();
+            //setFullScreen();
         }
     }
 
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
+    }
+    public void npcSpeak(int npcIndex){
+
     }
 
     @Override
@@ -128,14 +125,19 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
+        //Don't update player/npc if the game is paused
+        if(gameState == playState){
+            player.update();
+
+            for (NPC npc : npcList) {
+                if(npc != null) {
+                    npc.update();       //Update the npc movement
+                }
+            }
+        }
+
     }
 
-    /**
-     * This is method used to temporarily draw everything so that resizing becomes smoother and more effective.
-     * if the gameStare = titleState then the MainMenu is drawn else the game is drawn.
-     * @author Kristoffer
-     */
     public void drawToTempScreen(){
         if(gameState == titleState){ //MainMenu
             ui.draw(g2);
@@ -149,12 +151,19 @@ public class GamePanel extends JPanel implements Runnable {
                     obj[i].draw(g2, this);
                 }
             }
+
             if (gameState == playState) {
                 player.draw(g2);
                 ui.draw(g2); //Gustav
+
+                for (NPC npc : npcList){
+                    if(npc != null){
+                        npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
+                    }
+                }
             }
-            if (gameState == optionsState || gameState == noneState) {
-                ui.drawSettingsMenu(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
+            if (gameState == optionsState) {
+                ui.drawOptionsScreen(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
             }
 
 
@@ -162,17 +171,13 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    /**
-     * This draws everything from the drawToTempScreen().
-     * @author Kristoffer
-     */
     public void drawToScreen(){
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0 , 0, screenWidth2,screenHeight2, null);
         g.dispose();
     }
 
-    /*public void paintComponent(Graphics g) { // allt ritas här
+    public void paintComponent(Graphics g) { // allt ritas här
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
@@ -188,12 +193,17 @@ public class GamePanel extends JPanel implements Runnable {
                     obj[i].draw(g2, this);
                 }
             }
+            for (NPC npc : npcList){
+                if(npc != null){
+                    npc.draw(g2);
+                }
+            }
             player.draw(g2);
             //showGrid(g2); //kan tas bort
             g2.dispose();
 
         }
-    }*/
+    }
 
     public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
         int x = 0;
@@ -210,39 +220,21 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    /**
-     * Method to play and loop the music by choosing what number from the URL[].
-     * @param soundChooser what track to play from the array in the Sound class.
-     * @author Kristoffer
-     */
-    public void playMusik(int soundChooser){
-        music.setClip(soundChooser);
+    public void playMusik(int i){
+        music.setClip(i);
         music.playAudio();
         music.loopAudio();
     }
 
-    /**
-     * Stops the music from playing
-     * @author Kristoffer
-     */
     public void stopMusik(){
         music.stopAudio();
     }
 
-    /**
-     * Method used to play sound effects
-     * @param soundChooser what track to play from the array in the Sound class.
-     * @author Kristoffer
-     */
-    public void playSoundEffect(int soundChooser){
-        soundEffects.setClip(soundChooser);
+    public void playSoundEffect(int i){
+        soundEffects.setClip(i);
         soundEffects.playAudio();
     }
 
-    /**
-     * Method used to sett fullscreen based on the monitors' resolution.
-     * @author Kristoffer
-     */
     public void setFullScreen(){
         //Get local screen device
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

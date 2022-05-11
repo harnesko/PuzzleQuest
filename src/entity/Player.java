@@ -202,9 +202,8 @@ public class Player extends Entity {
     }
 
     private void interactWithNpc(int npcIndex) {
-        if (npcIndex != 999){
+        if (npcIndex != -1){
             if(keyH.ePressed){
-
                 gp.npcList[npcIndex].speak();
                 //keyH.ePressed = false;
             }

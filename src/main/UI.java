@@ -295,7 +295,7 @@ public class UI {
         try{
             g2.drawString(text, x + 70, y + 2);
         }catch (ClassCastException e){
-            System.out.println("This error drives me CRAZY");   //Todo måns lös detta eller nåts
+            System.out.println("This error drives me CRAZY");   //Todo måns lös detta eller nåt
 
         }
         if (commandNumber == 3) {

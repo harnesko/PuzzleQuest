@@ -214,9 +214,7 @@ public class UI {
             startMenu();
         }
 
-        else if(titleScreenState == 1){
-            savesMenu();
-        }
+        
 
         else if(titleScreenState == 2){
             settingsMenu();

@@ -227,8 +227,12 @@ public class Player extends Entity {
                     if (hasKey > 0) {
                         gp.obj[index] = null;
                         hasKey--;
-                        break;
+
                     }
+                    else{
+                        gp.ui.showMessage("hey man you need a key for that");
+                    }
+                    break;
                 case "Chest":
                     gp.ui.gameFinished = true;
                     break;

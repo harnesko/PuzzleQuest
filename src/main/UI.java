@@ -85,10 +85,7 @@ public class UI {
             }
 
 
-            if (gp.gameState == gp.optionsState ||gp.gameState == gp.noneState ) {
-                drawSettingsMenu(g2);
-                g2.fillRect(0, 0, 200, 200);
-            }
+            
 
             if (gp.gameState == gp.dialogState) {
                 //todo later

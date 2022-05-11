@@ -308,7 +308,7 @@ public class KeyHandler implements KeyListener {
      * @param code
      */
     public void optionsBackButton(int code) {
-        if (code == KeyEvent.VK_B) {
+        if (code == KeyEvent.VK_ESCAPE ||code == KeyEvent.VK_BACK_SPACE ) {
             if (gp.ui.commandNumber == 0) {
                 if (gp.ui.settingsState == 1) {
                     gp.gameState = gp.optionsState;

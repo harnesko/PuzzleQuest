@@ -67,7 +67,7 @@ public class KeyHandler implements KeyListener {
             //Lower Music
             if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
                 gp.music.volumeScale --;
-                gp.music.checkVolume();
+                gp.music.volumeChanger();
                 gp.playSoundEffect(2);
             }
             //Lower Volume
@@ -81,7 +81,7 @@ public class KeyHandler implements KeyListener {
             //Increase Music
             if (gp.ui.commandNumber == 0 && gp.music.volumeScale < 10) {
                 gp.music.volumeScale++;
-                gp.music.checkVolume();
+                gp.music.volumeChanger();
                 gp.playSoundEffect(2);
             }//Increase sound effect
             if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale < 10) {
@@ -230,7 +230,7 @@ public class KeyHandler implements KeyListener {
                 //Lower Music
                 if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
                     gp.music.volumeScale --;
-                    gp.music.checkVolume();
+                    gp.music.volumeChanger();;
                     gp.playSoundEffect(2);
                 }
                 //Lower Volume
@@ -244,7 +244,7 @@ public class KeyHandler implements KeyListener {
                 //Increase Music
                 if (gp.ui.commandNumber == 0 && gp.music.volumeScale < 10) {
                     gp.music.volumeScale++;
-                    gp.music.checkVolume();
+                    gp.music.volumeChanger();
                     gp.playSoundEffect(2);
                 }//Increase sound effect
                 if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale < 10) {

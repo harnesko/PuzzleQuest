@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed, ePressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed, ePressed, enterPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp){
@@ -24,7 +24,7 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         if(gp.gameState == gp.titleState) {
-        mainMenuKeys(code);
+            mainMenuKeys(code);
         }
         if(gp.gameState == gp.playState) {
             gamePlayKeys(code);
@@ -32,8 +32,16 @@ public class KeyHandler implements KeyListener {
         if(gp.gameState == gp.optionsState) {
             optionKey(code);
         }
-
+        if(gp.gameState == gp.noneState){
+            optionsBackButton(code);
+        }
     }
+
+    /**
+     * Method to organize the keys for the mainMenu.
+     * @param code used to determine what key we use.
+     * @author Kristoffer
+     */
     public void mainMenuKeys(int code){
         if (gp.ui.titleScreenState == 0) {
             startKeys(code);
@@ -47,73 +55,11 @@ public class KeyHandler implements KeyListener {
 
     }
 
-    private void optionKey(int code) {
-        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
-            gp.ui.commandNumber--;
-            gp.playSoundEffect(3);
-            if (gp.ui.commandNumber < 0) {
-                gp.ui.commandNumber = 3;
-            }
-        }
-
-        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
-            gp.ui.commandNumber++;
-            gp.playSoundEffect(3);
-            if (gp.ui.commandNumber > 3) {
-                gp.ui.commandNumber = 0;
-            }
-        }
-        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
-            //Lower Music
-            if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
-                gp.music.volumeScale --;
-                gp.music.volumeChanger();
-                gp.playSoundEffect(2);
-            }
-            //Lower Volume
-            if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale > 0) {
-                gp.soundEffects.volumeScale --;
-                gp.playSoundEffect(2);
-            }
-        }
-
-        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
-            //Increase Music
-            if (gp.ui.commandNumber == 0 && gp.music.volumeScale < 10) {
-                gp.music.volumeScale++;
-                gp.music.volumeChanger();
-                gp.playSoundEffect(2);
-            }//Increase sound effect
-            if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale < 10) {
-                gp.soundEffects.volumeScale++;
-                gp.playSoundEffect(2);
-            }
-        }
-
-        if (code == KeyEvent.VK_ENTER) {
-            if (gp.ui.commandNumber == 2) {
-                //FullScreen
-                if(gp.ui.fullscreen) {
-                    gp.ui.fullscreen = false;
-                    gp.playSoundEffect(2);
-                }else{
-                    gp.ui.fullscreen = true;
-                }
-                gp.playSoundEffect(2);;
-            }
-            if (gp.ui.commandNumber == 3) {
-                gp.gameState= gp.titleState;
-                gp.ui.commandNumber = 0;
-                gp.playSoundEffect(2);
-
-            }
-        }
-        if (code == KeyEvent.VK_ESCAPE){
-            escPressed = false;
-            gp.gameState = gp.playState;
-        }
-    }
-
+    /**
+     * The keys used in the MainMenu start screen.
+     * @param code used to determine what key we use.
+     * @author Kristoffer
+     */
     public void startKeys(int code) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 gp.ui.commandNumber--;
@@ -155,6 +101,11 @@ public class KeyHandler implements KeyListener {
             }
     }
 
+    /**
+     * The keys used in the saves' menu.
+     * @param code used to determine what key we use.
+     * @author Kristoffer
+     */
     public void savesKeys(int code) {
 
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -210,67 +161,167 @@ public class KeyHandler implements KeyListener {
             }
     }
 
+    /**
+     * The keys used in the settings menu.
+     * @param code used to determine what key we use.
+     * @author Kristoffer
+     */
     public void settingsKeys(int code) {
-            if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
-                gp.ui.commandNumber--;
-                gp.playSoundEffect(3);
-                if (gp.ui.commandNumber < 0) {
-                    gp.ui.commandNumber = 3;
-                }
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+            gp.ui.commandNumber--;
+            gp.playSoundEffect(3);
+            if (gp.ui.commandNumber < 0) {
+                gp.ui.commandNumber = 3;
             }
+        }
 
-            if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
-                gp.ui.commandNumber++;
-                gp.playSoundEffect(3);
-                if (gp.ui.commandNumber > 3) {
-                    gp.ui.commandNumber = 0;
-                }
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+            gp.ui.commandNumber++;
+            gp.playSoundEffect(3);
+            if (gp.ui.commandNumber > 3) {
+                gp.ui.commandNumber = 0;
             }
-            if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
-                //Lower Music
-                if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
-                    gp.music.volumeScale --;
-                    gp.music.volumeChanger();;
-                    gp.playSoundEffect(2);
-                }
-                //Lower Volume
-                if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale > 0) {
-                    gp.soundEffects.volumeScale --;
-                    gp.playSoundEffect(2);
-                }
+        }
+        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+            //Lower Music
+            if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
+                gp.music.volumeScale --;
+                gp.music.volumeChanger();;
+                gp.playSoundEffect(2);
             }
+            //Lower Volume
+            if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale > 0) {
+                gp.soundEffects.volumeScale --;
+                gp.playSoundEffect(2);
+            }
+        }
 
-            if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
-                //Increase Music
-                if (gp.ui.commandNumber == 0 && gp.music.volumeScale < 10) {
-                    gp.music.volumeScale++;
-                    gp.music.volumeChanger();
-                    gp.playSoundEffect(2);
-                }//Increase sound effect
-                if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale < 10) {
-                    gp.soundEffects.volumeScale++;
-                    gp.playSoundEffect(2);
-                }
+        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+            //Increase Music
+            if (gp.ui.commandNumber == 0 && gp.music.volumeScale < 10) {
+                gp.music.volumeScale++;
+                gp.music.volumeChanger();
+                gp.playSoundEffect(2);
+            }//Increase sound effect
+            if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale < 10) {
+                gp.soundEffects.volumeScale++;
+                gp.playSoundEffect(2);
             }
+        }
 
-            if (code == KeyEvent.VK_ENTER) {
-                if (gp.ui.commandNumber == 2) {
-                    //FullScreen
-                    if(gp.ui.fullscreen) {
-                        gp.ui.fullscreen = false;
-                        gp.playSoundEffect(2);
-                    }else{
-                        gp.ui.fullscreen = true;
-                    }
-                    gp.playSoundEffect(2);;
-                }
-                if (gp.ui.commandNumber == 3) {
-                    gp.ui.titleScreenState = 0;
-                    gp.ui.commandNumber = 0;
+        if (code == KeyEvent.VK_ENTER) {
+            if (gp.ui.commandNumber == 2) {
+                //FullScreen
+                if(gp.ui.fullscreen) {
+                    gp.ui.fullscreen = false;
                     gp.playSoundEffect(2);
-                    //enter save 4
+                }else{
+                    gp.ui.fullscreen = true;
+                }
+                gp.playSoundEffect(2);;
+            }
+            if (gp.ui.commandNumber == 3) {
+                gp.ui.titleScreenState = 0;
+                gp.ui.commandNumber = 0;
+                gp.playSoundEffect(2);
+                //enter save 4
+            }
+        }
+    }
+
+    /**
+     * The keys used in the options menu.
+     * @param code used to determine what key we use.
+     * @author Kristoffer
+     */
+    private void optionKey(int code) {
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+            gp.ui.commandNumber--;
+            gp.playSoundEffect(3);
+            if (gp.ui.commandNumber < 0) {
+                gp.ui.commandNumber = 3;
+            }
+        }
+
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+            gp.ui.commandNumber++;
+            gp.playSoundEffect(3);
+            if (gp.ui.commandNumber > 3) {
+                gp.ui.commandNumber = 0;
+            }
+        }
+        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+            //Lower Music
+            if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
+                gp.music.volumeScale --;
+                gp.music.volumeChanger();
+                gp.playSoundEffect(2);
+            }
+            //Lower Volume
+            if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale > 0) {
+                gp.soundEffects.volumeScale --;
+                gp.playSoundEffect(2);
+            }
+        }
+
+        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+            //Increase Music
+            if (gp.ui.commandNumber == 0 && gp.music.volumeScale < 10) {
+                gp.music.volumeScale++;
+                gp.music.volumeChanger();
+                gp.playSoundEffect(2);
+            }//Increase sound effect
+            if (gp.ui.commandNumber == 1 && gp.soundEffects.volumeScale < 10) {
+                gp.soundEffects.volumeScale++;
+                gp.playSoundEffect(2);
+            }
+        }
+
+        if (code == KeyEvent.VK_ENTER) {
+            if (gp.ui.commandNumber == 2) {
+                if(gp.ui.fullscreen) {
+                    gp.ui.fullscreen = false;
+                    gp.playSoundEffect(2);
+                }else{
+                    gp.ui.fullscreen = true;
+                }
+                gp.ui.settingsState = 1;
+                gp.gameState = gp.noneState;
+                gp.ui.commandNumber = 0;
+                gp.playSoundEffect(2);;
+            }
+            if (gp.ui.commandNumber == 3) {
+                gp.gameState= gp.titleState;
+                gp.ui.commandNumber = 0;
+                gp.playSoundEffect(2);
+            }
+        }
+
+        /**
+         * Denna Fungerar inte med ESC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         * Om den andra är ESC
+         */
+        if (code == KeyEvent.VK_BACK_SPACE){
+            gp.gameState = gp.playState;
+        }
+    }
+
+    /**
+     * This method is used to go back from the fullscreen notifications screen.
+     * @param code used to determine what key we use.
+     * @author Kristoffer
+     */
+    public void optionsBackButton(int code) {
+        if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_BACK_SPACE) {
+            if (gp.ui.commandNumber == 0) {
+                if (gp.ui.settingsState == 1) {
+                    gp.gameState = gp.optionsState;
+                    gp.ui.settingsState = 0;
+                    gp.playSoundEffect(2);
                 }
             }
+        }
+
     }
 
     public void gamePlayKeys(int code){
@@ -296,10 +347,11 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_E){
             ePressed = true;
             //gp.npcList[0].speak();
-
+        }
+        if (code == KeyEvent.VK_ESCAPE){
+            gp.gameState =gp.optionsState;
         }
     }
-
 
     @Override
     public void keyReleased(KeyEvent e) {

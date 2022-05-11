@@ -42,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 1;
     public final int optionsState = 2;
     public final int dialogState = 3;
+    public final int noneState = 4;
 
     // FPS
     int FPS = 60;
@@ -162,9 +163,9 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
-            /*if (gameState == optionsState) {
-                ui.drawOptionsScreen(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
-            }*/
+            if (gameState == optionsState || gameState == noneState) {
+                ui.drawSettingsMenu(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
+            }
 
 
             //showGrid(g2); //kan tas bort

@@ -64,7 +64,7 @@ public class UI {
             gameWon();
         } else {
             this.g2 = g2;
-            someStuffIDK();
+            someStuffIDK(); //Gustav kan du ändra namnet på metoden till något mer passande.
             //message
             if (messagesOn) {
                 g2.setFont(g2.getFont().deriveFont(30F));
@@ -105,14 +105,11 @@ public class UI {
      */
     public void drawSettingsMenu(Graphics2D g2) {
 
-        // inget ändrat här förutom g2 parameter
-
         //Sub window
         int frameX = gp.tileSize*6;
         int frameY = gp.tileSize;
         int frameWidth = gp.tileSize*8;
         int frameHeight = gp.tileSize*10;
-        //drawSubWindow(g2,frameX,frameY,frameWidth,frameHeight);
 
         if(settingsState == 0){
             g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
@@ -136,10 +133,7 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
 
         String text = "Music: < " + gp.music.volumeScale + " >";
-        // x = getXForCenteredText(title);
-        /**
-         * Försök fixa denna. G2 blir null för den är efterbliven
-         */
+
         x = gp.tileSize*8;
         y = gp.tileSize * 4 + (gp.tileSize/2);
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
@@ -239,7 +233,7 @@ public class UI {
 
         //title Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String title = "PuzzleQuest";
+        String title = "HomeQuest";
         int x = getXForCenteredText(title);
         int y = gp.tileSize * 3;
 
@@ -303,7 +297,7 @@ public class UI {
 
         //title Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String title = "PuzzleQuest";
+        String title = "HomeQuest";
         int x = getXForCenteredText(title);
         int y = gp.tileSize * 3;
 
@@ -330,7 +324,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 0) {
             g2.drawString(">", x - 45, y + 2);
-            //scrollAudio();
         }
 
         text = "Save 2";
@@ -344,7 +337,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 1) {
             g2.drawString(">", x - 45, y);
-            // scrollAudio();
         }
 
         text = "Save 3";
@@ -358,7 +350,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 2) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
 
         text = "Save 4";
@@ -400,7 +391,7 @@ public class UI {
 
         //title Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String title = "PuzzleQuest";
+        String title = "HomeQuest";
         int x = getXForCenteredText(title);
         int y = gp.tileSize * 3;
 

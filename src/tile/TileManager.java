@@ -1,5 +1,6 @@
 package tile;
 
+import main.Debug;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -16,14 +17,18 @@ public class TileManager {
     public Tile[] tile;
     public int[][] mapTileNum;
 
+    // TILE ANIMATION SETTINGS
+    int frame = 0;
+    int tileNum = 1;
+
     public TileManager(GamePanel gp) {
         this.gp = gp;
 
-        tile = new Tile[10];
+        tile = new Tile[1200];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
-        getTileImage();
-        loadMap("/maps/world01.txt");
+        getTileImages();
+        loadMap("/maps/world001.txt");
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
@@ -48,6 +53,75 @@ public class TileManager {
 
             tile[5] = new Tile(); // SAND
             tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getTileImages() { // debug, testa här först sen kopiera över uppåt
+        try {
+            int i = 0;
+
+            tile[i] = new Tile(); // TRANSPARENT
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/empty.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // BOT RIGHT WATER CORNER
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_4.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // MID WATER
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_mid.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // TOP RIGHT WATER CORNER
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_2.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // GRASS
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/grass2.png")));
+            i++;
+
+            ////// ANIMATION SECTION ////// // TODO: detta måste fixas, jätte reduntant o fuckt / kinda
+
+            // WATER 2
+            i = 101;
+            tile[i] = new Tile(); // BOT RIGHT WATER CORNER
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_4.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // MID WATER 101
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_mid.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // TOP RIGHT WATER CORNER 102
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_2.png")));
+            tile[i].collision = true;
+            i++;
+
+            // WATER 3
+            i = 1001;
+            tile[i] = new Tile(); // BOT RIGHT WATER CORNER 103
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_4.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // MID WATER 104
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_mid.png")));
+            tile[i].collision = true;
+            i++;
+
+            tile[i] = new Tile(); // TOP RIGHT WATER CORNER 105
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_2.png")));
+            tile[i].collision = true;
+            i++;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,43 +173,66 @@ public class TileManager {
         }
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, boolean debugON) {
+
+        Debug debug = new Debug(); // DELETE LATER
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
 
-        g2.drawImage(tile[0].image, 0, 0, gp.tileSize, gp.tileSize, null);
+        for (int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
+            for (int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
 
-        int worldCol = 0;
-        int worldRow = 0;
+                int tileIndex = mapTileNum[worldCol][worldRow];
 
-        // TODO: för kinda, ändra detta till en for-loop lmao
+                /** här blir worldCol & worldRow mängden av tiles.
+                 *
+                 * Så en 50x50 tiled mapp får max 50 worldCol och worldRow
+                 * Man kan säga att worldX och worldY är höjd och längden på mappen i pixel prefix. så tile nr 25
+                 * som då är 25 * tilesize (64 just nu) blir 1600 pixlar.
+                 * */
 
-        while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
+                int worldX = worldCol * gp.tileSize;
+                int worldY = worldRow * gp.tileSize;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX; // spelarskärmens x axel + dens bredd
+                int screenY = worldY - gp.player.worldY + gp.player.screenY; // spelarskärmens y axel + dens längd
+                // ovan variabler ger oss "världens kamera" som brukar kunna vara utanför gui:n
+                // därför kan screenX/Y bli negativ. Eftersom mappen kan vara större än bara måtten som gui:n visar oss
 
-            int tileNum = mapTileNum[worldCol][worldRow];
+                /** Det som egentligen görs här är att måtten på världskameran (i pixlar) jämförs med spelarens
+                 * kamera och säkerställer att vi ritar ENDAST pixlarna/tiles:en som vi kan se inuti GUI:t. Resten
+                 * ritas endast där spelarkameran rör sig till, alltså när vi rör på gubben.
+                 *
+                 * detta ger bättre rendering performance.*/
 
-            // TODO: för kinda, förklara dessa sen
-            //  snabb tldr: har med hur kameran + mappen + player gubben reagerar me varan
 
-            int worldX = worldCol * gp.tileSize;
-            int worldY = worldRow * gp.tileSize;
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+                if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+                        worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                        worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+                        worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-            if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && // denna if-satsen säkerställer att mappen
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX && // ritas ENDAST där kameran ser för att
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY && // förbättra performance och slippa rita
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) { // 500 pixlar vi inte ser + ger lag
+                    tileIndex = playTileAnimations(tileIndex);
 
-                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-            }
+                    g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                }
 
-            worldCol++;
-
-            if (worldCol == gp.maxWorldCol) {
-                worldCol = 0;
-                worldRow++;
+                if (debugON) { // OK att ta bort
+                    debug.showMapTiles(g2, screenX, screenY, gp.tileSize);
+                }
             }
         }
     }
+
+    public int playTileAnimations(int i) { // TODO: fixa lol
+        frame++;
+
+        if (frame > 30) {
+            i = i == 1 ? 101 : i == 2 ? 102 : i == 3 ? 103 :
+                    i == 101 ? 1001 : i == 102 ? 1002 : i == 103 ? 1003 :
+                            i == 1001 ? 1 : i == 1002 ? 2 : i == 1003 ? 3 : i;
+
+            frame = 0;
+        }
+        return i;
+    }
+
 }

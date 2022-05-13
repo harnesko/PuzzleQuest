@@ -8,6 +8,7 @@ import tile.TileManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
 /**
  * Fixat i denna klassen
  */
@@ -15,13 +16,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     // SCREEN SETTINGS ändra helst inte dessa
     final int originalTileSize = 32; // 16x16 tile
-    final int scale = 2; // detta skapar vi eftersom vi kommer skala upp storleken på alla tiles
+    public final int scale = 2; // detta skapar vi eftersom vi kommer skala upp storleken på alla tiles
     // så de blir tile x scale = 16 x 3 = 48. alltså 48 pixel x 48 pixel
 
     public final int tileSize = originalTileSize * scale; // 48x48 tile, den riktiga size
-    public final int maxScreenCol = 20; // mappen blir 16 tiles horizontalt
+    public final int maxScreenCol = 16; // mappen blir 16 tiles horizontalt
+    // public final int maxScreenCol = 20; .. vrf?
     public final int maxScreenRow = 12; // och 12 tiles vertikalt
-    public final int screenWidth = tileSize * maxScreenCol; // 960 pixels horizontalt
+    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
 
     // WORLD SETTINGS dessa kan ändras
@@ -30,6 +32,10 @@ public class GamePanel extends JPanel implements Runnable {
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
+    // EXTRA SETTINGS
+    boolean debugOn; // kan tas bort @author Kinda
+
+    // ===================================
     //FULL SCREEN
     int screenWidth2 = screenWidth;
     int screenHeight2 = screenHeight;
@@ -43,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int optionsState = 2;
     public final int dialogState = 3;
     public final int noneState = 4;
+    // ===================================
 
     // FPS
     int FPS = 60;
@@ -50,12 +57,14 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this); // knapparna WASD
     Thread gameThread; // tiden för spelet
+    // ===================================
     public UI ui = new UI(this); //lade till public
     Sound music = new Sound();
     Sound soundEffects = new Sound();
     Config config = new Config(this);
+    // ===================================
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public AssetSetter assetSetter = new AssetSetter(this);
+    //public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
     public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
@@ -68,16 +77,16 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-    public void setupGame(){
-        assetSetter.setObject();
-        assetSetter.setNPC();
+    public void setupGame() {
+        // assetSetter.setObject();
+        // assetSetter.setNPC();
         playMusik(0);
         gameState = titleState;
 
-        tempScreen = new BufferedImage(screenWidth,screenHeight, BufferedImage.TYPE_INT_ARGB);
+        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
 
-        if(ui.fullscreen){
+        if (ui.fullscreen) {
             setFullScreen();
         }
     }
@@ -86,7 +95,8 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
-    public void npcSpeak(int npcIndex){
+
+    public void npcSpeak(int npcIndex) { // vad är detta? / Kinda
 
     }
 
@@ -98,7 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         while (gameThread != null) {
 
-           update();
+            update();
 
 
             //repaint(); // denna kallar på paintComponent metoden
@@ -126,12 +136,14 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        debugOn = keyH.fPressed; // kan tas bort men gör inte det än / K
+
         //Don't update player/npc if the game is paused
-        if(gameState == playState){
+        if (gameState == playState) {
             player.update();
 
             for (NPC npc : npcList) {
-                if(npc != null) {
+                if (npc != null) {
                     npc.update();       //Update the npc movement
                 }
             }
@@ -139,11 +151,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    public void drawToTempScreen(){
-        if(gameState == titleState){ //MainMenu
+    public void drawToTempScreen() {
+        if (gameState == titleState) { //MainMenu
             ui.draw(g2);
-        }
-        else { // allt annat till spelet
+        } else { // allt annat till spelet
             stopMusik();
 
             tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
@@ -157,8 +168,8 @@ public class GamePanel extends JPanel implements Runnable {
                 player.draw(g2);
                 ui.draw(g2); //Gustav
 
-                for (NPC npc : npcList){
-                    if(npc != null){
+                for (NPC npc : npcList) {
+                    if (npc != null) {
                         npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
                     }
                 }
@@ -172,20 +183,20 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void drawToScreen(){
+    public void drawToScreen() {
         Graphics g = getGraphics();
-        g.drawImage(tempScreen, 0 , 0, screenWidth2,screenHeight2, null);
+        g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
     }
 
     public void paintComponent(Graphics g) { // allt ritas här
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
 
-        if(gameState == titleState){ //MainMenu
+        if (gameState == titleState) { //MainMenu
             ui.draw(g2);
-        }
-        else { // allt annat till spelet
+        } else { // allt annat till spelet
             stopMusik();
 
             tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
@@ -194,17 +205,15 @@ public class GamePanel extends JPanel implements Runnable {
                     obj[i].draw(g2, this);
                 }
             }
-            for (NPC npc : npcList){
-                if(npc != null){
+            for (NPC npc : npcList) {
+                if (npc != null) {
                     npc.draw(g2);
                 }
             }
-            player.draw(g2);
+            player.draw(g2, debugOn);
             //showGrid(g2); //kan tas bort
             g2.dispose();
-
         }
-    }
 
     public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
         int x = 0;
@@ -255,4 +264,4 @@ public class GamePanel extends JPanel implements Runnable {
     // update 3: grid behlvde tas bort. behöver fixas på världen inte gubben. // TODO: kinda ?
     // update 4: ok, skärmens storlek e samma som mappen nu pga better rendering performance uppdateringen :(
     // grid kanske inte behövs mer? idk yet.
-}
+    }

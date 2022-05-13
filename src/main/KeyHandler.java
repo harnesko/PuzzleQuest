@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed, ePressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed, ePressed, enterPressed, fPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp){
@@ -344,6 +344,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_SHIFT){
             shiftPressed = true;
         }
+        if (code == KeyEvent.VK_F2){
+            fPressed = !fPressed;
+        }
         if (code == KeyEvent.VK_P){
             escPressed = true;
             gp.gameState =gp.optionsState;
@@ -377,5 +380,4 @@ public class KeyHandler implements KeyListener {
             shiftPressed = false;
         }
     }
-
 }

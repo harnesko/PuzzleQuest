@@ -1,6 +1,7 @@
 package entity;
 
 import gameObject.GameObject;
+import main.Debug;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -26,16 +27,19 @@ public class Player extends Entity {
 
         setDefaultValues();
         getPlayerImage();
-        screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
-        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
+        screenX = gp.screenWidth / 2 - (gp.tileSize / 2); // kamera
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2); // kamera
 
         solidArea = new Rectangle(); // kan justeras så klart
-        solidArea.x = 8;
-        solidArea.y = 16;
+
+        // allt som har med gp.scale att göra lades till av Kinda
+
+        solidArea.x = 8 * gp.scale;
+        solidArea.y = 21 * gp.scale;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 32;
-        solidArea.height = 32;
+        solidArea.width = 16 * gp.scale;
+        solidArea.height = 10 * gp.scale;
         /** solid area är kroppen som ska importeras hos playern för att fixa fysiken hos han. anledningen vi kör
          * dessa värden är för att vi vill inte hela player-tile:n ska vara fysisk eftersom det skapar problem när
          * man t.ex vill gå igenom två väggar. man måste vara precis och inte ens 1 pixel fel annars kolliderar man så
@@ -53,8 +57,16 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
         // spelarens position i hela mappen, inte kameran
-        worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
+
+        // int värden = index på tiles
+        // int värden kan ändras för att positionera han olika ställen. exempel: vill du ha han längst
+        // upp till vänster? direkt i första tile:en som skapas? byt ut värden med 0 och 0.
+        worldX = gp.tileSize * 9;
+        worldY = gp.tileSize * 7;
+
+        // editat av Kinda
+        // org var: 23, 21
+
         direction = "idledown";
     }
 
@@ -96,9 +108,6 @@ public class Player extends Entity {
     }
 
     public void update() {
-        // TODO: 5 sprint, 15 walk, 30 idle........... men riktigt låg prio - k
-        // TODO: om shift, speed change, animation change
-
         spriteCounter++;
         speed = 3;
 
@@ -172,20 +181,14 @@ public class Player extends Entity {
             }
 
         } else {
-            if (!lastBtnPressed.equals("")){
+            if (!lastBtnPressed.equals("")) {
                 direction = lastBtnPressed;
             }
         }
 
 
-
-
         if (spriteCounter > 30) {
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 1;
-            }
+            spriteNum = spriteNum == 1 ? 2 : 1; // kinda
             spriteCounter = 0;
         }
 
@@ -195,9 +198,6 @@ public class Player extends Entity {
         // denna metod låter sprite gubben ändra walk animation. spriteCounter räknar hur många
         // frames innan man typ "checkar" vilket håll man ska ändra till. hela update() kallas ju
         // 60 ggn per sekund så man kan säga att varje 30 frames så ändras animation till up2 eller right1, osv..
-
-        // TODO: k - uppdatera texten här
-
 
     }
 
@@ -274,7 +274,8 @@ public class Player extends Entity {
         return "idledown";
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, boolean debugON) {
+        Debug debug = new Debug(); // kan tas bort
 
         BufferedImage image = null;
 
@@ -401,7 +402,11 @@ public class Player extends Entity {
                 }
             }
         }
-        g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+        if (debugON) { // kan tas bort men ta ej bort rn
+            debug.showPlayerCollisionBox(g2, screenX, screenY, solidArea.x, solidArea.y, solidArea.width, solidArea.height);
+        }
     }
 }
 

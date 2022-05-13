@@ -141,30 +141,24 @@ public class TileManager {
             InputStream is = getClass().getResourceAsStream(filePath); // text file
             BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
 
-            // TODO: for-loop, kinda, kanske, vi får se
-
-            int col = 0;
+            // i = row
             int row = 0;
+            // j = col
+            int col = 0;
 
-            while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
+            for (row = 0; (row < gp.maxWorldRow) && (col < gp.maxWorldCol) ; row++) {
 
-                String line = null;
-                line = br.readLine(); // här läses en line
+                String line = br.readLine(); // här läses en line
 
-                while (col < gp.maxWorldCol) {
+                for (col = 0; col < gp.maxWorldCol; col++) {
 
-                    String numbers[] = line.split(" "); // vi säger åt systemet att separera siffrorna
+                    String[] numbers = line.split(" "); // vi säger åt systemet att separera siffrorna
                     // efter varje space, så att den behandlar
                     // varje siffra enskilt
 
                     int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
 
                     mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
-                    col++;
-                }
-                if (col == gp.maxWorldCol) {
-                    col = 0;
-                    row++;
                 }
             }
             br.close();
@@ -175,7 +169,7 @@ public class TileManager {
 
     public void draw(Graphics2D g2, boolean debugON) {
 
-        Debug debug = new Debug(); // DELETE LATER
+        Debug debug = new Debug(); // DELETE LATER, not now
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
 

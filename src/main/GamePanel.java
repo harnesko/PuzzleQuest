@@ -27,8 +27,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
 
     // WORLD SETTINGS dessa kan ändras
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
+    public final int maxWorldCol = 17;
+    public final int maxWorldRow = 13;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -157,7 +157,7 @@ public class GamePanel extends JPanel implements Runnable {
         } else { // allt annat till spelet
             stopMusik();
 
-            tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
+            tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
             for (int i = 0; i < obj.length; i++) {
                 if (obj[i] != null) {
                     obj[i].draw(g2, this);
@@ -199,7 +199,7 @@ public class GamePanel extends JPanel implements Runnable {
         } else { // allt annat till spelet
             stopMusik();
 
-            tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
+            tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
             for (int i = 0; i < obj.length; i++) {
                 if (obj[i] != null) {
                     obj[i].draw(g2, this);
@@ -214,6 +214,7 @@ public class GamePanel extends JPanel implements Runnable {
             //showGrid(g2); //kan tas bort
             g2.dispose();
         }
+    }
 
     public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
         int x = 0;
@@ -230,22 +231,22 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void playMusik(int i){
+    public void playMusik(int i) {
         music.setClip(i);
         music.playAudio();
         music.loopAudio();
     }
 
-    public void stopMusik(){
+    public void stopMusik() {
         music.stopAudio();
     }
 
-    public void playSoundEffect(int i){
+    public void playSoundEffect(int i) {
         soundEffects.setClip(i);
         soundEffects.playAudio();
     }
 
-    public void setFullScreen(){
+    public void setFullScreen() {
         //Get local screen device
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
@@ -258,10 +259,4 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 
-    // kan va en ide att inte begränsa storleken på panelen till mappens storlek. men idk !
-    // update 1: tiles ligger utanför the grid
-    // update 2: grid är ändrat tbx, vet inte om det är lönt att köra större skärm storlek än mappen
-    // update 3: grid behlvde tas bort. behöver fixas på världen inte gubben. // TODO: kinda ?
-    // update 4: ok, skärmens storlek e samma som mappen nu pga better rendering performance uppdateringen :(
-    // grid kanske inte behövs mer? idk yet.
-    }
+}

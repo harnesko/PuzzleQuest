@@ -28,7 +28,7 @@ public class TileManager {
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImages();
-        loadMap("/maps/world001.txt");
+        loadMap("/maps/testMap.txt");
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
@@ -60,67 +60,52 @@ public class TileManager {
 
     public void getTileImages() { // debug, testa här först sen kopiera över uppåt
         try {
-            int i = 0;
+            tile[0] = new Tile(); // TRANSPARENT
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
+            tile[0].collision = true;
 
-            tile[i] = new Tile(); // TRANSPARENT
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
-            tile[i].collision = true;
-            i++;
+            tile[1] = new Tile(); // BOT RIGHT WATER CORNER
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_4.png")));
+            tile[1].collision = true;
 
-            tile[i] = new Tile(); // BOT RIGHT WATER CORNER
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_4.png")));
-            tile[i].collision = true;
-            i++;
+            tile[2] = new Tile(); // MID WATER
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_mid.png")));
+            tile[2].collision = true;
 
-            tile[i] = new Tile(); // MID WATER
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_mid.png")));
-            tile[i].collision = true;
-            i++;
+            tile[3] = new Tile(); // TOP RIGHT WATER CORNER
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_2.png")));
+            tile[3].collision = true;
 
-            tile[i] = new Tile(); // TOP RIGHT WATER CORNER
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_2.png")));
-            tile[i].collision = true;
-            i++;
-
-            tile[i] = new Tile(); // GRASS 4
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/grass2.png")));
-            i++;
+            tile[4] = new Tile(); // GRASS 4
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/grass2.png")));
 
             ////// ANIMATION SECTION ////// // TODO: detta måste fixas, jätte reduntant o fuckt / kinda
 
             // WATER 2
-            i = 101;
-            tile[i] = new Tile(); // BOT RIGHT WATER CORNER
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_4.png")));
-            tile[i].collision = true;
-            i++;
+            tile[101] = new Tile(); // BOT RIGHT WATER CORNER
+            tile[101].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_4.png")));
+            tile[101].collision = true;
 
-            tile[i] = new Tile(); // MID WATER 101
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_mid.png")));
-            tile[i].collision = true;
-            i++;
+            tile[102] = new Tile(); // MID WATER 101
+            tile[102].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_mid.png")));
+            tile[102].collision = true;
 
-            tile[i] = new Tile(); // TOP RIGHT WATER CORNER 102
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_2.png")));
-            tile[i].collision = true;
-            i++;
+            tile[103] = new Tile(); // TOP RIGHT WATER CORNER 102
+            tile[103].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_2.png")));
+            tile[103].collision = true;
 
             // WATER 3
-            i = 1001;
-            tile[i] = new Tile(); // BOT RIGHT WATER CORNER 103
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_4.png")));
-            tile[i].collision = true;
-            i++;
+            tile[1001] = new Tile(); // BOT RIGHT WATER CORNER 103
+            tile[1001].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_4.png")));
+            tile[1001].collision = true;
 
-            tile[i] = new Tile(); // MID WATER 104
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_mid.png")));
-            tile[i].collision = true;
-            i++;
+            tile[1002] = new Tile(); // MID WATER 104
+            tile[1002].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_mid.png")));
+            tile[1002].collision = true;
 
-            tile[i] = new Tile(); // TOP RIGHT WATER CORNER 105
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_2.png")));
-            tile[i].collision = true;
-            i++;
+            tile[1003] = new Tile(); // TOP RIGHT WATER CORNER 105
+            tile[1003].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_2.png")));
+            tile[1003].collision = true;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -146,7 +131,7 @@ public class TileManager {
             // j = col
             int col = 0;
 
-            for (row = 0; (row < gp.maxWorldRow) && (col < gp.maxWorldCol) ; row++) {
+            for (row = 0; (row < gp.maxWorldRow); row++) {
 
                 String line = br.readLine(); // här läses en line
 

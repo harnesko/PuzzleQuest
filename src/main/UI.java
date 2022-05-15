@@ -66,7 +66,7 @@ public class UI {
             this.g2 = g2;
             someStuffIDK(); //Gustav kan du ändra namnet på metoden till något mer passande.
             //message
-            if (messagesOn) {
+            if (messagesOn) { // TODO: lägga denna block av kod i nån metod utanför draw för tydlighetsskull
                 g2.setFont(g2.getFont().deriveFont(30F));
                 g2.drawString(message, gp.tileSize / 2, gp.tileSize * 5);
 

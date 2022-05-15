@@ -27,8 +27,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
 
     // WORLD SETTINGS dessa kan ändras
-    public final int maxWorldCol = 17;
-    public final int maxWorldRow = 13;
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -108,10 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         while (gameThread != null) {
 
-            //update();
-
-
-            //repaint(); // denna kallar på paintComponent metoden
+            update();
             drawToTempScreen(); //ritar allt till image buffer
             drawToScreen(); // ritar av det som finns i bufferten till skärmen
 
@@ -158,6 +155,7 @@ public class GamePanel extends JPanel implements Runnable {
             stopMusik();
 
             tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
+
             for (int i = 0; i < obj.length; i++) {
                 if (obj[i] != null) {
                     obj[i].draw(g2, this);
@@ -184,33 +182,6 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
-    }
-
-    public void paintComponent(Graphics g) { // allt ritas här
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
-
-        if (gameState == titleState) { //MainMenu
-            ui.draw(g2);
-        } else { // allt annat till spelet
-            stopMusik();
-
-            tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
-            for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].draw(g2, this);
-                }
-            }
-            for (NPC npc : npcList) {
-                if (npc != null) {
-                    npc.draw(g2);
-                }
-            }
-            player.draw(g2, debugOn);
-            //showGrid(g2); //kan tas bort
-            g2.dispose();
-        }
     }
 
     public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna

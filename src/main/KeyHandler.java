@@ -79,11 +79,12 @@ public class KeyHandler implements KeyListener {
 
             if (code == KeyEvent.VK_ENTER) {
                 if (gp.ui.commandNumber == 0) {
+                    //Play
                     gp.gameState = gp.playState;
                     gp.playSoundEffect(2);
-                    ;
                 }
                 if (gp.ui.commandNumber == 1) {
+                    //Saves
                     gp.ui.titleScreenState = 1;
                     gp.ui.commandNumber = 0;
                     gp.playSoundEffect(2);

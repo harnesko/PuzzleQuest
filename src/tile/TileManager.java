@@ -27,8 +27,8 @@ public class TileManager {
         tile = new Tile[1200];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
-        getTileImages();
-        loadMap("/maps/world001.txt");
+        getTileImage();
+        loadMap("/maps/world01.txt");
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen

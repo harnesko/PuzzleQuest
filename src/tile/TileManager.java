@@ -27,8 +27,8 @@ public class TileManager {
         tile = new Tile[1200];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
-        getTileImage();
-        loadMap("/maps/world01.txt");
+        getTileImages();
+        loadMap("/maps/world001.txt");
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
@@ -63,7 +63,7 @@ public class TileManager {
             int i = 0;
 
             tile[i] = new Tile(); // TRANSPARENT
-            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/empty.png")));
+            tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
             tile[i].collision = true;
             i++;
 
@@ -82,7 +82,7 @@ public class TileManager {
             tile[i].collision = true;
             i++;
 
-            tile[i] = new Tile(); // GRASS
+            tile[i] = new Tile(); // GRASS 4
             tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/grass2.png")));
             i++;
 

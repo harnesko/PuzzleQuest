@@ -199,7 +199,6 @@ public class UI {
     public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
         g2.drawImage(woodFrame,x,y,width,height,null);
 
-
     }
     /**
      * This is an organised method to dictate what is being drawn in the MainMenu.

@@ -29,8 +29,6 @@ public class GamePanel extends JPanel implements Runnable {
     // WORLD SETTINGS dessa kan ändras
     public final int maxWorldCol = 17;
     public final int maxWorldRow = 13;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
 
     // EXTRA SETTINGS
     boolean debugOn; // kan tas bort @author Kinda
@@ -64,7 +62,6 @@ public class GamePanel extends JPanel implements Runnable {
     Config config = new Config(this);
     // ===================================
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    //public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
     public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
@@ -78,8 +75,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        // assetSetter.setObject();
-        // assetSetter.setNPC();
         playMusik(0);
         gameState = titleState;
 
@@ -145,7 +140,6 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-
     }
 
     public void drawToTempScreen() {
@@ -184,21 +178,6 @@ public class GamePanel extends JPanel implements Runnable {
         g.dispose();
     }
 
-    public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
-        int x = 0;
-        int y = 0;
-
-
-        for (int i = 0; i < maxScreenRow; i++) {
-            for (int j = 0; j < maxScreenCol; j++) {
-                g2.drawRect(x, y, tileSize, tileSize);
-                x += tileSize;
-            }
-            x = 0;
-            y += tileSize;
-        }
-    }
-
     public void playMusik(int i) {
         music.setClip(i);
         music.playAudio();
@@ -223,8 +202,5 @@ public class GamePanel extends JPanel implements Runnable {
         //Get fullscreen width & height
         screenWidth2 = GameStarter.window.getWidth();
         screenHeight2 = GameStarter.window.getHeight();
-
     }
-
-
 }

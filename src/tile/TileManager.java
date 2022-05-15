@@ -170,6 +170,7 @@ public class TileManager {
     public void draw(Graphics2D g2, boolean debugON) {
 
         Debug debug = new Debug(); // DELETE LATER, not now
+        System.out.println("CONFIRMED");
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
 

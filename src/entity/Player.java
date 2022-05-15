@@ -22,6 +22,7 @@ public class Player extends Entity {
     public int hasKey = 0; //Gustav gjorde till public
 
     public Player(GamePanel gp, KeyHandler keyH) {
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
 

@@ -108,7 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         while (gameThread != null) {
 
-            update();
+            //update();
 
 
             //repaint(); // denna kallar på paintComponent metoden
@@ -165,7 +165,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (gameState == playState) {
-                player.draw(g2);
+                player.draw(g2, debugOn);
                 ui.draw(g2); //Gustav
 
                 for (NPC npc : npcList) {
@@ -177,9 +177,6 @@ public class GamePanel extends JPanel implements Runnable {
             if (gameState == optionsState || gameState == noneState) {
                 ui.drawSettingsMenu(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
             }
-
-
-            //showGrid(g2); //kan tas bort
         }
     }
 

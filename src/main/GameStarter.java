@@ -35,5 +35,3 @@ public class GameStarter {
     }
 
 }
-
-// öppna inte player foldern, städar det sen - k

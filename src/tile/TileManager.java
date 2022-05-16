@@ -28,7 +28,7 @@ public class TileManager {
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImages();
-        loadMap("/maps/testMap.txt");
+        loadMap("/maps/TiledTesting.txt");
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
@@ -61,51 +61,47 @@ public class TileManager {
     public void getTileImages() { // debug, testa här först sen kopiera över uppåt
         try {
             tile[0] = new Tile(); // TRANSPARENT
-            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/black.png")));
             tile[0].collision = true;
 
-            tile[1] = new Tile(); // BOT RIGHT WATER CORNER
-            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_4.png")));
-            tile[1].collision = true;
+            tile[1] = new Tile(); // TRANSPARENT
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/grass.png")));
 
-            tile[2] = new Tile(); // MID WATER
-            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_mid.png")));
+            tile[2] = new Tile(); // TRANSPARENT
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/watermid_1.png")));
             tile[2].collision = true;
 
-            tile[3] = new Tile(); // TOP RIGHT WATER CORNER
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water1_2.png")));
+            tile[3] = new Tile(); // TRANSPARENT
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/big_tree1.png")));
             tile[3].collision = true;
 
-            tile[4] = new Tile(); // GRASS 4
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/grass2.png")));
+            tile[4] = new Tile(); // TRANSPARENT
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/big_tree2.png")));
+            tile[4].collision = true;
 
-            ////// ANIMATION SECTION ////// // TODO: detta måste fixas, jätte reduntant o fuckt / kinda
+            tile[5] = new Tile(); // TRANSPARENT
+            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/big_tree3.png")));
+            tile[5].collision = true;
 
-            // WATER 2
-            tile[101] = new Tile(); // BOT RIGHT WATER CORNER
-            tile[101].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_4.png")));
-            tile[101].collision = true;
+            tile[6] = new Tile(); // TRANSPARENT
+            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/big_tree4.png")));
+            tile[6].collision = true;
 
-            tile[102] = new Tile(); // MID WATER 101
-            tile[102].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_mid.png")));
-            tile[102].collision = true;
+            tile[7] = new Tile(); // TRANSPARENT
+            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/water1_1.png")));
+            tile[7].collision = true;
 
-            tile[103] = new Tile(); // TOP RIGHT WATER CORNER 102
-            tile[103].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water2_2.png")));
-            tile[103].collision = true;
+            tile[8] = new Tile(); // TRANSPARENT
+            tile[8].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/water2_1.png")));
+            tile[8].collision = true;
 
-            // WATER 3
-            tile[1001] = new Tile(); // BOT RIGHT WATER CORNER 103
-            tile[1001].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_4.png")));
-            tile[1001].collision = true;
+            tile[9] = new Tile(); // TRANSPARENT
+            tile[9].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/water3_1.png")));
+            tile[9].collision = true;
 
-            tile[1002] = new Tile(); // MID WATER 104
-            tile[1002].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_mid.png")));
-            tile[1002].collision = true;
-
-            tile[1003] = new Tile(); // TOP RIGHT WATER CORNER 105
-            tile[1003].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/ani_water3_2.png")));
-            tile[1003].collision = true;
+            tile[10] = new Tile(); // TRANSPARENT
+            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/altTiles/water4_1.png")));
+            tile[10].collision = true;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -137,7 +133,7 @@ public class TileManager {
 
                 for (col = 0; col < gp.maxWorldCol; col++) {
 
-                    String[] numbers = line.split(" "); // vi säger åt systemet att separera siffrorna
+                    String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
                     // efter varje space, så att den behandlar
                     // varje siffra enskilt
 
@@ -191,8 +187,10 @@ public class TileManager {
                         worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
                     tileIndex = playTileAnimations(tileIndex);
+                    if (tile[tileIndex] != null) {
+                        g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                    }
 
-                    g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
                 }
 
                 if (debugON) { // OK att ta bort

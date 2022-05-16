@@ -30,32 +30,32 @@ public class CollisionChecker {
         switch (entity.direction) {
             case "walkup", "runup":
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityTopRow];
-                tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityTopRow];
+                tileNum1 = gp.tileManager.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
+                tileNum2 = gp.tileManager.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
                 if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
                     entity.collisionOn = true;
                 }
                 break;
             case "walkdown", "rundown":
                 entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityBottomRow];
-                tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityBottomRow];
+                tileNum1 = gp.tileManager.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
+                tileNum2 = gp.tileManager.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
                 if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
                     entity.collisionOn = true;
                 }
                 break;
             case "walkleft", "runleft":
                 entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityTopRow];
-                tileNum2 = gp.tileManager.mapTileNum[entityLeftCol][entityBottomRow];
+                tileNum1 = gp.tileManager.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
+                tileNum2 = gp.tileManager.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
                 if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
                     entity.collisionOn = true;
                 }
                 break;
             case "walkright", "runright":
                 entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[entityRightCol][entityTopRow];
-                tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityBottomRow];
+                tileNum1 = gp.tileManager.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
+                tileNum2 = gp.tileManager.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
                 if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
                     entity.collisionOn = true;
                 }
@@ -66,8 +66,8 @@ public class CollisionChecker {
     public int checkObject(Entity entity, EntityType type) {
         int index = -1;
 
-        for (int i = 0; i < gp.obj.length; i++) {
-            if (gp.obj[i] != null){
+        for (int i = 0; i < gp.obj[1].length; i++) {
+            if (gp.obj[gp.currentMap][i] != null){
 
                 // Get entity's solid area position
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
@@ -75,8 +75,8 @@ public class CollisionChecker {
 
                 if(type == EntityType.PLAYER){
                     // Get the object's solid area position
-                    gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;
-                    gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;
+                    gp.obj[gp.currentMap][i].solidArea.x = gp.obj[gp.currentMap][i].worldX + gp.obj[gp.currentMap][i].solidArea.x;
+                    gp.obj[gp.currentMap][i].solidArea.y = gp.obj[gp.currentMap][i].worldY + gp.obj[gp.currentMap][i].solidArea.y;
                 }else if(type == EntityType.NPC){
                     //check stuff 
                 }
@@ -85,9 +85,9 @@ public class CollisionChecker {
                 switch (entity.direction) {
                     case "walkup", "runup" -> {
                         entity.solidArea.y -= entity.speed;
-                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) { // intersects är en solidArea metod, kollar om de överlappar
+                        if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) { // intersects är en solidArea metod, kollar om de överlappar
                             // som checkar om objekt kolliderar
-                            if (gp.obj[i].collision) {
+                            if (gp.obj[gp.currentMap][i].collision) {
                                 entity.collisionOn = true;
                             }
                             //if (type == EntityType.PLAYER) {
@@ -98,8 +98,8 @@ public class CollisionChecker {
                     }
                     case "walkdown", "rundown" -> {
                         entity.solidArea.y += entity.speed;
-                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            if (gp.obj[i].collision) {
+                        if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
+                            if (gp.obj[gp.currentMap][i].collision) {
                                 entity.collisionOn = true;
                             }
                             if (type == EntityType.PLAYER) {
@@ -109,8 +109,8 @@ public class CollisionChecker {
                     }
                     case "walkleft", "runleft" -> {
                         entity.solidArea.x -= entity.speed;
-                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            if (gp.obj[i].collision) {
+                        if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
+                            if (gp.obj[gp.currentMap][i].collision) {
                                 entity.collisionOn = true;
                             }
                             if (type == EntityType.PLAYER) {
@@ -120,8 +120,8 @@ public class CollisionChecker {
                     }
                     case "walkright", "runright" -> {
                         entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            if (gp.obj[i].collision) {
+                        if (entity.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)) {
+                            if (gp.obj[gp.currentMap][i].collision) {
                                 entity.collisionOn = true;
                             }
                             if (type == EntityType.PLAYER) {
@@ -132,8 +132,8 @@ public class CollisionChecker {
                 }
                 entity.solidArea.x = entity.solidAreaDefaultX;
                 entity.solidArea.y = entity.solidAreaDefaultY;
-                gp.obj[i].solidArea.x = gp.obj[i].solidAreaDefaultX;
-                gp.obj[i].solidArea.y = gp.obj[i].solidAreaDefaultY;
+                gp.obj[gp.currentMap][i].solidArea.x = gp.obj[gp.currentMap][i].solidAreaDefaultX;
+                gp.obj[gp.currentMap][i].solidArea.y = gp.obj[gp.currentMap][i].solidAreaDefaultY;
             }
 
         }
@@ -142,45 +142,45 @@ public class CollisionChecker {
     }
 
 
-    public int checkEntity(Entity entity, Entity[] target){
+    public int checkEntity(Entity entity, Entity[][] target){
         int index = -1;
 
-        for (int i = 0; i < target.length; i++) {
-            if (target[i] != null){
+        for (int i = 0; i < target[1].length; i++) {
+            if (target[gp.currentMap][i] != null){
 
                 // Get entity's solid area position
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
                 // Get the object's solid area position
-                target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
-                target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
+                target[gp.currentMap][i].solidArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].solidArea.x;
+                target[gp.currentMap][i].solidArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].solidArea.y;
 
                 switch (entity.direction) {
                     case "walkup", "runup" -> {
                         entity.solidArea.y -= entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)) { // intersects är en solidArea metod
+                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) { // intersects är en solidArea metod
                             entity.collisionOn = true;
                             index = i;
                         }
                     }
                     case "walkdown", "rundown" -> {
                         entity.solidArea.y += entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
                             entity.collisionOn = true;
                             index = i;
                         }
                     }
                     case "walkleft", "runleft" -> {
                         entity.solidArea.x -= entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
                             entity.collisionOn = true;
                             index = i;
                         }
                     }
                     case "walkright", "runright" -> {
                         entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
                             entity.collisionOn = true;
                             index = i;
                         }
@@ -188,8 +188,8 @@ public class CollisionChecker {
                 }
                 entity.solidArea.x = entity.solidAreaDefaultX;
                 entity.solidArea.y = entity.solidAreaDefaultY;
-                target[i].solidArea.x = target[i].solidAreaDefaultX;
-                target[i].solidArea.y = target[i].solidAreaDefaultY;
+                target[gp.currentMap][i].solidArea.x = target[gp.currentMap][i].solidAreaDefaultX;
+                target[gp.currentMap][i].solidArea.y = target[gp.currentMap][i].solidAreaDefaultY;
             }
 
         }

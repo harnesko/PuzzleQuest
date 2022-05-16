@@ -27,8 +27,10 @@ public class GamePanel extends JPanel implements Runnable {
     // WORLD SETTINGS dessa kan ändras
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
+    public final int worldWidth = tileSize * maxWorldCol; //Used for stopping camera from moving outside the map
+    public final int worldHeight = tileSize * maxWorldRow; //Used for stopping camera from moving outside the map
+    public final int maxMap = 10; // This means that it is possible to create 10 maps
+    public int currentMap = 0; // The current map number that the player is on
 
     //FULL SCREEN
     int screenWidth2 = screenWidth;
@@ -54,10 +56,11 @@ public class GamePanel extends JPanel implements Runnable {
     Sound soundEffects = new Sound();
     Config config = new Config(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
+   // public EventHandler eHandler = new EventHandler(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
-    public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
-    public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
+    public GameObject obj[][] = new GameObject[maxMap][10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
+    public NPC[][] npcList = new NPC[maxMap][10];           //Does this need to exist or can npcs exist inside obj[]?
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // här förstorade jag skärmen
@@ -68,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame(){
-        assetSetter.setObject();
+       // assetSetter.setObject();
         assetSetter.setNPC();
         playMusik(0);
         gameState = titleState;
@@ -77,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2 = (Graphics2D) tempScreen.getGraphics();
 
         if(ui.fullscreen){
-            //setFullScreen();
+            setFullScreen();
         }
     }
 
@@ -85,10 +88,10 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
-    public void npcSpeak(int npcIndex){
+    /*public void npcSpeak(int npcIndex){
 
     }
-
+*/
     @Override
     public void run() {
 
@@ -126,16 +129,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         //Don't update player/npc if the game is paused
-        if(gameState == playState){
+        if (gameState == playState) {
             player.update();
 
-            for (NPC npc : npcList) {
-                if(npc != null) {
-                    npc.update();       //Update the npc movement
+            for (int i = 0; i < npcList[1].length; i++) {
+                if (npcList[currentMap][i] != null) {
+                    npcList[currentMap][i].update();
                 }
             }
         }
-
     }
 
     public void drawToTempScreen(){
@@ -147,8 +149,8 @@ public class GamePanel extends JPanel implements Runnable {
 
             tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
             for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].draw(g2, this);
+                if (obj[currentMap][i] != null) {
+                    obj[currentMap][i].draw(g2, this);
                 }
             }
 
@@ -156,9 +158,9 @@ public class GamePanel extends JPanel implements Runnable {
                 player.draw(g2);
                 ui.draw(g2); //Gustav
 
-                for (NPC npc : npcList){
-                    if(npc != null){
-                        npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
+                for (int i = 0; i < npcList[1].length; i++) {
+                        if (npcList[currentMap][i] != null){
+                            npcList[currentMap][i].update();
                     }
                 }
             }
@@ -189,13 +191,13 @@ public class GamePanel extends JPanel implements Runnable {
 
             tileManager.draw(g2); // rita tiles före playern, detta funkar som lager
             for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].draw(g2, this);
+                if (obj[currentMap][i] != null) {
+                    obj[currentMap][i].draw(g2, this);
                 }
             }
-            for (NPC npc : npcList){
-                if(npc != null){
-                    npc.draw(g2);
+            for (int i = 0; i < npcList[1].length; i++) {
+                if (npcList[currentMap][i] != null){
+                    npcList[currentMap][i].draw(g2);
                 }
             }
             player.draw(g2);

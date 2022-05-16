@@ -16,6 +16,8 @@ public class Entity {
             walkRight1, walkRight2, runDown1, runDown2, runLeft1, runLeft2, runUp1, runUp2, runRight1, runRight2;
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; // TODO: k - problem med object collision, checka sen up1orna
     public String direction;
+    public String[] dialogues = new String[10];
+    public int dialogueIndex = 0;
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea; // detta är ersättningen för body saken i libgdx. hjälper med collision

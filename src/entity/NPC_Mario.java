@@ -79,7 +79,7 @@ public class NPC_Mario extends NPC{
     //Remove and put in super later I guess
     @Override
     public void update() {
-        //super.update();     //fix this mess later, super method gives nullpointer on gamepanel instance for w/e reason
+        //super.update();     //fix this mess later with inheritence, super method gives nullpointer on gamepanel instance for w/e reason
         setAction();
         collisionOn = false;
         gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance. Npc doesn't properly detect player rn, fix later

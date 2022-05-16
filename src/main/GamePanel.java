@@ -25,8 +25,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
 
     // WORLD SETTINGS dessa kan ändras
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
+    public final int maxWorldCol = 50;          //Horizontal
+    public final int maxWorldRow = 50;          //vertical
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleState = 0;
     public final int playState = 1;
     public final int optionsState = 2;
-    public final int dialogState = 3;
+    public final int dialogueState = 3;
 
     // FPS
     int FPS = 60;
@@ -135,6 +135,9 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
+        if(gameState == dialogueState){
+            //ui.drawDialogueWindow();
+        }
 
     }
 
@@ -158,7 +161,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                 for (NPC npc : npcList){
                     if(npc != null){
-                        npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
+                        npc.draw(g2);
                     }
                 }
             }
@@ -166,7 +169,9 @@ public class GamePanel extends JPanel implements Runnable {
                 ui.drawOptionsScreen(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
             }*/
 
-
+            if(gameState == dialogueState){
+                ui.drawDialogueWindow();
+            }
             //showGrid(g2); //kan tas bort
         }
     }
@@ -193,6 +198,7 @@ public class GamePanel extends JPanel implements Runnable {
                     obj[i].draw(g2, this);
                 }
             }
+            //Draws all NPC in the array set by AssetSetter.java
             for (NPC npc : npcList){
                 if(npc != null){
                     npc.draw(g2);

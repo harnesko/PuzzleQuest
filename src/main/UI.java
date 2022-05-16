@@ -32,6 +32,7 @@ public class UI {
     public boolean save1Active,save2Active,save3Active,save4Active;
     public boolean fullscreen;
 
+
     public UI(GamePanel gp){
         this.gp = gp;
 
@@ -49,8 +50,8 @@ public class UI {
 
     /**
      * This method is used to draw the different Ui's.
-     * With the help of GamePanel's game states we can draw what is needed for that specifik state.
-     * @param g2 We send in Graphics2D to be able to draw the different objekts.
+     * With the help of GamePanel's game states we can draw what is needed for that specific state.
+     * @param g2 We send in Graphics2D to be able to draw the different objects.
      * @author Kristoffer & Gustav
      */
     public void draw(Graphics2D g2){
@@ -110,8 +111,8 @@ public class UI {
                 g2.fillRect(0, 0, 200, 200);
             }
 
-            if (gp.gameState == gp.dialogState) {
-                //todo later
+            if (gp.gameState == gp.dialogueState) {
+                drawDialogueWindow();
             }
         }
 
@@ -195,24 +196,44 @@ public class UI {
     }
 
     /**
-     * This method draws a small sub frame to be able to be used for example the dialog frame.
-     * @param g2 We send in Graphics2D to be able to draw the different objekts.
+     * This method draws a small sub frame to be able to be used for example the dialogue frame.
+     * @param g2 We send in Graphics2D to be able to draw the different objects.
      * @param x The X coordinate position for the window
      * @param y The Y coordinate position for the window
      * @param width The width size of the window
      * @param height height size of the window
      * @author Kristoffer
      */
+
    public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
-        Color c = new Color(0,0,0);
+        //Dialogue window
+        Color c = new Color(0,0,0, 200);        //4th param = opacity
         g2.setColor(c);
         g2.fillRoundRect(x,y,width,height,35,35);
 
-
-        c = new Color(255,255,255);
+        //Defines a line along the edge for aesthetics
+        c = new Color(81, 88, 129);
         g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
+   }
+
+    /**
+     * This method uses the method drawSubWindow() to use its frame into a dialogue
+     * @author Måns
+     */
+   public void drawDialogueWindow(){
+        int x = 200;    //gp.tileSize * 2; //x position
+        int y = 550;//gp.tileSize / 2; //y position
+
+        int width = 800;                 //gp.screenWidth - (gp.tileSize * 4);
+        int height = 200;                //gp.tileSize * 5;
+
+        drawSubWindow(g2, x, y, width, height);
+
+        x =+ gp.tileSize + 170; //text x position
+        y += gp.tileSize;       //text y position
+        g2.drawString(currentDialog, x, y);
     }
     /**
      * This is an organised method to dictate what is being drawn in the MainMenu.
@@ -232,9 +253,15 @@ public class UI {
             settingsMenu();
         }
     }
+
+    public void interactWithNPC(int i){     //remove? Player class does this currently
+        if (i != -1){
+            gp.gameState = gp.dialogueState;
+        }
+    }
     /**
      * This method draws the MainMenu screen with the possible sub Menus the player could choose.
-     * Its being draw by the g2 variable to draw the different objekts.
+     * Its being drawn by the g2 variable to draw the different objekts.
      * @author Kristoffer
      */
     public void startMenu(){
@@ -295,8 +322,7 @@ public class UI {
         try{
             g2.drawString(text, x + 70, y + 2);
         }catch (ClassCastException e){
-            System.out.println("This error drives me CRAZY");   //Todo måns lös detta eller nåt
-
+            System.out.println("It happened again :(");  //Todo måns lös detta eller nåt (Testa att döda tråden innan vi terminerar programmet?)
         }
         if (commandNumber == 3) {
             g2.drawString(">", x - 45, y);

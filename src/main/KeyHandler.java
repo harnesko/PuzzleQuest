@@ -24,13 +24,21 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         if(gp.gameState == gp.titleState) {
-        mainMenuKeys(code);
+            mainMenuKeys(code);
         }
         if(gp.gameState == gp.playState) {
             gamePlayKeys(code);
         }
         if(gp.gameState == gp.optionsState) {
             optionKey(code);
+        }
+        if(gp.gameState == gp.dialogueState){
+            if(code == KeyEvent.VK_ENTER){      //What key to use to exit dialogue? Enter?
+                gp.gameState = gp.playState;
+            } else if (code == KeyEvent.VK_E) {
+                gp.npcList[1].progressDialogue();
+            }
+
         }
 
     }
@@ -296,6 +304,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_E){
             ePressed = true;
             //gp.npcList[0].speak();
+            //Enter dialogue state i guess
 
         }
     }

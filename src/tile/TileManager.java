@@ -123,9 +123,9 @@ public class TileManager {
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
             if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && // denna if-satsen säkerställer att mappen
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX && // ritas ENDAST där kameran ser för att
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY && // förbättra performance och slippa rita
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) { // 500 pixlar vi inte ser + ger lag
+                    worldX - gp.tileSize < gp.player.worldX + gp.player.screenX && // ritas ENDAST där kameran ser för att
+                    worldY + gp.tileSize > gp.player.worldY - gp.player.screenY && // förbättra performance och slippa rita
+                    worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) { // 500 pixlar vi inte ser + ger lag
 
                 g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }

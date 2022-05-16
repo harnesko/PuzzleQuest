@@ -1,6 +1,5 @@
 package entity;
 
-import gameObject.GameObject;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -141,14 +140,12 @@ public class Player extends Entity {
 
             //CHECK NPC COLLISION
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
-            interactWithNpc(npcIndex);
-            //todo Se om vi kan ta bort parametrar, köra alla objekt i samma array och kolla typ med "instanceof" metoden
+
+            // Se om vi kan ta bort parametrar, köra alla objekt i samma array och kolla typ med "instanceof" metoden
             //Checka igenom CollisionChecker
             if(keyH.ePressed){
-
                 if (npcIndex != -1){
-                    gp.npcList[npcIndex].speak();
-
+                    interactWithNpc(npcIndex);
                 }
                 keyH.ePressed = false;
                 System.out.println("Key E pressed");
@@ -202,17 +199,15 @@ public class Player extends Entity {
     }
 
     private void interactWithNpc(int npcIndex) {
-        if (npcIndex != -1){
-            if(keyH.ePressed){
-                gp.npcList[npcIndex].speak();
-                //keyH.ePressed = false;
-            }
+        if (npcIndex != -1){            //npcIndex -1 means no npc is near player
+            gp.gameState = gp.dialogueState;
+            System.out.println("Player.java entering dialogue state..");
+            gp.npcList[npcIndex].speak();
         }
     }
 
     public void pickUpObject(int index) {
-        if (index != -1) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
-            // om index är ej empty alltså innehåller ett objekt
+        if (index != -1) { // -1 equals no object near player
             String objectName = gp.obj[index].name;
 
             switch (objectName) { // denna funktion tar bort objektet när vi passerar den

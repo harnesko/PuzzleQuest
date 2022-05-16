@@ -233,7 +233,9 @@ public class UI {
 
         x =+ gp.tileSize + 170; //text x position
         y += gp.tileSize;       //text y position
-        g2.drawString(currentDialog, x, y);
+       if(currentDialog != null){
+           g2.drawString(currentDialog, x, y);
+       }
     }
     /**
      * This is an organised method to dictate what is being drawn in the MainMenu.

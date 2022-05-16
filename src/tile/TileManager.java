@@ -28,6 +28,7 @@ public class TileManager {
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
         try {
+            //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
             tile[0] = new Tile(); // GRASS
             tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
 

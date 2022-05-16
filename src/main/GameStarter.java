@@ -33,7 +33,6 @@ public class GameStarter {
         gamePanel.setupGame();
         gamePanel.startGameThread();
     }
-
 }
 
 // öppna inte player foldern, städar det sen - k

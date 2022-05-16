@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
-    public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
+    public GameObject obj[] = new GameObject[30]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
     public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
 
     public GamePanel() {
@@ -91,14 +91,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-
+        /*try{
+            Thread.sleep(1);
+        }catch (Exception ignored){}*/
         double drawInterval = 1000000000 / FPS; // 1,000,000,000 nanosekunder
         double nextDrawTime = System.nanoTime() + drawInterval;
 
         while (gameThread != null) {
-
            update();
-
 
             //repaint(); // denna kallar på paintComponent metoden
             drawToTempScreen(); //ritar allt till image buffer

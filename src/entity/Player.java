@@ -52,8 +52,8 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
         // spelarens position i hela mappen, inte kameran
-        worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
+        worldX = gp.tileSize * 40;             // 23;
+        worldY = gp.tileSize * 40;             // 21;
         direction = "idledown";
     }
 

@@ -20,39 +20,59 @@ public class TileManager {
         this.gp = gp;
 
         tile = new Tile[10];
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+        mapTileNum = new int[50][50];
 
         getTileImage();
-        loadMap("/maps/world01.txt");
+        loadMap("/maps/map02.txt");
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
         try {
             //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
-            tile[0] = new Tile(); // GRASS
-            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
+            tile[0] = new Tile(); // Background
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
 
-            tile[1] = new Tile(); // WALL
-            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
+            tile[1] = new Tile(); // Bushtest
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/bush_test.png")));
             tile[1].collision = true;
 
-            tile[2] = new Tile(); // WATER
-            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
+            tile[2] = new Tile(); // Sand
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
             tile[2].collision = true;
 
-            tile[3] = new Tile(); // EARTH
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
+            tile[3] = new Tile(); // Tree
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
 
-            tile[4] = new Tile(); // TREE
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
+            tile[4] = new Tile(); // Wall
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
             tile[4].collision = true;
 
-            tile[5] = new Tile(); // SAND
-            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+            tile[5] = new Tile(); // Water
+            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
+            tile[5].collision = true;
+
+            tile[6] = new Tile(); // Grass
+            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
+
+            tile[7] = new Tile(); // Sand
+            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+  /*  public int getMapHeight() throws IOException {
+        int lineCount = 0;      //Can be used to get current map height to set in gp.maxWorldCol/Rows
+        InputStream is = getClass().getResourceAsStream("/maps/map02.txt"); // text file
+        BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
+        String data;
+        while((data = br.readLine()) != null) {
+            lineCount++;
+        }
+        return lineCount;
+    }*/
 
     public void loadMap(String filePath) { // om du inte fattar nåt här, skit i det. ändra bara inget
         try {
@@ -70,20 +90,22 @@ public class TileManager {
 
             // TODO: for-loop, kinda, kanske, vi får se
 
+            int mapHeight = 30;
+            int mapWidth = 30;
+
+
             int col = 0;
             int row = 0;
-
-            while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
-
-                String line = null;
+            String line = null;
+            do{
                 line = br.readLine(); // här läses en line
 
-                while (col < gp.maxWorldCol) {
+                if (line != null){                                                          //(col < gp.maxWorldCol) {
 
                     String numbers[] = line.split(" "); // vi säger åt systemet att separera siffrorna
                     // efter varje space, så att den behandlar
                     // varje siffra enskilt
-
+                    System.out.println(line);
                     int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
 
                     mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
@@ -93,8 +115,9 @@ public class TileManager {
                     col = 0;
                     row++;
                 }
-            }
-            br.close();
+                System.out.println("Current line is done..");
+            } while (line != null); //read until there is no more lines
+            br.close();             //close the stream
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,14 +127,35 @@ public class TileManager {
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
 
-        g2.drawImage(tile[0].image, 0, 0, gp.tileSize, gp.tileSize, null);
+        //g2.drawImage(tile[0].image, 0, 0, gp.tileSize, gp.tileSize, null);
 
+        int tileToDraw = 0;
         int worldCol = 0;
         int worldRow = 0;
+        try {
+            worldCol = 30;
+            worldRow = 30; //lazy rn
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        // TODO: för kinda, ändra detta till en for-loop lmao
+        int worldX = worldCol * gp.tileSize;
+        int worldY = worldRow * gp.tileSize;
+        int screenX = worldX - gp.player.worldX + gp.player.screenX;
+        int screenY = worldY - gp.player.worldY + gp.player.screenY;        //worldx/y och screen x/y är lite fucked atm
+        for (int i = 0; i < worldCol; i++){
+            for (int j = 0; j < worldRow; j++){
+                if(mapTileNum[i][j] != -1)
+                    if(tileToDraw != 0){
+                        System.out.println("the tile to be drawn is number: " + tileToDraw);
+                    }
+                    tileToDraw = mapTileNum[i][j];
+                    g2.drawImage(tile[tileToDraw].image, worldX, worldY, gp.tileSize, gp.tileSize, null);
+                }
+            }
+        }
 
-        while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
+       /* while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
 
             int tileNum = mapTileNum[worldCol][worldRow];
 
@@ -131,12 +175,11 @@ public class TileManager {
                 g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
 
-            worldCol++;
+            worldCol++;*/
 
-            if (worldCol == gp.maxWorldCol) {
+          /*  if (worldCol == gp.maxWorldCol) {
                 worldCol = 0;
-                worldRow++;
-            }
-        }
-    }
+                worldRow++;*/
+
+
 }

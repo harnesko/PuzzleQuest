@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
 
-    // WORLD SETTINGS dessa kan ändras // TODO:
+    // WORLD SETTINGS dessa kan ändras // TODO: används ej mer ?
     public int maxWorldCol = 37;
     public final int maxWorldRow = 29;
 
@@ -52,8 +52,8 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     int FPS = 60;
 
-    TileManager tileManager = new TileManager(this);
-    KeyHandler keyH = new KeyHandler(this); // knapparna WASD
+    TileManager tileManager;
+    KeyHandler keyH;
     Thread gameThread; // tiden för spelet
     // ===================================
     public UI ui = new UI(this); //lade till public
@@ -62,7 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
     Config config = new Config(this);
     // ===================================
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public Player player = new Player(this, keyH);
+    public Player player;
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
     public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
 
@@ -72,6 +72,23 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true); // att göra detta true ger bättre rendering performance
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+        keyH = new KeyHandler(this); // knapparna WASD
+        tileManager = new TileManager(this);
+        player = new Player(this, keyH);
+        setDefaultGamesValues();
+    }
+
+    public void setDefaultGamesValues() {
+        /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !
+        // ============ PLAYER DEFAULT VALUES ============ //
+        player.worldX = tileSize * 1000;
+        player.worldY = tileSize * 1000;
+        player.direction = "idledown";
+
+
+        // ============ MAP DEFAULT VALUES ============ //
+        tileManager.currentMap = "/maps/TiledTesting.txt";
     }
 
     public void setupGame() {
@@ -91,9 +108,6 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
     }
 
-    public void npcSpeak(int npcIndex) { // vad är detta? / Kinda
-
-    }
 
     @Override
     public void run() {

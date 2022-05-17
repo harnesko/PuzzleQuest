@@ -17,9 +17,12 @@ public class TileManager {
     public Tile[] tile;
     public int[][] mapTileNum;
 
+    // MAP
+    public String currentMap = "";
+    /** current map will be used to determine the map, how it loads, current map takes inputs **/
+
     // TILE ANIMATION SETTINGS
     int frame = 0;
-    int tileNum = 1;
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
@@ -27,8 +30,8 @@ public class TileManager {
         tile = new Tile[1200];
        // mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
-        getTileImagesTEST();
-        loadMap("/maps/testmap2.txt");
+        getTileImages();
+        loadMap(currentMap);
     }
     public void getTileImagesTEST(){
          // TODO: för kinda, ersätta, lägga till, byta gfx sen
@@ -162,11 +165,9 @@ public class TileManager {
              *
              * kolla i resource.maps.snabbmapguide.pdf för info på hur denna text fil skapas */
 
+            Map map = new Map(currentMap);
 
-            int maxColTiles = measureMap(1, filePath); // 1 är horizontalt alltså width
-            int maxRowTiles = measureMap(2, filePath); // 2 är vertikalt alltså height
-
-            mapTileNum = new int[maxRowTiles][maxColTiles];
+            mapTileNum = new int[map.getHeight()][map.getWidth()];
 
             InputStream is = getClass().getResourceAsStream(filePath); // text file
             BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
@@ -176,11 +177,11 @@ public class TileManager {
             // j = col
             int col = 0;
 
-            for (row = 0; (row < maxRowTiles); row++) {
+            for (row = 0; (row < map.getHeight()); row++) {
 
                 String line = br.readLine(); // här läses en line
 
-                for (col = 0; col < maxColTiles; col++) {
+                for (col = 0; col < map.getWidth(); col++) {
 
                     if(line != null){
                         String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
@@ -190,9 +191,6 @@ public class TileManager {
                         mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
                         System.out.println("done");
                     }
-                    // efter varje space, så att den behandlar
-                    // varje siffra enskilt
-
                 }
             }
 
@@ -202,42 +200,16 @@ public class TileManager {
         }
     }
 
-    public int measureMap(int x, String fileName) {
-        InputStream is = getClass().getResourceAsStream(fileName); // text file
-        BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
-        int lineCount = 0; //
-        int totalCharCount = 0;
-
-        try {
-            String line;
-            while ((line = br.readLine()) != null) {
-                lineCount++;
-                int charCount = line.split(",").length;
-                totalCharCount += charCount;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            br.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("line count är " + lineCount);
-        System.out.println("total char är " + totalCharCount);
-        return x == 1 ? lineCount : (totalCharCount / lineCount);
-    }
     public void draw(Graphics2D g2, boolean debugON) {
-
+        Map map = new Map(currentMap);
         Debug debug = new Debug(); // DELETE LATER, not now
         System.out.println("CONFIRMED");
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
 
-        for (int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
-            for (int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
-                gp.maxWorldCol = 30;
-                gp.maxScreenRow = 30;
+        for (int worldRow = 0; worldRow < map.getHeight(); worldRow++) {
+            for (int worldCol = 0; worldCol < map.getWidth(); worldCol++) {
+
                 int tileIndex = mapTileNum[worldCol][worldRow];
 
                 /** här blir worldCol & worldRow mängden av tiles.

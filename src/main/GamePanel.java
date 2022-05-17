@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
     // WORLD SETTINGS dessa kan ändras
     public final int maxWorldCol = 50;          //Horizontal
     public final int maxWorldRow = 50;          //vertical
-    public final int worldWidth = tileSize * maxWorldCol;
+    public int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
     //FULL SCREEN
@@ -77,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2 = (Graphics2D) tempScreen.getGraphics();
 
         if(ui.fullscreen){
-            //setFullScreen();
+            setFullScreen();
         }
     }
 
@@ -144,8 +144,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void drawToTempScreen(){
         if(gameState == titleState){ //MainMenu
             ui.draw(g2);
-        }
-        else { // allt annat till spelet
+        }else { // allt annat till spelet
             stopMusik();
 
             tileManager.draw(g2); // rita tiles före playern, detta funkar som lager

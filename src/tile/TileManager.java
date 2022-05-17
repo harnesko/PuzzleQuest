@@ -30,7 +30,7 @@ public class TileManager {
         try {
             //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
             tile[0] = new Tile(); // Background
-            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
 
             tile[1] = new Tile(); // Bushtest
             tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/bush_test.png")));
@@ -57,22 +57,29 @@ public class TileManager {
             tile[7] = new Tile(); // Sand
             tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-  /*  public int getMapHeight() throws IOException {
+    public int getMapHeight(String filePath) {
         int lineCount = 0;      //Can be used to get current map height to set in gp.maxWorldCol/Rows
-        InputStream is = getClass().getResourceAsStream("/maps/map02.txt"); // text file
-        BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
-        String data;
-        while((data = br.readLine()) != null) {
-            lineCount++;
+        try {
+            lineCount = 0;
+            String data = "";
+            InputStream is = getClass().getResourceAsStream(filePath); // text file
+            BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
+            while((data = br.readLine()) != null) {
+                lineCount++;
+                gp.worldWidth = data.length() / 2;
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         return lineCount;
-    }*/
+    }
 
     public void loadMap(String filePath) { // om du inte fattar nåt här, skit i det. ändra bara inget
         try {
@@ -90,14 +97,14 @@ public class TileManager {
 
             // TODO: for-loop, kinda, kanske, vi får se
 
-            int mapHeight = 30;
-            int mapWidth = 30;
+            int mapHeight = getMapHeight(filePath);
+            int mapWidth =  30;
 
 
             int col = 0;
             int row = 0;
             String line = null;
-            do{
+            do{                        //Read atleast one line
                 line = br.readLine(); // här läses en line
 
                 if (line != null){                                                          //(col < gp.maxWorldCol) {
@@ -111,12 +118,13 @@ public class TileManager {
                     mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
                     col++;
                 }
-                if (col == gp.maxWorldCol) {
+                if (col == mapHeight) {
                     col = 0;
                     row++;
                 }
                 System.out.println("Current line is done..");
             } while (line != null); //read until there is no more lines
+            System.out.println("");
             br.close();             //close the stream
         } catch (IOException e) {
             e.printStackTrace();
@@ -145,12 +153,13 @@ public class TileManager {
         int screenY = worldY - gp.player.worldY + gp.player.screenY;        //worldx/y och screen x/y är lite fucked atm
         for (int i = 0; i < worldCol; i++){
             for (int j = 0; j < worldRow; j++){
-                if(mapTileNum[i][j] != -1)
+                if(mapTileNum[i] != null){
                     if(tileToDraw != 0){
                         System.out.println("the tile to be drawn is number: " + tileToDraw);
                     }
                     tileToDraw = mapTileNum[i][j];
-                    g2.drawImage(tile[tileToDraw].image, worldX, worldY, gp.tileSize, gp.tileSize, null);
+                    g2.drawImage(tile[tileToDraw].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                    }
                 }
             }
         }

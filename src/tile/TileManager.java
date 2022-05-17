@@ -28,8 +28,9 @@ public class TileManager {
     // TILE ANIMATION SETTINGS
     int frame = 0;
 
-    public TileManager(GamePanel gp) {
+    public TileManager(GamePanel gp, String starterMap) {
         this.gp = gp;
+        currentMap = starterMap;
 
         tile = new Tile[1200];
         mapManager = new MapManager();
@@ -175,6 +176,7 @@ public class TileManager {
             /** @author Kinda, fråga om saker o ting är förvirrande **/
             if (map != null) {
                 mapTileNum = new int[map.getHeight()][map.getWidth()];
+                System.out.println("MAP FOUND");
 
                 InputStream is = getClass().getResourceAsStream(filePath); // text file
                 BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
@@ -195,13 +197,15 @@ public class TileManager {
 
                             int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
 
-                            mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
-                            System.out.println("done");
+                            mapTileNum[row][col] = num;     // och sedan sparar siffran i vår map array
                         }
                     }
                 }
 
                 br.close();
+            } else {
+                System.out.println("MAP NOT FOUND");
+                System.exit(0);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -218,7 +222,7 @@ public class TileManager {
         for (int worldRow = 0; worldRow < map.getHeight(); worldRow++) {
             for (int worldCol = 0; worldCol < map.getWidth(); worldCol++) {
 
-                int tileIndex = mapTileNum[worldCol][worldRow];
+                int tileIndex = mapTileNum[worldRow][worldCol];
 
                 /** här blir worldCol & worldRow mängden av tiles.
                  *
@@ -260,9 +264,8 @@ public class TileManager {
         }
     }
 
-    public Map getMap(String file){
+    public Map getMap(String file) {
         ArrayList<Map> maps = mapManager.getMapList();
-
         for (int i = 0; i < maps.size(); i++) {
             if (file.equals(maps.get(i).getMapTxtFile())) {
                 return maps.get(i);

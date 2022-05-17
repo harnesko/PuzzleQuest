@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
 
     TileManager tileManager;
-    KeyHandler keyH;
+    KeyHandler keyH = new KeyHandler(this); // knapparna WASD
     Thread gameThread; // tiden för spelet
     // ===================================
     public UI ui = new UI(this); //lade till public
@@ -62,7 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
     Config config = new Config(this);
     // ===================================
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public Player player;
+    public Player player = new Player(this, keyH);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
     public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
 
@@ -73,22 +73,15 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
-        keyH = new KeyHandler(this); // knapparna WASD
-        tileManager = new TileManager(this);
-        player = new Player(this, keyH);
-        setDefaultGameValues();
+        tileManager = new TileManager(this, "/maps/TiledTesting.txt");
     }
 
     public void setDefaultGameValues() {
-        /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !
+        /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !!!
         // ============ PLAYER DEFAULT VALUES ============ //
-        player.worldX = tileSize * 1000;
-        player.worldY = tileSize * 1000;
+        player.worldX = tileSize * 17;
+        player.worldY = tileSize * 14;
         player.direction = "idledown";
-
-
-        // ============ MAP DEFAULT VALUES ============ //
-        tileManager.currentMap = "/maps/TiledTesting.txt";
     }
 
     public void setupGame() {
@@ -113,6 +106,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         double drawInterval = 1000000000 / FPS; // 1,000,000,000 nanosekunder
         double nextDrawTime = System.nanoTime() + drawInterval;
+
+        setDefaultGameValues(); // ?!!!
 
         while (gameThread != null) {
 

@@ -27,7 +27,6 @@ public class Map {
             String line;
             while ((line = br.readLine()) != null) {
                 lineCount++;
-                System.out.println("COUNTED");
                 int charCount = line.split(",").length;
                 totalCharCount += charCount;
             }

@@ -32,6 +32,7 @@ public class TileManager {
         this.gp = gp;
 
         tile = new Tile[1200];
+        mapManager = new MapManager();
 
         getTileImages();
         loadMap(currentMap);
@@ -260,7 +261,6 @@ public class TileManager {
     }
 
     public Map getMap(String file){
-        mapManager = new MapManager();
         ArrayList<Map> maps = mapManager.getMapList();
 
         for (int i = 0; i < maps.size(); i++) {

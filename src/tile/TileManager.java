@@ -25,16 +25,54 @@ public class TileManager {
         this.gp = gp;
 
         tile = new Tile[1200];
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+       // mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
-        getTileImages();
-        loadMap("/maps/TiledTesting.txt");
+        getTileImagesTEST();
+        loadMap("/maps/testmap2.txt");
+    }
+    public void getTileImagesTEST(){
+         // TODO: för kinda, ersätta, lägga till, byta gfx sen
+            try {
+                //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
+                tile[0] = new Tile(); // Background
+                tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
+
+                tile[1] = new Tile(); // Bushtest
+                tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/bush_test.png")));
+                tile[1].collision = true;
+
+                tile[2] = new Tile(); // Sand
+                tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+                tile[2].collision = true;
+
+                tile[3] = new Tile(); // Tree
+                tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
+
+                tile[4] = new Tile(); // Wall
+                tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
+                tile[4].collision = true;
+
+                tile[5] = new Tile(); // Water
+                tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
+                tile[5].collision = true;
+
+                tile[6] = new Tile(); // Grass
+                tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
+
+                tile[7] = new Tile(); // Sand
+                tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
     }
 
     public void getTileImage() { // TODO: för kinda, ersätta, lägga till, byta gfx sen
         try {
             tile[0] = new Tile(); // GRASS
             tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
+            tile[0].collision = false;
 
             tile[1] = new Tile(); // WALL
             tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
@@ -53,6 +91,11 @@ public class TileManager {
 
             tile[5] = new Tile(); // SAND
             tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+            tile[5].collision = false;
+
+            tile[6] = new Tile(); //something else
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,6 +162,12 @@ public class TileManager {
              *
              * kolla i resource.maps.snabbmapguide.pdf för info på hur denna text fil skapas */
 
+
+            int maxColTiles = measureMap(1, filePath); // 1 är horizontalt alltså width
+            int maxRowTiles = measureMap(2, filePath); // 2 är vertikalt alltså height
+
+            mapTileNum = new int[maxRowTiles][maxColTiles];
+
             InputStream is = getClass().getResourceAsStream(filePath); // text file
             BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
 
@@ -127,27 +176,57 @@ public class TileManager {
             // j = col
             int col = 0;
 
-            for (row = 0; (row < gp.maxWorldRow); row++) {
+            for (row = 0; (row < maxRowTiles); row++) {
 
                 String line = br.readLine(); // här läses en line
 
-                for (col = 0; col < gp.maxWorldCol; col++) {
+                for (col = 0; col < maxColTiles; col++) {
 
-                    String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
+                    if(line != null){
+                        String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
+
+                        int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
+
+                        mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
+                        System.out.println("done");
+                    }
                     // efter varje space, så att den behandlar
                     // varje siffra enskilt
 
-                    int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
-
-                    mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
                 }
             }
+
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public int measureMap(int x, String fileName) {
+        InputStream is = getClass().getResourceAsStream(fileName); // text file
+        BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
+        int lineCount = 0; //
+        int totalCharCount = 0;
+
+        try {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lineCount++;
+                int charCount = line.split(",").length;
+                totalCharCount += charCount;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("line count är " + lineCount);
+        System.out.println("total char är " + totalCharCount);
+        return x == 1 ? lineCount : (totalCharCount / lineCount);
+    }
     public void draw(Graphics2D g2, boolean debugON) {
 
         Debug debug = new Debug(); // DELETE LATER, not now
@@ -157,7 +236,8 @@ public class TileManager {
 
         for (int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
             for (int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
-
+                gp.maxWorldCol = 30;
+                gp.maxScreenRow = 30;
                 int tileIndex = mapTileNum[worldCol][worldRow];
 
                 /** här blir worldCol & worldRow mängden av tiles.

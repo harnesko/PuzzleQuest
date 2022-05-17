@@ -76,10 +76,10 @@ public class GamePanel extends JPanel implements Runnable {
         keyH = new KeyHandler(this); // knapparna WASD
         tileManager = new TileManager(this);
         player = new Player(this, keyH);
-        setDefaultGamesValues();
+        setDefaultGameValues();
     }
 
-    public void setDefaultGamesValues() {
+    public void setDefaultGameValues() {
         /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !
         // ============ PLAYER DEFAULT VALUES ============ //
         player.worldX = tileSize * 1000;
@@ -111,7 +111,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-
         double drawInterval = 1000000000 / FPS; // 1,000,000,000 nanosekunder
         double nextDrawTime = System.nanoTime() + drawInterval;
 

@@ -9,13 +9,17 @@ public class MapManager {
     ArrayList<Map> mapList;
 
     public MapManager(){
+        mapList = new ArrayList<>();
         setupMaps();
     }
 
     public void setupMaps(){
-        Map starterMap = new Map("/maps/testMap.txt"); // TODO: add an actual starter map
+        Map starterMap = new Map("/maps/TiledTesting.txt"); // TODO: add an actual starter map
 
         mapList.add(starterMap);
     }
 
+    public ArrayList<Map> getMapList() {
+        return mapList;
+    }
 }

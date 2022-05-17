@@ -31,11 +31,12 @@ public class TileManager {
         loadMap("/maps/testmap2.txt");
     }
     public void getTileImagesTEST(){
-         // TODO: för kinda, ersätta, lägga till, byta gfx sen
+         // TODO: gp.maxWorldCol/maxWorldRow is currently non-final because it broke otherwise idk i guess fix it later
             try {
                 //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
                 tile[0] = new Tile(); // Background
                 tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
+                tile[0].collision = true;
 
                 tile[1] = new Tile(); // Bushtest
                 tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/bush_test.png")));
@@ -47,6 +48,7 @@ public class TileManager {
 
                 tile[3] = new Tile(); // Tree
                 tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
+                tile[3].collision = true;
 
                 tile[4] = new Tile(); // Wall
                 tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
@@ -83,10 +85,10 @@ public class TileManager {
             tile[2].collision = true;
 
             tile[3] = new Tile(); // EARTH
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
 
             tile[4] = new Tile(); // TREE
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
             tile[4].collision = true;
 
             tile[5] = new Tile(); // SAND
@@ -236,7 +238,7 @@ public class TileManager {
 
         for (int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
             for (int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
-                gp.maxWorldCol = 30;
+                gp.maxWorldCol = 30;    //Change this later by using the measure map. Set gp.maxWorldCol/row to actual map size
                 gp.maxScreenRow = 30;
                 int tileIndex = mapTileNum[worldCol][worldRow];
 

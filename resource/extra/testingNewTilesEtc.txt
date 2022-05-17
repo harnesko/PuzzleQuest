@@ -1,0 +1,43 @@
+transparent = 0
+water top 1 [1], 2 [2], 3 [3]
+water mid 1 [101], 2 [102], 3 [103]
+water bot 1 [1001], 2 [1002], 3 [1003]
+(tile breaks off against grass..)
+grass = 4
+sand (path) = 5
+(tile breaks off against grass...)
+
+detail:
+transparent = 0
+grass detail = 1
+tadpoles = 2
+wooden logs = 3
+bush = 4
+
+group_tree1 = 5
+group_tree2 = 6
+group_tree3 = 6
+group_tree4 = 5
+
+tree1 = 7
+tree2 = 8
+tree3 = 9
+tree4 = 10
+
+x = 17
+y = 13
+
+BASE
+3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0

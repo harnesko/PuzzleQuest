@@ -20,29 +20,33 @@ public class UI {
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
-    public String currentDialog ="";
+    public String currentDialog = "";
 
+    //Images
     //Images
     private final Image woodPlankImage = new ImageIcon("resource/Images/woodplank.png").getImage();
     private final Image woodBackground = new ImageIcon("resource/Images/woodframe.png").getImage();
+    private final Image woodFrame = new ImageIcon("resource/Images/woodframe.png").getImage();
+    private final Image woodFrame2 = new ImageIcon("resource/Images/woodFrame2.png").getImage();
 
     //Different states
     public int commandNumber = 0;
     public int titleScreenState = 0;
-    public boolean save1Active,save2Active,save3Active,save4Active;
+    public boolean save1Active, save2Active, save3Active, save4Active;
     public boolean fullscreen;
+    public int settingsState = 0;
 
-
-    public UI(GamePanel gp){
+    public UI(GamePanel gp) {
         this.gp = gp;
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         Key key = new Key();
-        keyImage = key.image;;
+        keyImage = key.image;
+        ;
     }
 
 
-    public void showMessage(String text){
+    public void showMessage(String text) {
         message = text;
         messagesOn = true;
 
@@ -50,43 +54,19 @@ public class UI {
 
     /**
      * This method is used to draw the different Ui's.
-     * With the help of GamePanel's game states we can draw what is needed for that specific state.
-     * @param g2 We send in Graphics2D to be able to draw the different objects.
+     * With the help of GamePanel's game states we can draw what is needed for that specifik state.
+     *
+     * @param g2 We send in Graphics2D to be able to draw the different objekts.
      * @author Kristoffer & Gustav
      */
-    public void draw(Graphics2D g2){
-        if(gameFinished){
-            g2.setFont(arial_40);
-            g2.setColor(Color.white);
-
-            String text;
-            int textLength;
-            int x;
-            int y;
-
-            text = "Boi you got rich!";
-            textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-
-            x = gp.screenWidth/2 - textLength/2;
-            y = gp.screenHeight/2 - (gp.tileSize*3);
-            g2.drawString(text, x, y);
-
-            gp.gameThread = null;
-        }
-        else {
+    public void draw(Graphics2D g2) {
+        if (gameFinished) {
+            gameWon();
+        } else {
             this.g2 = g2;
-            //g2.setFont(); //todo later
-            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            g2.setColor(Color.WHITE);
-
-            //Display keys tror detta ska ligga i "gp.playstate" Hitta en bättre font än arial
-            g2.setFont(arial_40);
-            g2.setColor(Color.white);
-            g2.drawImage(keyImage, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize, null);
-            g2.drawString("x " + gp.player.hasKey, 95, 77);
-
+            someStuffIDK(); //Gustav kan du ändra namnet på metoden till något mer passande.
             //message
-            if (messagesOn) {
+            if (messagesOn) { // TODO: lägga denna block av kod i nån metod utanför draw för tydlighetsskull
                 g2.setFont(g2.getFont().deriveFont(30F));
                 g2.drawString(message, gp.tileSize / 2, gp.tileSize * 5);
 
@@ -106,16 +86,15 @@ public class UI {
             }
 
 
-            if (gp.gameState == gp.optionsState) {
+            if (gp.gameState == gp.optionsState || gp.gameState == gp.noneState) {
                 drawSettingsMenu(g2);
                 g2.fillRect(0, 0, 200, 200);
             }
 
-            if (gp.gameState == gp.dialogueState) {
-                drawDialogueWindow();
+            if (gp.gameState == gp.dialogState) {
+                //todo later
             }
         }
-
     }
 
     /**
@@ -126,16 +105,25 @@ public class UI {
      */
     public void drawSettingsMenu(Graphics2D g2) {
 
-        // inget ändrat här förutom g2 parameter
-
         //Sub window
         int frameX = gp.tileSize*6;
         int frameY = gp.tileSize;
         int frameWidth = gp.tileSize*8;
         int frameHeight = gp.tileSize*10;
-        //drawSubWindow(g2,frameX,frameY,frameWidth,frameHeight);
-        g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
 
+        if(settingsState == 0){
+            g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
+            optionsMenu();
+        }
+        else if (settingsState == 1 && gp.gameState == gp.noneState){
+            g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
+            fullScreenNotification(frameX, frameY);
+        }
+
+    }
+
+
+    public void optionsMenu(){
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55F));
         String title = "Settings";
         int x = 525;
@@ -145,10 +133,7 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
 
         String text = "Music: < " + gp.music.volumeScale + " >";
-       // x = getXForCenteredText(title);
-        /**
-         * Försök fixa denna. G2 blir null för den är efterbliven
-         */
+
         x = gp.tileSize*8;
         y = gp.tileSize * 4 + (gp.tileSize/2);
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
@@ -169,10 +154,17 @@ public class UI {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
         }
 
+
         if(!fullscreen){
             text = "FullScreen [ ]";
+            if(gp.keyH.enterPressed) {
+                settingsState = 1;
+            }
         }else{
             text = "FullScreen [X]";
+            if(gp.keyH.enterPressed) {
+                settingsState = 1;
+            }
         }
 
         y += 100;
@@ -187,55 +179,26 @@ public class UI {
         text = "Return to Menu";
         y += 100;
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x, y+2);
+        g2.drawString(text, x + 15, y + 2);
         if (commandNumber == 3) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 60 , y);
+            g2.drawString(">", x - 80 , y);
         }
         gp.config.saveConfig();
     }
 
     /**
-     * This method draws a small sub frame to be able to be used for example the dialogue frame.
-     * @param g2 We send in Graphics2D to be able to draw the different objects.
+     * This method draws a small sub frame to be able to be used for example the dialog frame.
+     * @param g2 We send in Graphics2D to be able to draw the different objekts.
      * @param x The X coordinate position for the window
      * @param y The Y coordinate position for the window
      * @param width The width size of the window
      * @param height height size of the window
      * @author Kristoffer
      */
+    public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
+        g2.drawImage(woodFrame,x,y,width,height,null);
 
-   public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
-        //Dialogue window
-        Color c = new Color(0,0,0, 200);        //4th param = opacity
-        g2.setColor(c);
-        g2.fillRoundRect(x,y,width,height,35,35);
-
-        //Defines a line along the edge for aesthetics
-        c = new Color(81, 88, 129);
-        g2.setColor(c);
-        g2.setStroke(new BasicStroke(5));
-        g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
-   }
-
-    /**
-     * This method uses the method drawSubWindow() to use its frame into a dialogue
-     * @author Måns
-     */
-   public void drawDialogueWindow(){
-        int x = 200;    //gp.tileSize * 2; //x position
-        int y = 550;//gp.tileSize / 2; //y position
-
-        int width = 800;                 //gp.screenWidth - (gp.tileSize * 4);
-        int height = 200;                //gp.tileSize * 5;
-
-        drawSubWindow(g2, x, y, width, height);
-
-        x =+ gp.tileSize + 170; //text x position
-        y += gp.tileSize;       //text y position
-       if(currentDialog != null){
-           g2.drawString(currentDialog, x, y);
-       }
     }
     /**
      * This is an organised method to dictate what is being drawn in the MainMenu.
@@ -255,15 +218,9 @@ public class UI {
             settingsMenu();
         }
     }
-
-    public void interactWithNPC(int i){     //remove? Player class does this currently
-        if (i != -1){
-            gp.gameState = gp.dialogueState;
-        }
-    }
     /**
      * This method draws the MainMenu screen with the possible sub Menus the player could choose.
-     * Its being drawn by the g2 variable to draw the different objekts.
+     * Its being draw by the g2 variable to draw the different objekts.
      * @author Kristoffer
      */
     public void startMenu(){
@@ -275,7 +232,7 @@ public class UI {
 
         //title Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String title = "PuzzleQuest";
+        String title = "HomeQuest";
         int x = getXForCenteredText(title);
         int y = gp.tileSize * 3;
 
@@ -296,7 +253,6 @@ public class UI {
         g2.drawString(text, x, y + 2);
         if (commandNumber == 0) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
 
         text = "Load Game";
@@ -305,7 +261,6 @@ public class UI {
         g2.drawString(text, x - 5, y + 2);
         if (commandNumber == 1) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
 
         text = "Settings";
@@ -314,21 +269,15 @@ public class UI {
         g2.drawString(text, x + 34, y + 2);
         if (commandNumber == 2) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
         text = "Quit";
         y += gp.tileSize + 25;
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        try{
-            g2.drawString(text, x + 70, y + 2);
-        }catch (ClassCastException e){
-            System.out.println("It happened again :(");  //Todo måns lös detta eller nåt (Testa att döda tråden innan vi terminerar programmet?)
-        }
+        g2.drawString(text, x + 70, y + 2);
         if (commandNumber == 3) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
     }
 
@@ -347,7 +296,7 @@ public class UI {
 
         //title Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String title = "PuzzleQuest";
+        String title = "HomeQuest";
         int x = getXForCenteredText(title);
         int y = gp.tileSize * 3;
 
@@ -374,7 +323,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 0) {
             g2.drawString(">", x - 45, y + 2);
-            //scrollAudio();
         }
 
         text = "Save 2";
@@ -388,7 +336,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 1) {
             g2.drawString(">", x - 45, y);
-            // scrollAudio();
         }
 
         text = "Save 3";
@@ -402,7 +349,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 2) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
 
         text = "Save 4";
@@ -416,7 +362,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 3) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
@@ -427,7 +372,6 @@ public class UI {
         g2.drawString(text, x + 45, y + 5);
         if (commandNumber == 4) {
             g2.drawString(">", x - 45, y);
-            //scrollAudio();
         }
     }
     /**
@@ -446,13 +390,14 @@ public class UI {
 
         //title Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String title = "PuzzleQuest";
+        String title = "HomeQuest";
         int x = getXForCenteredText(title);
         int y = gp.tileSize * 3;
 
         //Shadow of title
         g2.setColor(Color.black);
         g2.drawString(title, x + 5, y + 5);
+
         //Main color
         g2.setColor(Color.white);
         g2.drawString(title, x, y);
@@ -504,6 +449,15 @@ public class UI {
             g2.drawString(">", x - 45 , y);
         }
         gp.config.saveConfig();
+
+        if (gp.keyH.enterPressed){
+            int frameX = gp.tileSize * 6;
+            int frameY = gp.tileSize * 3 + (gp.tileSize/2) ;
+            int frameWidth = gp.tileSize * 8;
+            int frameHeight = gp.tileSize * 8;
+            g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
+            fullScreenNotification(frameX, frameY);
+        }
     }
 
     /**
@@ -513,15 +467,53 @@ public class UI {
      * * @author Kristoffer
      */
     public void fullScreenNotification(int x, int y){
-        int textX = x + gp.tileSize;
-        int textY = y + gp.tileSize*3;
 
-        currentDialog = "The change will take \n effect after restarting the game";
-        for(String line: currentDialog.split("\n")){
-            g2.drawString(line,textX,textY);
-            textY+=40;
-        }
+        g2.setColor(Color.black);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+        String text = "The change will take effect";
+        g2.drawString(text, gp.tileSize*7, gp.tileSize*6);
+        text = "after restarting the game";
+        g2.drawString(text, gp.tileSize*7, gp.tileSize*6+50);
 
+        //back
+        g2.setColor(Color.WHITE);
+        x = gp.tileSize*8;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        text = "Return";
+        y = gp.tileSize*10;
+        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        g2.drawString(text, x + 50, y+2);
+        g2.drawString(">", x - 45 , y);
+    }
+    public void gameWon(){
+        g2.setFont(arial_40);
+        g2.setColor(Color.white);
+
+        String text;
+        int textLength;
+        int x;
+        int y;
+
+        text = "Boi you got rich!";
+        textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+
+        x = gp.screenWidth/2 - textLength/2;
+        y = gp.screenHeight/2 - (gp.tileSize*3);
+        g2.drawString(text, x, y);
+
+        gp.gameThread = null;
+    }
+
+    public void someStuffIDK(){
+        //g2.setFont(); //todo later
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2.setColor(Color.WHITE);
+
+        //Display keys tror detta ska ligga i "gp.playstate" Hitta en bättre font än arial
+        g2.setFont(arial_40);
+        g2.setColor(Color.white);
+        g2.drawImage(keyImage, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize, null);
+        g2.drawString("x " + gp.player.hasKey, 95, 77);
     }
 
     /**
@@ -531,8 +523,8 @@ public class UI {
      * * @author Kristoffer
      */
     public int getXForCenteredText(String text){
-       int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-       int x = gp.screenWidth/2 - length/2;
-       return x;
+        int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        int x = gp.screenWidth/2 - length/2;
+        return x;
     }
 }

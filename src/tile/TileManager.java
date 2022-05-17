@@ -27,8 +27,8 @@ public class TileManager {
         tile = new Tile[1200];
        // mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
-        getTileImagesTEST();
-        loadMap("/maps/testmap2.txt");
+        getTileImages();
+        loadMap("/maps/TiledTesting.txt");
     }
     public void getTileImagesTEST(){
          // TODO: gp.maxWorldCol/maxWorldRow is currently non-final because it broke otherwise idk i guess fix it later

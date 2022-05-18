@@ -15,8 +15,10 @@ public class MapManager {
 
     public void setupMaps(){
         Map starterMap = new Map("/maps/TiledTesting.txt"); // TODO: add an actual starter map
+        Map testingMap = new Map("/maps/testy");
 
         mapList.add(starterMap);
+        mapList.add(testingMap);
     }
 
     public ArrayList<Map> getMapList() {

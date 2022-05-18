@@ -79,8 +79,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void setDefaultGameValues() {
         /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !!!
         // ============ PLAYER DEFAULT VALUES ============ //
-        player.worldX = tileSize * 17;
-        player.worldY = tileSize * 14;
+        player.worldX = tileSize * 2;
+        player.worldY = tileSize * 2;
         player.direction = "idledown";
     }
 

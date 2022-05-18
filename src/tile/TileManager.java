@@ -29,7 +29,7 @@ public class TileManager {
        // mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImagesTEST();
-        loadMap("/maps/map04.txt");
+        loadMap("/maps/sawmill.txt");
     }
     public void getTileImagesTEST(){
          // TODO: gp.maxWorldCol/maxWorldRow is currently non-final because it broke otherwise idk i guess fix it later
@@ -43,9 +43,9 @@ public class TileManager {
                 tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/bush_test.png")));
                 tile[1].collision = true;
 
-                tile[2] = new Tile(); // Sand
-                tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
-                tile[2].collision = true;
+                tile[2] = new Tile(); // Dirt
+                tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
+
 
                 tile[3] = new Tile(); // Tree
                 tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
@@ -238,8 +238,6 @@ public class TileManager {
 
         for (int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
             for (int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
-                gp.maxWorldCol = 30;    //Change this later by using the measure map. Set gp.maxWorldCol/row to actual map size
-                gp.maxScreenRow = 30;
                 int tileIndex = mapTileNum[worldCol][worldRow];
 
                 /** här blir worldCol & worldRow mängden av tiles.
@@ -268,7 +266,7 @@ public class TileManager {
                         worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                         worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-                    tileIndex = playTileAnimations(tileIndex);
+                    //tileIndex = playTileAnimations(tileIndex);
                     if (tile[tileIndex] != null) {
                         g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
                     }

@@ -37,8 +37,13 @@ public class NPC_Luigi extends NPC{
 
     @Override
     public void speak() {
-        gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
-        dialogueIndex++;
+        if(dialogueIndex <= dialogues.length) {
+            gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
+            dialogueIndex++;
+        }else{
+            dialogueIndex = 1;      //Skip the first line of dialogue if it has been previously exausted
+        }
+
     }
 
     public void progressQuest(){

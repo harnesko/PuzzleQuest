@@ -217,6 +217,7 @@ public class UI {
     public void drawDialogueWindow(){
         int x = 200;    //gp.tileSize * 2; //x position
         int y = 550;//gp.tileSize / 2; //y position
+        System.out.println("HERE");
 
         int width = 800;                 //gp.screenWidth - (gp.tileSize * 4);
         int height = 200;                //gp.tileSize * 5;

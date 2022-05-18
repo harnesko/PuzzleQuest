@@ -62,8 +62,8 @@ public class Player extends Entity {
         // int värden = index på tiles
         // int värden kan ändras för att positionera han olika ställen. exempel: vill du ha han längst
         // upp till vänster? direkt i första tile:en som skapas? byt ut värden med 0 och 0.
-        worldX = gp.tileSize * 17;
-        worldY = gp.tileSize * 15;
+        worldX = gp.tileSize * 20;
+        worldY = gp.tileSize * 20;
 
         // editat av Kinda
         // org var: 23, 21
@@ -207,6 +207,7 @@ public class Player extends Entity {
             if(keyH.ePressed){
                 gp.npcList[npcIndex].speak();
                 //keyH.ePressed = false;
+                gp.gameState = gp.dialogueState;
             }
         }
     }

@@ -142,7 +142,7 @@ public class Player extends Entity {
             pickUpObject(objIndex);
 
             // CHECK EVENT
-        //    gp.eHandler.checkEvent();
+            gp.eHandler.checkEvent();
             /*
             Funkar av någon anledning inte att starta spelet då man ska checka event.
             Kan vara pga av rendering issues. Får testa
@@ -428,6 +428,7 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image,x,y,gp.tileSize,gp.tileSize,null);
+
 
     }
 }

@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
     Sound soundEffects = new Sound();
     Config config = new Config(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-   // public EventHandler eHandler = new EventHandler(this);
+    public EventHandler eHandler = new EventHandler(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public GameObject obj[][] = new GameObject[maxMap][10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10

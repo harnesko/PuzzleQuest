@@ -45,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleState = 0;
     public final int playState = 1;
     public final int optionsState = 2;
-    public final int dialogState = 3;
+    public final int dialogueState = 3;
     public final int noneState = 4;
     // ===================================
 
@@ -75,6 +75,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
+        AssetSetter setter = new AssetSetter(this);
+        setter.setNPC();
         playMusik(0);
         gameState = titleState;
 

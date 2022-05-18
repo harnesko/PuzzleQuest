@@ -91,8 +91,8 @@ public class UI {
                 g2.fillRect(0, 0, 200, 200);
             }
 
-            if (gp.gameState == gp.dialogState) {
-                //todo later
+            if (gp.gameState == gp.dialogueState) {
+                drawDialogueWindow();
             }
         }
     }
@@ -194,11 +194,40 @@ public class UI {
      * @param y The Y coordinate position for the window
      * @param width The width size of the window
      * @param height height size of the window
-     * @author Kristoffer
+     * @author Kristoffer, Måns
      */
     public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
-        g2.drawImage(woodFrame,x,y,width,height,null);
+        //Dialogue window
+        Color c = new Color(0, 0, 0, 200);        //4th param = opacity
+        g2.setColor(c);
+        g2.fillRoundRect(x, y, width, height, 35, 35);
 
+        //Text color
+        c = new Color(255, 255, 255);
+        //Defines a line along the edge for aesthetics
+        c = new Color(81, 88, 129);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
+    }
+    /**
+     * This method uses the method drawSubWindow() to use its frame into a dialogue
+     * @author Måns
+     */
+    public void drawDialogueWindow(){
+        int x = 200;    //gp.tileSize * 2; //x position
+        int y = 550;//gp.tileSize / 2; //y position
+
+        int width = 800;                 //gp.screenWidth - (gp.tileSize * 4);
+        int height = 200;                //gp.tileSize * 5;
+
+        drawSubWindow(g2, x, y, width, height);
+
+        x =+ gp.tileSize + 170; //text x position
+        y += gp.tileSize;       //text y position
+        if(currentDialog != null){
+            g2.drawString(currentDialog, x, y);
+        }
     }
     /**
      * This is an organised method to dictate what is being drawn in the MainMenu.

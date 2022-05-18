@@ -15,7 +15,6 @@ import java.util.Objects;
  */
 public class NPC_Luigi extends NPC{
     public GamePanel gp;
-    //public String[] npcLuigiDialogue = new String[10];
     private int screenX; // Are these needed for an NPC or is it only for Player?
     private int screenY;
     BufferedImage luigi_image1 = null;
@@ -40,8 +39,8 @@ public class NPC_Luigi extends NPC{
     public void speak() {
         gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
         dialogueIndex++;
-
     }
+
     public void progressQuest(){
         for (int i = 0; i < questProgress.length; i++){
             if(!questProgress[i]) {

@@ -29,6 +29,8 @@ public abstract class NPC extends Entity{       //Super class for all npc's
     private int screenX; // Are these needed for an NPC or is it only for Player?
     private int screenY;
     public int directionalDelay = 0;
+    int dialogueIndex = 0;
+    String[] dialogues = new String[10];
 
     public NPC (GamePanel gp){
         super(gp);

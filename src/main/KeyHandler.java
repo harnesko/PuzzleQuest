@@ -34,6 +34,13 @@ public class KeyHandler implements KeyListener {
         }
         if(gp.gameState == gp.noneState){
             optionsBackButton(code);
+        }        if(gp.gameState == gp.dialogueState){
+            if(code == KeyEvent.VK_ENTER){      //What key to use to exit dialogue? Enter?
+                gp.gameState = gp.playState;
+            } else if (code == KeyEvent.VK_E) {
+                gp.npcList[1].progressDialogue();
+            }
+
         }
     }
 

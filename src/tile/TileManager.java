@@ -16,6 +16,7 @@ public class TileManager {
     GamePanel gp;
     public Tile[] tile;
     public int[][] mapTileNum;
+    private int mapWidth, mapHeight;
 
     // TILE ANIMATION SETTINGS
     int frame = 0;
@@ -28,7 +29,7 @@ public class TileManager {
        // mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImagesTEST();
-        loadMap("/maps/testmap2.txt");
+        loadMap("/maps/map04.txt");
     }
     public void getTileImagesTEST(){
          // TODO: gp.maxWorldCol/maxWorldRow is currently non-final because it broke otherwise idk i guess fix it later
@@ -203,7 +204,6 @@ public class TileManager {
             e.printStackTrace();
         }
     }
-
     public int measureMap(int x, String fileName) {
         InputStream is = getClass().getResourceAsStream(fileName); // text file
         BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
@@ -232,7 +232,7 @@ public class TileManager {
     public void draw(Graphics2D g2, boolean debugON) {
 
         Debug debug = new Debug(); // DELETE LATER, not now
-        System.out.println("CONFIRMED");
+        //System.out.println("CONFIRMED");
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
 
@@ -281,6 +281,7 @@ public class TileManager {
             }
         }
     }
+
 
     public int playTileAnimations(int i) { // TODO: fixa lol
         frame++;

@@ -24,8 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenCol = 16; // mappen blir 16 tiles horizontalt
     // public final int maxScreenCol = 20; .. vrf?
     public int maxScreenRow = 12; // och 12 tiles vertikalt
-    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
+    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
 
     // WORLD SETTINGS dessa kan ändras // TODO: används ej mer ?
     public int maxWorldCol = 37;
@@ -75,19 +75,14 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
-        tileManager = new TileManager(this, mapManager, "/maps/TiledTesting.txt");
+        tileManager = new TileManager(this, mapManager, "/maps/maintown");
     }
 
     public void setDefaultGameValues() {
         /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !!!
         // ============ PLAYER DEFAULT VALUES ============ //
-
         for (int i = 0; i < mapManager.getMapList().size(); i++) {
             if (mapManager.getMapList().get(i).getMapTxtFile().equals(tileManager.currentMap)){
-                System.out.println(tileManager.currentMap);
-                System.out.println(mapManager.getMapList().get(i).getMapTxtFile());
-                System.out.println(mapManager.getMapList().get(i).getPlayerSpawnX());
-                System.out.println(mapManager.getMapList().get(i).getPlayerSpawnY());
                 player.worldX = mapManager.getMapList().get(i).getPlayerSpawnX();
                 player.worldY = mapManager.getMapList().get(i).getPlayerSpawnY();
             }

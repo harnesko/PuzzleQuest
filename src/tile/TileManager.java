@@ -35,7 +35,7 @@ public class TileManager {
         tile = new Tile[1200];
         this.mapManager = mapManager;
 
-        getTileImages();
+        getTileImagesTEST();
         loadMap(currentMap);
     }
 
@@ -45,6 +45,7 @@ public class TileManager {
             //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
             tile[0] = new Tile(); // Background
             tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
+            tile[0].collision = true;
 
             tile[1] = new Tile(); // Bushtest
             tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/bush_test.png")));
@@ -52,10 +53,11 @@ public class TileManager {
 
             tile[2] = new Tile(); // Sand
             tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
-            tile[2].collision = true;
+            tile[2].collision = false;
 
             tile[3] = new Tile(); // Tree
             tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
+            tile[3].collision = true;
 
             tile[4] = new Tile(); // Wall
             tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
@@ -186,18 +188,17 @@ public class TileManager {
                 // j = col
                 int col = 0;
 
-                for (row = 0; (row < map.getHeight()); row++) {
+                for (row = 0; row < map.getWidth(); row++) {
 
                     String line = br.readLine(); // här läses en line
 
-                    for (col = 0; col < map.getWidth(); col++) {
-
+                    for (col = 0; col < map.getHeight(); col++) {
                         if (line != null) {
                             String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
 
                             int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
 
-                            mapTileNum[row][col] = num;     // och sedan sparar siffran i vår map array
+                            mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
                         }
                     }
                 }
@@ -215,14 +216,13 @@ public class TileManager {
     public void draw(Graphics2D g2, boolean debugON) {
         Map map = getMap(currentMap);
         Debug debug = new Debug(); // DELETE LATER, not now
-        System.out.println("CONFIRMED");
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
 
-        for (int worldRow = 0; worldRow < map.getHeight(); worldRow++) {
-            for (int worldCol = 0; worldCol < map.getWidth(); worldCol++) {
+        for (int worldRow = 0; worldRow < map.getWidth(); worldRow++) {
+            for (int worldCol = 0; worldCol < map.getHeight(); worldCol++) {
 
-                int tileIndex = mapTileNum[worldRow][worldCol];
+                int tileIndex = mapTileNum[worldCol][worldRow];
 
                 /** här blir worldCol & worldRow mängden av tiles.
                  *
@@ -231,8 +231,8 @@ public class TileManager {
                  * som då är 25 * tilesize (64 just nu) blir 1600 pixlar.
                  * */
 
-                int worldX = worldCol * gp.tileSize;
-                int worldY = worldRow * gp.tileSize;
+                int worldX = worldCol * gp.tileSize; // i pixlar
+                int worldY = worldRow * gp.tileSize; // i pixlar
                 int screenX = worldX - gp.player.worldX + gp.player.screenX; // spelarskärmens x axel + dens bredd
                 int screenY = worldY - gp.player.worldY + gp.player.screenY; // spelarskärmens y axel + dens längd
                 // ovan variabler ger oss "världens kamera" som brukar kunna vara utanför gui:n
@@ -250,15 +250,14 @@ public class TileManager {
                         worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                         worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-                    tileIndex = playTileAnimations(tileIndex);
+                    //tileIndex = playTileAnimations(tileIndex);
                     if (tile[tileIndex] != null) {
                         g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
                     }
-
                 }
 
                 if (debugON) { // OK att ta bort
-                    debug.showMapTiles(g2, screenX, screenY, gp.tileSize);
+                    debug.showMapTiles(g2, screenX, screenY, gp.tileSize, tileIndex);
                 }
             }
         }

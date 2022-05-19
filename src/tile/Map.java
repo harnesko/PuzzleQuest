@@ -8,16 +8,16 @@ import java.io.InputStreamReader;
 public class Map {
 
     private String mapTxtFile;
-    private int width;
     private int height; // TODO: bättre namn?
+    private int width;
     private int playerSpawnX = 0;
     private int playerSpawnY = 0;
 
     public Map(String mapTxtFile){
         this.mapTxtFile = mapTxtFile;
 
-        width = measureMap(2);
-        height = measureMap(1);
+        height = measureMap(2);
+        width = measureMap(1);
     }
 
     public int measureMap(int x) {

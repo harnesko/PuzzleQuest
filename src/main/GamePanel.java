@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
     // ===================================
 
     // FPS
-    int FPS = 5;
+    int FPS = 60;
 
     TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this); // knapparna WASD

@@ -64,7 +64,7 @@ public class UI {
             gameWon();
         } else {
             this.g2 = g2;
-            showKeys(); //Gustav kan du ändra namnet på metoden till något mer passande.
+            showKeys();
             //message
             if (messagesOn) { // TODO: lägga denna block av kod i nån metod utanför draw för tydlighetsskull
                 g2.setFont(g2.getFont().deriveFont(30F));
@@ -88,7 +88,7 @@ public class UI {
 
             if (gp.gameState == gp.optionsState || gp.gameState == gp.noneState) {
                 drawSettingsMenu(g2);
-                g2.fillRect(0, 0, 200, 200);
+                //g2.fillRect(0, 0, 200, 200);
             }
 
             if (gp.gameState == gp.dialogueState) {
@@ -106,7 +106,7 @@ public class UI {
     public void drawSettingsMenu(Graphics2D g2) {
 
         //Sub window
-        int frameX = gp.tileSize*6;
+        int frameX = gp.tileSize*4;
         int frameY = gp.tileSize;
         int frameWidth = gp.tileSize*8;
         int frameHeight = gp.tileSize*10;
@@ -126,7 +126,7 @@ public class UI {
     public void optionsMenu(){
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55F));
         String title = "Settings";
-        int x = 525;
+        int x = gp.tileSize*7 - 45;
         int y = gp.tileSize * 3 - 50;
         g2.drawString(title,x,y);
 
@@ -134,7 +134,7 @@ public class UI {
 
         String text = "Music: < " + gp.music.volumeScale + " >";
 
-        x = gp.tileSize*8;
+        x = gp.tileSize*6;
         y = gp.tileSize * 4 + (gp.tileSize/2);
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
         g2.drawString(text, x + 20 , y);
@@ -494,7 +494,7 @@ public class UI {
      * @param y coordinate
      * * @author Kristoffer
      */
-    public void fullScreenNotification(int x, int y){
+    public void fullScreenNotification(int x, int y){ //centrera möget
 
         g2.setColor(Color.black);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
@@ -505,7 +505,7 @@ public class UI {
 
         //back
         g2.setColor(Color.WHITE);
-        x = gp.tileSize*8;
+        x = gp.tileSize*4;
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
         text = "Return";
         y = gp.tileSize*10;
@@ -532,6 +532,10 @@ public class UI {
         gp.gameThread = null;
     }
 
+    /**
+     * @autor Gustav
+     * Shows the ammount of keys a player has on screen
+     */
     public void showKeys(){
         //g2.setFont(); //todo later
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

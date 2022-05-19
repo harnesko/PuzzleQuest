@@ -171,12 +171,13 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
 
-            if (gameState == optionsState || gameState == noneState) {
-                ui.drawSettingsMenu(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
+             // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
             }
             if(gameState == dialogueState){
                 ui.drawDialogueWindow();
             }
+        if (gameState == optionsState || gameState == noneState) {
+            ui.drawSettingsMenu(g2);
         }
     }
 

@@ -34,11 +34,14 @@ public class KeyHandler implements KeyListener {
         }
         if(gp.gameState == gp.noneState){
             optionsBackButton(code);
-        }        if(gp.gameState == gp.dialogueState){
-            if(code == KeyEvent.VK_ENTER){      //What key to use to exit dialogue? Enter?
-                gp.gameState = gp.playState;
+        }
+        if(gp.gameState == gp.dialogueState){
+            if(code == KeyEvent.VK_E || code == KeyEvent.VK_ENTER  ){      //E or Enter key progresses dialogue
+                gp.ui.displayNextDialogue("Input proper string here");
             } else if (code == KeyEvent.VK_E) {
                 gp.npcList[1].progressDialogue();
+            } else if (code == KeyEvent.VK_ESCAPE){                     //Esc exits dialogue state
+                gp.gameState = gp.playState;
             }
 
         }
@@ -313,6 +316,9 @@ public class KeyHandler implements KeyListener {
          * Denna Fungerar inte med ESC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          * Om den andra är ESC
          */
+        /*if(code == KeyEvent.VK_ESCAPE){
+            gp.gameState = gp.playState;
+        }*/
         if (code == KeyEvent.VK_BACK_SPACE){
             gp.gameState = gp.playState;
         }
@@ -333,7 +339,6 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
-
     }
 
     public void gamePlayKeys(int code){

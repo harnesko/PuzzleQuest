@@ -62,7 +62,7 @@ public class NPC_Mario extends NPC{
         npcMarioDialogue[3] = "bla bla bla";
         npcMarioDialogue[4] = "Please bring this item back to Luigi?";
     }
-    @Override
+
     public  void speak(){
         for (String str : npcMarioDialogue){
             if(str != null)               //ClassCastException ibland i ui???? :(

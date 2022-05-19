@@ -42,14 +42,12 @@ public class UI {
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         Key key = new Key();
         keyImage = key.image;
-        ;
     }
 
 
-    public void showMessage(String text) {
+    public void showMessage(String text) {      //On screen pop up text
         message = text;
         messagesOn = true;
-
     }
 
     /**
@@ -222,12 +220,18 @@ public class UI {
 
         drawSubWindow(g2, x, y, width, height);
 
-        x =+ gp.tileSize + 170; //text x position
+        x = gp.tileSize + 170; //text x position
         y += gp.tileSize;       //text y position
         if(currentDialog != null){
             g2.drawString(currentDialog, x, y);
         }
     }
+    public void displayNextDialogue(String str){
+        currentDialog = str;
+        g2.drawString(currentDialog, gp.tileSize + 170, 600);
+        System.out.println("Current dialogue is: " + currentDialog);
+    }
+
     /**
      * This is an organised method to dictate what is being drawn in the MainMenu.
      * By using the game title states we control if the MainMenu is drawn or the settings Menu or the Saves menu.

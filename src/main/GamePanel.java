@@ -93,10 +93,6 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
     }
 
-    public void npcSpeak(int npcIndex) { // vad är detta? / Kinda
-
-    }
-
     @Override
     public void run() {
 
@@ -142,9 +138,14 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-        if(gameState == dialogueState){
+        if(gameState == dialogueState) {
             ui.drawDialogueWindow();
+            //keyH.ePressed = false;
         }
+        if((gameState == dialogueState) && (keyH.enterPressed)){
+            System.out.println("SUCCESS?");
+                ui.drawDialogueWindow();
+            }
     }
 
     public void drawToTempScreen() {
@@ -209,5 +210,9 @@ public class GamePanel extends JPanel implements Runnable {
         //Get fullscreen width & height
         screenWidth2 = GameStarter.window.getWidth();
         screenHeight2 = GameStarter.window.getHeight();
+    }
+
+    public void progressDialogue(int npcIndex) {
+        npcList[npcIndex].progressDialogue();
     }
 }

@@ -57,7 +57,7 @@ public class AssetSetter {
 
         //Luigi
         gp.npcList[1] = new NPC_Luigi(gp);
-        gp.npcList[1].worldX = 1390;
-        gp.npcList[1].worldY = 1355;
+        gp.npcList[1].worldX = 1290;
+        gp.npcList[1].worldY = 755;
     }
 }

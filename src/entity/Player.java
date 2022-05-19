@@ -62,8 +62,14 @@ public class Player extends Entity {
         // int värden = index på tiles
         // int värden kan ändras för att positionera han olika ställen. exempel: vill du ha han längst
         // upp till vänster? direkt i första tile:en som skapas? byt ut värden med 0 och 0.
-        worldX = gp.tileSize * 21;      //left/right                            //Use tile * 21 for sawmill default
-        worldY = ((gp.tileSize * 11) + (gp.tileSize / 2));       //up /down     //Use tile * 11 for sawmill default
+
+        //Sawmill default pos, tested and works
+        worldX = gp.tileSize * 21;                               //left/right    //Use tile * 21 for sawmill default
+        worldY = ((gp.tileSize * 11) + (gp.tileSize / 2));       //up /down      //Use tile * 11 for sawmill default
+
+        //Testmap default pos, breaks sometime feel free to edit
+        /*worldX = gp.tileSize * 3;
+        worldY = gp.tileSize * 2;*/
 
 
         // editat av Kinda
@@ -155,16 +161,15 @@ public class Player extends Entity {
             interactWithNpc(npcIndex);
             //todo Se om vi kan ta bort parametrar, köra alla objekt i samma array och kolla typ med "instanceof" metoden
             //Checka igenom CollisionChecker
-            if(keyH.ePressed){
-
+            /*if(keyH.ePressed){
                 if (npcIndex != -1){
                     gp.npcList[npcIndex].speak();
-
+                    gp.progressDialogue(npcIndex);
                 }
                 keyH.ePressed = false;
                 System.out.println("Key E pressed");
             }
-
+*/
             System.out.println("Npc index = " + npcIndex);
 
 
@@ -203,13 +208,27 @@ public class Player extends Entity {
 
     }
 
+    /**
+     *
+     * @param npcIndex - Used to determine what NPC the player is near, -1 if no npcs around
+     * @author Måns
+     */
     private void interactWithNpc(int npcIndex) {
         if (npcIndex != -1){
-            if(keyH.ePressed){
+            if(keyH.ePressed && gp.gameState != gp.dialogueState){
                 gp.npcList[npcIndex].speak();
-                //keyH.ePressed = false;
                 gp.gameState = gp.dialogueState;
+                keyH.ePressed = false;
+
+            }else if (gp.gameState == gp.dialogueState){
+                //gp.progressDialogue(npcIndex);
+                System.out.println("Here");
+
+                gp.npcList[npcIndex].progressDialogue();
+                gp.ui.drawDialogueWindow();
             }
+
+            //keyH.ePressed = false;
         }
     }
 

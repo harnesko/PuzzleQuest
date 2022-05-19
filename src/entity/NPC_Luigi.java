@@ -38,13 +38,16 @@ public class NPC_Luigi extends NPC{
     //I guess move this method to super? Depending on how we will do the other npc interactions
     @Override
     public void speak() {
-        if(dialogueIndex < dialogues.length) {
+        if(dialogues[dialogueIndex] == null || (dialogueIndex >= dialogues.length - 1)) {
+            System.out.println("Resetting dialogue..");
+            dialogueIndex = 0;
+        }else{
             gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
             dialogueIndex++;
-        }else{
-            dialogueIndex = 1;      //Skip the first line of dialogue if it has been previously exausted
-        }
+            System.out.println("Dialogue index incremented to: " + dialogueIndex);
 
+           // gp.ui.displayNextDialogue(dialogues[dialogueIndex]);
+        }
     }
 
     public void progressQuest(){
@@ -66,11 +69,10 @@ public class NPC_Luigi extends NPC{
         try{
             luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcTwo/npc_luigi_left.png")));
             if(luigi_image1 == null){
-                System.out.println("here");
+                System.out.println("Load image failed..");
             }
-        }catch (Exception e){
+        }catch (Exception e) {
             e.printStackTrace();
-            System.out.println("also here");
         }
         return luigi_image1;   //todo make void i guess
     }
@@ -157,7 +159,7 @@ public class NPC_Luigi extends NPC{
     public void createDialogue(){
         //Mostly for testing purposes rn, do it properly later or something
         dialogues[0] = "Hello";
-        dialogues[1] = "Nintendo couldn't make this game if they tried";
+        dialogues[1] = "Nintendo couldn't make this\n game if they tried";
         dialogues[2] = "bla bla bla";
         dialogues[3] = "bla bla bla";
         dialogues[4] = "You need go and speak with Mario!";

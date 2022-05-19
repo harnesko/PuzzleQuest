@@ -3,6 +3,7 @@ package main;
 import entity.NPC;
 import entity.Player;
 import gameObject.GameObject;
+import tile.MapManager;
 import tile.TileManager;
 
 import javax.swing.*;
@@ -31,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxWorldRow = 29;
 
     // EXTRA SETTINGS
+    MapManager mapManager = new MapManager(this);
     boolean debugOn; // kan tas bort @author Kinda
 
     // ===================================
@@ -73,15 +75,25 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
-        tileManager = new TileManager(this, "/maps/TiledTesting.txt");
+        tileManager = new TileManager(this, mapManager, "/maps/TiledTesting.txt");
     }
 
     public void setDefaultGameValues() {
         /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !!!
         // ============ PLAYER DEFAULT VALUES ============ //
-        player.worldX = tileSize * 2;
-        player.worldY = tileSize * 2;
-        player.direction = "idledown";
+
+        for (int i = 0; i < mapManager.getMapList().size(); i++) {
+            if (mapManager.getMapList().get(i).getMapTxtFile().equals(tileManager.currentMap)){
+                System.out.println(tileManager.currentMap);
+                System.out.println(mapManager.getMapList().get(i).getMapTxtFile());
+                System.out.println(mapManager.getMapList().get(i).getPlayerSpawnX());
+                System.out.println(mapManager.getMapList().get(i).getPlayerSpawnY());
+                player.worldX = mapManager.getMapList().get(i).getPlayerSpawnX();
+                player.worldY = mapManager.getMapList().get(i).getPlayerSpawnY();
+            }
+        }
+
+        player.direction = "idledown"; // TODO: fixa så det passar mappen, fixa i Map klassen kanske?
     }
 
     public void setupGame() {

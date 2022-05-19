@@ -10,9 +10,12 @@ public class Map {
     private String mapTxtFile;
     private int width;
     private int height; // TODO: bättre namn?
+    private int playerSpawnX = 0;
+    private int playerSpawnY = 0;
 
     public Map(String mapTxtFile){
         this.mapTxtFile = mapTxtFile;
+
         width = measureMap(2);
         height = measureMap(1);
     }
@@ -53,5 +56,21 @@ public class Map {
 
     public int getHeight() {
         return height;
+    }
+
+    public int getPlayerSpawnX() {
+        return playerSpawnX;
+    }
+
+    public int getPlayerSpawnY() {
+        return playerSpawnY;
+    }
+
+    public void setPlayerSpawnX(int playerSpawnX) {
+        this.playerSpawnX = playerSpawnX;
+    }
+
+    public void setPlayerSpawnY(int playerSpawnY) {
+        this.playerSpawnY = playerSpawnY;
     }
 }

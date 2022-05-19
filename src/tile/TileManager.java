@@ -28,12 +28,12 @@ public class TileManager {
     // TILE ANIMATION SETTINGS
     int frame = 0;
 
-    public TileManager(GamePanel gp, String starterMap) {
+    public TileManager(GamePanel gp, MapManager mapManager, String starterMap) {
         this.gp = gp;
         currentMap = starterMap;
 
         tile = new Tile[1200];
-        mapManager = new MapManager();
+        this.mapManager = mapManager;
 
         getTileImages();
         loadMap(currentMap);

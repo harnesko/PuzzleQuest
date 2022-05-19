@@ -29,7 +29,7 @@ public class TileManager {
        // mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImagesTEST();
-        loadMap("/maps/sawmill.txt");
+        loadMap("/maps/main_town.txt");
     }
     public void getTileImagesTEST(){
          // TODO: gp.maxWorldCol/maxWorldRow is currently non-final because it broke otherwise idk i guess fix it later
@@ -272,9 +272,8 @@ public class TileManager {
                     }
 
                 }
-
                 if (debugON) { // OK att ta bort
-                    debug.showMapTiles(g2, screenX, screenY, gp.tileSize);
+                    debug.showMapTiles(g2, screenX, screenY, gp.tileSize, tileIndex);
                 }
             }
         }

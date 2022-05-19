@@ -64,8 +64,8 @@ public class Player extends Entity {
         // upp till vänster? direkt i första tile:en som skapas? byt ut värden med 0 och 0.
 
         //Sawmill default pos, tested and works
-        worldX = gp.tileSize * 21;                               //left/right    //Use tile * 21 for sawmill default
-        worldY = ((gp.tileSize * 11) + (gp.tileSize / 2));       //up /down      //Use tile * 11 for sawmill default
+        worldX = gp.tileSize * 18;                               //left/right    //Use tile * 21 for sawmill default
+        worldY = ((gp.tileSize * 23) + (gp.tileSize / 2)) + 5;       //up /down      //Use tile * 11 for sawmill default
 
         //Testmap default pos, breaks sometime feel free to edit
         /*worldX = gp.tileSize * 3;

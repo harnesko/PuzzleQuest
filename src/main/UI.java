@@ -226,10 +226,20 @@ public class UI {
             g2.drawString(currentDialog, x, y);
         }
     }
+
+    /**
+     * This method updates the npc dialogue window when the player presses E or Enter
+     * If dialogue has been exausted, it will set the gameState to playState.
+     * @param str - The current string of dialogue that's to be displayed.
+     * @author Måns
+     */
     public void displayNextDialogue(String str){
         currentDialog = str;
-        g2.drawString(currentDialog, gp.tileSize + 170, 600);
-        System.out.println("Current dialogue is: " + currentDialog);
+        if(currentDialog != null){
+            g2.drawString(currentDialog, gp.tileSize + 170, 600);
+        }else{
+            gp.gameState = gp.playState;
+        }
     }
 
     /**

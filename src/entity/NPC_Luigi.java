@@ -15,8 +15,6 @@ import java.util.Objects;
  */
 public class NPC_Luigi extends NPC{
     public GamePanel gp;
-    private int screenX; // Are these needed for an NPC or is it only for Player?
-    private int screenY;
     BufferedImage luigi_image1 = null;
     public boolean isQuestDone = false;
     public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
@@ -44,9 +42,6 @@ public class NPC_Luigi extends NPC{
         }else{
             gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
             dialogueIndex++;
-            System.out.println("Dialogue index incremented to: " + dialogueIndex);
-
-           // gp.ui.displayNextDialogue(dialogues[dialogueIndex]);
         }
     }
 
@@ -56,6 +51,13 @@ public class NPC_Luigi extends NPC{
                 questProgress[i] = true;
                 break;
             }
+        }
+    }
+    public String getCurrDialogue(){
+        if(dialogueIndex <= dialogues.length){
+            return dialogues[dialogueIndex];
+        }else{
+            return "No more dialogue..";
         }
     }
 

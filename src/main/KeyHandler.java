@@ -38,14 +38,12 @@ public class KeyHandler implements KeyListener {
         }
         if(gp.gameState == gp.dialogueState){
             if(code == KeyEvent.VK_E || code == KeyEvent.VK_ENTER  ){      //E or Enter key progresses dialogue
-                gp.ui.displayNextDialogue("Input proper string here");
+                //gp.ui.displayNextDialogue("Input proper string here");
                 gp.progressDialogue();
-            } else if (code == KeyEvent.VK_E) {
-                gp.npcList[1].progressDialogue();
+                gp.ui.displayNextDialogue(gp.npcList[gp.currentSpeaker].getCurrDialogue());
             } else if (code == KeyEvent.VK_ESCAPE){                     //Esc exits dialogue state
                 gp.gameState = gp.playState;
             }
-
         }
     }
 
@@ -368,7 +366,6 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_E){
             ePressed = true;
-            //gp.npcList[0].speak();
         }
         if (code == KeyEvent.VK_ESCAPE){
             gp.gameState =gp.optionsState;

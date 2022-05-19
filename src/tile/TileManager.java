@@ -29,7 +29,7 @@ public class TileManager {
        // mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImagesTEST();
-        loadMap("/maps/main_town.txt");
+        loadMap("/maps/sawmill.txt");
     }
     public void getTileImagesTEST(){
          // TODO: gp.maxWorldCol/maxWorldRow is currently non-final because it broke otherwise idk i guess fix it later

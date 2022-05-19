@@ -62,6 +62,9 @@ public class NPC_Mario extends NPC{
         npcMarioDialogue[3] = "bla bla bla";
         npcMarioDialogue[4] = "Please bring this item back to Luigi?";
     }
+    public String getCurrDialogue(){
+        return dialogues[dialogueIndex];
+    }
 
     public  void speak(){
         for (String str : npcMarioDialogue){
@@ -105,21 +108,7 @@ public class NPC_Mario extends NPC{
             }
             spriteCounter = 0;
         }
-
     }
-
-    //v1, this code is a fucking mess
-  /*  public void draw(Graphics2D g2){
-        //BufferedImage image = null;
-        //image = loadNpcImage();             //Här händer något fucky. image = image1 ritar ej bild, image=load ritar på kameran och inte världen
-        //image = walkDown1;
-
-        //Denna raden funkar sådär
-        g2.drawImage(npcImage1, 1460 ,1355 ,gp.tileSize,gp.tileSize,null);
-
-
-    }*/
-    //V2, this code is also a fucking mess
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         switch (direction) {
@@ -157,13 +146,8 @@ public class NPC_Mario extends NPC{
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
         image = loadNpcImage();     //only for debug purposes, replace this with the switch case above later
-        //System.out.println("Image is : " + image);      //Image is sometimes null??
         g2.drawImage(image, screenX, screenY, 32, 32, null);
-
     }
-
-
-
     public void setDefaultNpcPosition(){
         this.worldX = 800;
         this.worldY = 356;

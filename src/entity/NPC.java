@@ -123,11 +123,16 @@ public abstract class NPC extends Entity{       //Super class for all npc's
 
     }
     public void progressDialogue(){
-        dialogueIndex++;
+        if (dialogueIndex < dialogues.length){
+            dialogueIndex++;
+        }else{
+            dialogueIndex = 1;
+        }
     }
 
     //Every NPC should say something, this is just to make sure that they know that
     public abstract void speak();
 
 
+    public abstract String getCurrDialogue();
 }

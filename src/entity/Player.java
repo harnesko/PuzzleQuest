@@ -64,8 +64,8 @@ public class Player extends Entity {
         // upp till vänster? direkt i första tile:en som skapas? byt ut värden med 0 och 0.
 
         //Sawmill default pos, tested and works
-        worldX = gp.tileSize * 18;                               //left/right    //Use tile * 21 for sawmill default
-        worldY = ((gp.tileSize * 23) + (gp.tileSize / 2)) + 5;       //up /down      //Use tile * 11 for sawmill default
+        worldX = gp.tileSize * 21;                               //left/right    //Use tile * 21 for sawmill default
+        worldY = ((gp.tileSize * 11) + (gp.tileSize / 2));       //up /down      //Use tile * 11 for sawmill default
 
         //Testmap default pos, breaks sometime feel free to edit
         /*worldX = gp.tileSize * 3;
@@ -159,20 +159,12 @@ public class Player extends Entity {
             //CHECK NPC COLLISION
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
             interactWithNpc(npcIndex);
-            //todo Se om vi kan ta bort parametrar, köra alla objekt i samma array och kolla typ med "instanceof" metoden
-            //Checka igenom CollisionChecker
-            /*if(keyH.ePressed){
-                if (npcIndex != -1){
-                    gp.npcList[npcIndex].speak();
-                    gp.progressDialogue(npcIndex);
-                }
+            if(npcIndex == -1){
                 keyH.ePressed = false;
-                System.out.println("Key E pressed");
             }
-*/
+
+
             System.out.println("Npc index = " + npcIndex);
-
-
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
                 switch (direction) {
@@ -186,7 +178,6 @@ public class Player extends Entity {
                     case "runright" -> worldX += speed;
                 }
             }
-
         } else {
             if (!lastBtnPressed.equals("")) {
                 direction = lastBtnPressed;
@@ -216,19 +207,10 @@ public class Player extends Entity {
     private void interactWithNpc(int npcIndex) {
         if (npcIndex != -1){
             if(keyH.ePressed && gp.gameState != gp.dialogueState){
-                gp.npcList[npcIndex].speak();
                 gp.gameState = gp.dialogueState;
-                keyH.ePressed = false;
-
-            }else if (gp.gameState == gp.dialogueState){
-                //gp.progressDialogue(npcIndex);
-                System.out.println("Here");
-
-                gp.npcList[npcIndex].progressDialogue();
-                gp.ui.drawDialogueWindow();
+                gp.npcList[npcIndex].speak();        //remove this mess later I guess
+                gp.currentSpeaker = npcIndex;       //Keeps track of what npc is currently engaged in dialogue
             }
-
-            //keyH.ePressed = false;
         }
     }
 

@@ -26,12 +26,13 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
 
-    // WORLD SETTINGS dessa kan ändras // TODO:
-    public int maxWorldRow = 65;        //65 för main_town, 40 för sawmill
-    public final int maxWorldCol = 65;  //65 för main_town, 42 för sawmill
+    // WORLD SETTINGS dessa kan ändras // TODO: Update automatically?
+    public int maxWorldRow = 40;        //65 för main_town, 40 för sawmill
+    public final int maxWorldCol = 42;  //65 för main_town, 42 för sawmill
 
     // EXTRA SETTINGS
     boolean debugOn; // kan tas bort @author Kinda
+    public int currentSpeaker;
 
     // ===================================
     //FULL SCREEN
@@ -140,12 +141,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         if(gameState == dialogueState) {
             ui.drawDialogueWindow();
-            //keyH.ePressed = false;
         }
-        /*if((gameState == dialogueState) && (keyH.enterPressed)){
-            System.out.println("SUCCESS?");
-                ui.drawDialogueWindow();        //I guess remove this mess later
-            }*/
     }
 
     public void drawToTempScreen() {
@@ -213,10 +209,8 @@ public class GamePanel extends JPanel implements Runnable {
         screenHeight2 = GameStarter.window.getHeight();
     }
 
-    public void progressDialogue(int npcIndex) {
-        npcList[npcIndex].progressDialogue();
-    }
     public void progressDialogue(){
-
+        npcList[currentSpeaker].progressDialogue();
+        //ui.displayNextDialogue(npcList[currentSpeaker].getCurrDialogue());
     }
 }

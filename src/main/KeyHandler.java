@@ -330,6 +330,9 @@ public class KeyHandler implements KeyListener {
     }
 
     public void gamePlayKeys(int code){
+        if (code == KeyEvent.VK_1){
+            gp.tileManager.currentMap = "/maps/testy";
+        }
         if (code == KeyEvent.VK_W){
             upPressed = true;
         }

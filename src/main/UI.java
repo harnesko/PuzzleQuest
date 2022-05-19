@@ -42,14 +42,12 @@ public class UI {
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         Key key = new Key();
         keyImage = key.image;
-        ;
     }
 
 
     public void showMessage(String text) {
         message = text;
         messagesOn = true;
-
     }
 
     /**

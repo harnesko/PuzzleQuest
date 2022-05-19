@@ -26,7 +26,6 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
-        setDefaultValues();
         getPlayerImage();
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2); // kamera
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2); // kamera
@@ -56,20 +55,6 @@ public class Player extends Entity {
 
     }
 
-    public void setDefaultValues() {
-        // spelarens position i hela mappen, inte kameran
-
-        // int värden = index på tiles
-        // int värden kan ändras för att positionera han olika ställen. exempel: vill du ha han längst
-        // upp till vänster? direkt i första tile:en som skapas? byt ut värden med 0 och 0.
-        worldX = gp.tileSize * 17;
-        worldY = gp.tileSize * 15;
-
-        // editat av Kinda
-        // org var: 23, 21
-
-        direction = "idledown";
-    }
 
     public void getPlayerImage() {
         try {

@@ -3,6 +3,7 @@ package main;
 import entity.NPC;
 import entity.Player;
 import gameObject.GameObject;
+import tile.MapManager;
 import tile.TileManager;
 
 import javax.swing.*;
@@ -23,14 +24,15 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenCol = 16; // mappen blir 16 tiles horizontalt
     // public final int maxScreenCol = 20; .. vrf?
     public int maxScreenRow = 12; // och 12 tiles vertikalt
-    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
+    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
 
-    // WORLD SETTINGS dessa kan ändras // TODO:
+    // WORLD SETTINGS dessa kan ändras // TODO: används ej mer ?
     public int maxWorldCol = 37;
     public final int maxWorldRow = 29;
 
     // EXTRA SETTINGS
+    MapManager mapManager = new MapManager(this);
     boolean debugOn; // kan tas bort @author Kinda
 
     // ===================================
@@ -52,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     int FPS = 60;
 
-    TileManager tileManager = new TileManager(this);
+    TileManager tileManager;
     KeyHandler keyH = new KeyHandler(this); // knapparna WASD
     Thread gameThread; // tiden för spelet
     // ===================================
@@ -72,6 +74,21 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true); // att göra detta true ger bättre rendering performance
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+        tileManager = new TileManager(this, mapManager, "/maps/maintown");
+    }
+
+    public void setDefaultGameValues() {
+        /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !!!
+        // ============ PLAYER DEFAULT VALUES ============ //
+        for (int i = 0; i < mapManager.getMapList().size(); i++) {
+            if (mapManager.getMapList().get(i).getMapTxtFile().equals(tileManager.currentMap)){
+                player.worldX = mapManager.getMapList().get(i).getPlayerSpawnX();
+                player.worldY = mapManager.getMapList().get(i).getPlayerSpawnY();
+            }
+        }
+
+        player.direction = "idledown"; // TODO: fixa så det passar mappen, fixa i Map klassen kanske?
     }
 
     public void setupGame() {
@@ -91,15 +108,13 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
     }
 
-    public void npcSpeak(int npcIndex) { // vad är detta? / Kinda
-
-    }
 
     @Override
     public void run() {
-
         double drawInterval = 1000000000 / FPS; // 1,000,000,000 nanosekunder
         double nextDrawTime = System.nanoTime() + drawInterval;
+
+        setDefaultGameValues(); // ?!!!
 
         while (gameThread != null) {
 

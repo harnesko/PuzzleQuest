@@ -33,5 +33,4 @@ public class GameStarter {
         gamePanel.setupGame();
         gamePanel.startGameThread();
     }
-
 }

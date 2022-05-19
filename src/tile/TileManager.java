@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class TileManager {
@@ -17,56 +18,64 @@ public class TileManager {
     public Tile[] tile;
     public int[][] mapTileNum;
 
+    // MAP
+    public String currentMap = "";
+    MapManager mapManager;
+    /**
+     * current map will be used to determine the map, how it loads, current map takes inputs
+     **/
+
     // TILE ANIMATION SETTINGS
     int frame = 0;
-    int tileNum = 1;
 
-    public TileManager(GamePanel gp) {
+    public TileManager(GamePanel gp, MapManager mapManager, String starterMap) {
         this.gp = gp;
+        currentMap = starterMap;
 
         tile = new Tile[1200];
-       // mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+        this.mapManager = mapManager;
 
-        getTileImages();
-        loadMap("/maps/TiledTesting.txt");
+        getTileImagesTEST();
+        loadMap(currentMap);
     }
-    public void getTileImagesTEST(){
-         // TODO: gp.maxWorldCol/maxWorldRow is currently non-final because it broke otherwise idk i guess fix it later
-            try {
-                //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
-                tile[0] = new Tile(); // Background
-                tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
-                tile[0].collision = true;
 
-                tile[1] = new Tile(); // Bushtest
-                tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/bush_test.png")));
-                tile[1].collision = true;
+    public void getTileImagesTEST() {
+        // TODO: för kinda, ersätta, lägga till, byta gfx sen
+        try {
+            //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
+            tile[0] = new Tile(); // Background
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
+            tile[0].collision = true;
 
-                tile[2] = new Tile(); // Sand
-                tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
-                tile[2].collision = true;
+            tile[1] = new Tile(); // Bushtest
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/bush_test.png")));
+            tile[1].collision = true;
 
-                tile[3] = new Tile(); // Tree
-                tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
-                tile[3].collision = true;
+            tile[2] = new Tile(); // Sand
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+            tile[2].collision = false;
 
-                tile[4] = new Tile(); // Wall
-                tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
-                tile[4].collision = true;
+            tile[3] = new Tile(); // Tree
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
+            tile[3].collision = true;
 
-                tile[5] = new Tile(); // Water
-                tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
-                tile[5].collision = true;
+            tile[4] = new Tile(); // Wall
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
+            tile[4].collision = true;
 
-                tile[6] = new Tile(); // Grass
-                tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
+            tile[5] = new Tile(); // Water
+            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
+            tile[5].collision = true;
 
-                tile[7] = new Tile(); // Sand
-                tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+            tile[6] = new Tile(); // Grass
+            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            tile[7] = new Tile(); // Sand
+            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -85,10 +94,10 @@ public class TileManager {
             tile[2].collision = true;
 
             tile[3] = new Tile(); // EARTH
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
 
             tile[4] = new Tile(); // TREE
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
             tile[4].collision = true;
 
             tile[5] = new Tile(); // SAND
@@ -164,82 +173,55 @@ public class TileManager {
              *
              * kolla i resource.maps.snabbmapguide.pdf för info på hur denna text fil skapas */
 
+            Map map = getMap(filePath);
 
-            int maxColTiles = measureMap(1, filePath); // 1 är horizontalt alltså width
-            int maxRowTiles = measureMap(2, filePath); // 2 är vertikalt alltså height
+            /** @author Kinda, fråga om saker o ting är förvirrande **/
+            if (map != null) {
+                mapTileNum = new int[map.getHeight()][map.getWidth()];
+                System.out.println("MAP FOUND");
 
-            mapTileNum = new int[maxRowTiles][maxColTiles];
+                InputStream is = getClass().getResourceAsStream(filePath); // text file
+                BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
 
-            InputStream is = getClass().getResourceAsStream(filePath); // text file
-            BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
+                // i = row
+                int row = 0;
+                // j = col
+                int col = 0;
 
-            // i = row
-            int row = 0;
-            // j = col
-            int col = 0;
+                for (row = 0; row < map.getWidth(); row++) {
 
-            for (row = 0; (row < maxRowTiles); row++) {
+                    String line = br.readLine(); // här läses en line
 
-                String line = br.readLine(); // här läses en line
+                    for (col = 0; col < map.getHeight(); col++) {
+                        if (line != null) {
+                            String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
 
-                for (col = 0; col < maxColTiles; col++) {
+                            int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
 
-                    if(line != null){
-                        String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
-
-                        int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
-
-                        mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
-                        System.out.println("done");
+                            mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
+                        }
                     }
-                    // efter varje space, så att den behandlar
-                    // varje siffra enskilt
-
                 }
-            }
 
-            br.close();
+                br.close();
+            } else {
+                System.out.println("MAP NOT FOUND");
+                System.exit(0);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public int measureMap(int x, String fileName) {
-        InputStream is = getClass().getResourceAsStream(fileName); // text file
-        BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
-        int lineCount = 0; //
-        int totalCharCount = 0;
-
-        try {
-            String line;
-            while ((line = br.readLine()) != null) {
-                lineCount++;
-                int charCount = line.split(",").length;
-                totalCharCount += charCount;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            br.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("line count är " + lineCount);
-        System.out.println("total char är " + totalCharCount);
-        return x == 1 ? lineCount : (totalCharCount / lineCount);
-    }
     public void draw(Graphics2D g2, boolean debugON) {
-
+        Map map = getMap(currentMap);
         Debug debug = new Debug(); // DELETE LATER, not now
-        System.out.println("CONFIRMED");
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
 
-        for (int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
-            for (int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
-                gp.maxWorldCol = 30;    //Change this later by using the measure map. Set gp.maxWorldCol/row to actual map size
-                gp.maxScreenRow = 30;
+        for (int worldRow = 0; worldRow < map.getWidth(); worldRow++) {
+            for (int worldCol = 0; worldCol < map.getHeight(); worldCol++) {
+
                 int tileIndex = mapTileNum[worldCol][worldRow];
 
                 /** här blir worldCol & worldRow mängden av tiles.
@@ -249,8 +231,8 @@ public class TileManager {
                  * som då är 25 * tilesize (64 just nu) blir 1600 pixlar.
                  * */
 
-                int worldX = worldCol * gp.tileSize;
-                int worldY = worldRow * gp.tileSize;
+                int worldX = worldCol * gp.tileSize; // i pixlar
+                int worldY = worldRow * gp.tileSize; // i pixlar
                 int screenX = worldX - gp.player.worldX + gp.player.screenX; // spelarskärmens x axel + dens bredd
                 int screenY = worldY - gp.player.worldY + gp.player.screenY; // spelarskärmens y axel + dens längd
                 // ovan variabler ger oss "världens kamera" som brukar kunna vara utanför gui:n
@@ -268,18 +250,27 @@ public class TileManager {
                         worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                         worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-                    tileIndex = playTileAnimations(tileIndex);
+                    //tileIndex = playTileAnimations(tileIndex);
                     if (tile[tileIndex] != null) {
                         g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
                     }
-
                 }
 
                 if (debugON) { // OK att ta bort
-                    debug.showMapTiles(g2, screenX, screenY, gp.tileSize);
+                    debug.showMapTiles(g2, screenX, screenY, gp.tileSize, tileIndex);
                 }
             }
         }
+    }
+
+    public Map getMap(String file) {
+        ArrayList<Map> maps = mapManager.getMapList();
+        for (int i = 0; i < maps.size(); i++) {
+            if (file.equals(maps.get(i).getMapTxtFile())) {
+                return maps.get(i);
+            }
+        }
+        return null;
     }
 
     public int playTileAnimations(int i) { // TODO: fixa lol

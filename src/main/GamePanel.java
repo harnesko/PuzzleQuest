@@ -150,7 +150,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void drawToTempScreen() {
         if (gameState == titleState) { //MainMenu
             ui.draw(g2);
-        } else { // allt annat till spelet
+        } else if (gameState == playState) { // allt annat till spelet
             stopMusik();
 
             tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
@@ -161,7 +161,6 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
-            if (gameState == playState) {
                 player.draw(g2, debugOn);
                 ui.draw(g2); //Gustav
 
@@ -170,7 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
                         npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
                     }
                 }
-            }
+
             if (gameState == optionsState || gameState == noneState) {
                 ui.drawSettingsMenu(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
             }

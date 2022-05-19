@@ -64,7 +64,7 @@ public class UI {
             gameWon();
         } else {
             this.g2 = g2;
-            someStuffIDK(); //Gustav kan du ändra namnet på metoden till något mer passande.
+            showKeys(); //Gustav kan du ändra namnet på metoden till något mer passande.
             //message
             if (messagesOn) { // TODO: lägga denna block av kod i nån metod utanför draw för tydlighetsskull
                 g2.setFont(g2.getFont().deriveFont(30F));
@@ -532,7 +532,7 @@ public class UI {
         gp.gameThread = null;
     }
 
-    public void someStuffIDK(){
+    public void showKeys(){
         //g2.setFont(); //todo later
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);

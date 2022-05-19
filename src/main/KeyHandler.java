@@ -19,6 +19,7 @@ public class KeyHandler implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
+
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
@@ -38,6 +39,7 @@ public class KeyHandler implements KeyListener {
         if(gp.gameState == gp.dialogueState){
             if(code == KeyEvent.VK_E || code == KeyEvent.VK_ENTER  ){      //E or Enter key progresses dialogue
                 gp.ui.displayNextDialogue("Input proper string here");
+                gp.progressDialogue();
             } else if (code == KeyEvent.VK_E) {
                 gp.npcList[1].progressDialogue();
             } else if (code == KeyEvent.VK_ESCAPE){                     //Esc exits dialogue state

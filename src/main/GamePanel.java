@@ -142,10 +142,10 @@ public class GamePanel extends JPanel implements Runnable {
             ui.drawDialogueWindow();
             //keyH.ePressed = false;
         }
-        if((gameState == dialogueState) && (keyH.enterPressed)){
+        /*if((gameState == dialogueState) && (keyH.enterPressed)){
             System.out.println("SUCCESS?");
-                ui.drawDialogueWindow();
-            }
+                ui.drawDialogueWindow();        //I guess remove this mess later
+            }*/
     }
 
     public void drawToTempScreen() {
@@ -215,5 +215,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void progressDialogue(int npcIndex) {
         npcList[npcIndex].progressDialogue();
+    }
+    public void progressDialogue(){
+
     }
 }

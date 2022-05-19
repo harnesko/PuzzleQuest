@@ -35,9 +35,10 @@ public class NPC_Luigi extends NPC{
         loadNpcImage();
     }
 
+    //I guess move this method to super? Depending on how we will do the other npc interactions
     @Override
     public void speak() {
-        if(dialogueIndex <= dialogues.length) {
+        if(dialogueIndex < dialogues.length) {
             gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
             dialogueIndex++;
         }else{

@@ -62,8 +62,9 @@ public class Player extends Entity {
         // int värden = index på tiles
         // int värden kan ändras för att positionera han olika ställen. exempel: vill du ha han längst
         // upp till vänster? direkt i första tile:en som skapas? byt ut värden med 0 och 0.
-        worldX = gp.tileSize * 20;
-        worldY = gp.tileSize * 20;
+        worldX = gp.tileSize * 21;      //left/right                            //Use tile * 21 for sawmill default
+        worldY = ((gp.tileSize * 11) + (gp.tileSize / 2));       //up /down     //Use tile * 11 for sawmill default
+
 
         // editat av Kinda
         // org var: 23, 21

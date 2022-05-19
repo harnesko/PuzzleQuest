@@ -165,7 +165,7 @@ public class NPC_Mario extends NPC{
 
 
     public void setDefaultNpcPosition(){
-        this.worldX = 1464;
+        this.worldX = 800;
         this.worldY = 356;
     }
 

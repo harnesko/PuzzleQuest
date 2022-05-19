@@ -52,7 +52,7 @@ public class AssetSetter {
     public void setNPC(){
         //Mario
         gp.npcList[0] = new NPC_Mario(gp);
-        gp.npcList[0].worldX = 1460;
+        gp.npcList[0].worldX = 1200;
         gp.npcList[0].worldY = 1355;
 
         //Luigi

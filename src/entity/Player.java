@@ -1,7 +1,9 @@
 package entity;
 
-import main.*;
-
+import gameObject.GameObject;
+import main.Debug;
+import main.GamePanel;
+import main.KeyHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,21 +22,25 @@ public class Player extends Entity {
     public int hasKey = 0; //Gustav gjorde till public
 
     public Player(GamePanel gp, KeyHandler keyH) {
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
 
         setDefaultValues();
         getPlayerImage();
-        screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
-        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
+        screenX = gp.screenWidth / 2 - (gp.tileSize / 2); // kamera
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2); // kamera
 
         solidArea = new Rectangle(); // kan justeras så klart
-        solidArea.x = 8;
-        solidArea.y = 16;
+
+        // allt som har med gp.scale att göra lades till av Kinda
+
+        solidArea.x = 8 * gp.scale;
+        solidArea.y = 21 * gp.scale;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 32;
-        solidArea.height = 32;
+        solidArea.width = 16 * gp.scale;
+        solidArea.height = 10 * gp.scale;
         /** solid area är kroppen som ska importeras hos playern för att fixa fysiken hos han. anledningen vi kör
          * dessa värden är för att vi vill inte hela player-tile:n ska vara fysisk eftersom det skapar problem när
          * man t.ex vill gå igenom två väggar. man måste vara precis och inte ens 1 pixel fel annars kolliderar man så
@@ -52,8 +58,23 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
         // spelarens position i hela mappen, inte kameran
-        worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
+
+        // int värden = index på tiles
+        // int värden kan ändras för att positionera han olika ställen. exempel: vill du ha han längst
+        // upp till vänster? direkt i första tile:en som skapas? byt ut värden med 0 och 0.
+
+        //Sawmill default pos, tested and works
+        worldX = gp.tileSize * 21;                               //left/right    //Use tile * 21 for sawmill default
+        worldY = ((gp.tileSize * 11) + (gp.tileSize / 2));       //up /down      //Use tile * 11 for sawmill default
+
+        //Testmap default pos, breaks sometime feel free to edit
+        /*worldX = gp.tileSize * 3;
+        worldY = gp.tileSize * 2;*/
+
+
+        // editat av Kinda
+        // org var: 23, 21
+
         direction = "idledown";
     }
 
@@ -95,9 +116,6 @@ public class Player extends Entity {
     }
 
     public void update() {
-        // TODO: 5 sprint, 15 walk, 30 idle........... men riktigt låg prio - k
-        // TODO: om shift, speed change, animation change
-
         spriteCounter++;
         speed = 3;
 
@@ -135,9 +153,18 @@ public class Player extends Entity {
             gp.collisionChecker.checkTile(this);
 
             // CHECK OBJECT COLLISION
-            int objIndex = gp.collisionChecker.checkObject(this, true);
+            int objIndex = gp.collisionChecker.checkObject(this, EntityType.PLAYER);
             pickUpObject(objIndex);
 
+            //CHECK NPC COLLISION
+            int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
+            interactWithNpc(npcIndex);
+            if(npcIndex == -1){
+                keyH.ePressed = false;
+            }
+
+
+            System.out.println("Npc index = " + npcIndex);
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
                 switch (direction) {
@@ -151,20 +178,15 @@ public class Player extends Entity {
                     case "runright" -> worldX += speed;
                 }
             }
-
         } else {
-            if (!lastBtnPressed.equals("")){
+            if (!lastBtnPressed.equals("")) {
                 direction = lastBtnPressed;
             }
         }
 
 
         if (spriteCounter > 30) {
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 1;
-            }
+            spriteNum = spriteNum == 1 ? 2 : 1; // kinda
             spriteCounter = 0;
         }
 
@@ -175,13 +197,25 @@ public class Player extends Entity {
         // frames innan man typ "checkar" vilket håll man ska ändra till. hela update() kallas ju
         // 60 ggn per sekund så man kan säga att varje 30 frames så ändras animation till up2 eller right1, osv..
 
-        // TODO: k - uppdatera texten här
+    }
 
-
+    /**
+     *
+     * @param npcIndex - Used to determine what NPC the player is near, -1 if no npcs around
+     * @author Måns
+     */
+    private void interactWithNpc(int npcIndex) {
+        if (npcIndex != -1){
+            if(keyH.ePressed && gp.gameState != gp.dialogueState){
+                gp.gameState = gp.dialogueState;
+                gp.npcList[npcIndex].speak();        //remove this mess later I guess
+                gp.currentSpeaker = npcIndex;       //Keeps track of what npc is currently engaged in dialogue
+            }
+        }
     }
 
     public void pickUpObject(int index) {
-        if (index != 999) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
+        if (index != -1) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
             // om index är ej empty alltså innehåller ett objekt
             String objectName = gp.obj[index].name;
 
@@ -196,10 +230,10 @@ public class Player extends Entity {
                     if (hasKey > 0) {
                         gp.obj[index] = null;
                         hasKey--;
-                        gp.ui.showMessage("Oi! The key opened the door!");
+
                     }
                     else{
-                        gp.ui.showMessage("Oi bruv you need a key to open this door");
+                        gp.ui.showMessage("hey man you need a key for that");
                     }
                     break;
                 case "Chest":
@@ -244,7 +278,8 @@ public class Player extends Entity {
         return "idledown";
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, boolean debugON) {
+        Debug debug = new Debug(); // kan tas bort
 
         BufferedImage image = null;
 
@@ -371,7 +406,11 @@ public class Player extends Entity {
                 }
             }
         }
-        g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+        if (debugON) { // kan tas bort men ta ej bort rn
+            debug.showPlayerCollisionBox(g2, screenX, screenY, solidArea.x, solidArea.y, solidArea.width, solidArea.height);
+        }
     }
 }
 

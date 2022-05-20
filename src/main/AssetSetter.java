@@ -1,9 +1,10 @@
 package main;
 
+import entity.NPC_Luigi;
+import entity.NPC_Mario;
 import gameObject.Chest;
 import gameObject.Door;
 import gameObject.Key;
-import interactive_tile.ITDryTree;
 
 public class AssetSetter {
 
@@ -44,9 +45,19 @@ public class AssetSetter {
         gp.obj[6].worldX = 10 * gp.tileSize;
         gp.obj[6].worldY = 7 * gp.tileSize;
 
+
+
     }
-    public void setInteractive(){
-        int i = 0;
-        gp.inTile[i] = new ITDryTree(gp);
+
+    public void setNPC(){
+        //Mario
+        gp.npcList[0] = new NPC_Mario(gp);
+        gp.npcList[0].worldX = 1200;
+        gp.npcList[0].worldY = 1355;
+
+        //Luigi
+        gp.npcList[1] = new NPC_Luigi(gp);
+        gp.npcList[1].worldX = 1290;
+        gp.npcList[1].worldY = 755;
     }
 }

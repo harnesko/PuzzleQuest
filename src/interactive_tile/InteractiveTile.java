@@ -3,9 +3,11 @@ package interactive_tile;
 import entity.Entity;
 import main.GamePanel;
 
-//fuck this fuck that fuck everything pallar inte
+import java.awt.*;
 
-/*public class InteractiveTile extends Entity {
+
+
+public class InteractiveTile extends Entity {
 
     GamePanel gp;
     public boolean destructable = false;
@@ -15,7 +17,9 @@ import main.GamePanel;
         this.gp = gp;
     }
 
+
     public void update(){
 
     }
-}*/
+
+}

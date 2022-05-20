@@ -3,6 +3,7 @@ package main;
 import entity.NPC;
 import entity.Player;
 import gameObject.GameObject;
+import interactive_tile.InteractiveTile;
 import tile.TileManager;
 
 import javax.swing.*;
@@ -66,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
     public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
+    public InteractiveTile interactiveTiles[] = new InteractiveTile[50]; //50 just a random number
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // här förstorade jag skärmen
@@ -79,6 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
         AssetSetter setter = new AssetSetter(this);
         setter.setNPC();
         playMusik(0);
+        setter.setInteractiveTiles();
         gameState = titleState;
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -142,6 +145,12 @@ public class GamePanel extends JPanel implements Runnable {
         if(gameState == dialogueState) {
             ui.drawDialogueWindow();
         }
+
+        for (int i = 0; i < interactiveTiles.length; i++){
+            if (interactiveTiles[i] != null){
+                interactiveTiles[i].update();
+            }
+        }
     }
 
     public void drawToTempScreen() {
@@ -151,6 +160,13 @@ public class GamePanel extends JPanel implements Runnable {
             stopMusik();
 
             tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
+
+            //interactive tiles ritas
+            for (int i = 0; i < interactiveTiles.length; i++){
+                if (interactiveTiles[i] != null){
+                    interactiveTiles[i].draw(g2);
+                }
+            }
 
             for (int i = 0; i < obj.length; i++) {
                 if (obj[i] != null) {

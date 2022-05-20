@@ -5,6 +5,7 @@ import entity.NPC_Mario;
 import gameObject.Chest;
 import gameObject.Door;
 import gameObject.Key;
+import interactive_tile.ITDryTree;
 
 public class AssetSetter {
 
@@ -59,5 +60,11 @@ public class AssetSetter {
         gp.npcList[1] = new NPC_Luigi(gp);
         gp.npcList[1].worldX = 1290;
         gp.npcList[1].worldY = 755;
+    }
+
+    public void setInteractiveTiles(){
+
+        int i = 0;
+        gp.interactiveTiles[i] = new ITDryTree(gp, 25, 25);
     }
 }

@@ -3,6 +3,7 @@ package main;
 import gameObject.Chest;
 import gameObject.Door;
 import gameObject.Key;
+import interactive_tile.ITDryTree;
 
 public class AssetSetter {
 
@@ -43,5 +44,9 @@ public class AssetSetter {
         gp.obj[6].worldX = 10 * gp.tileSize;
         gp.obj[6].worldY = 7 * gp.tileSize;
 
+    }
+    public void setInteractive(){
+        int i = 0;
+        gp.inTile[i] = new ITDryTree(gp);
     }
 }

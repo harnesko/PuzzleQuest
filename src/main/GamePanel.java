@@ -2,6 +2,7 @@ package main;
 
 import entity.Player;
 import gameObject.GameObject;
+//import interactive_tile.InteractiveTile;
 import tile.TileManager;
 
 import javax.swing.*;
@@ -56,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter assetSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
+   // public InteractiveTile inTile[] = new InteractiveTile[10];
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // här förstorade jag skärmen
@@ -120,6 +122,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
+
+       /* for (int i = 0; i<inTile.length; i++){
+            if (inTile[i] != null){
+                inTile[i].update();
+            }
+        }*/
     }
 
     public void drawToTempScreen(){
@@ -154,7 +162,7 @@ public class GamePanel extends JPanel implements Runnable {
         g.dispose();
     }
 
-    /*public void paintComponent(Graphics g) { // allt ritas här
+    public void paintComponent(Graphics g) { // allt ritas här
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
@@ -170,12 +178,19 @@ public class GamePanel extends JPanel implements Runnable {
                     obj[i].draw(g2, this);
                 }
             }
+            //Interactive tile draw
+            /*
+            for (int i = 0; i < inTile.length; i++){
+                if (inTile != null){
+                    inTile[i].draw(g2);
+                }
+            }*/
             player.draw(g2);
             //showGrid(g2); //kan tas bort
             g2.dispose();
 
         }
-    }*/
+    }
 
     public void showGrid(Graphics2D g2) { // debug replacement. vi kan ta bort denna
         int x = 0;

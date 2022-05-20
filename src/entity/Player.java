@@ -163,7 +163,7 @@ public class Player extends Entity {
                 System.out.println("Key E pressed");
             }
 
-            System.out.println("Npc index = " + npcIndex);
+            //System.out.println("Npc index = " + npcIndex);
 
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE

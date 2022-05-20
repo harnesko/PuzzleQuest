@@ -213,14 +213,14 @@ public class UI {
      * @author Måns
      */
     public void drawDialogueWindow(){
-        int x = 200;    //gp.tileSize * 2; //x position
-        int y = 550;//gp.tileSize / 2; //y position
+        int x = gp.tileSize * 2;    //gp.tileSize * 2; //x position
+        int y = gp.tileSize * 8;    //gp.tileSize / 2; //y position
         int width = 800;                 //gp.screenWidth - (gp.tileSize * 4);
         int height = 200;                //gp.tileSize * 5;
 
         drawSubWindow(g2, x, y, width, height);
 
-        x = gp.tileSize + 170; //text x position
+        x = gp.tileSize * 2 + 20; //text x position
         y += gp.tileSize;       //text y position
         if(currentDialog != null){
             g2.drawString(currentDialog, x, y);
@@ -236,7 +236,7 @@ public class UI {
     public void displayNextDialogue(String str){
         currentDialog = str;
         if(currentDialog != null){
-            g2.drawString(currentDialog, gp.tileSize + 170, 600);
+            g2.drawString(currentDialog, gp.tileSize * 2 + 20, 600);
         }else{
             gp.gameState = gp.playState;
         }

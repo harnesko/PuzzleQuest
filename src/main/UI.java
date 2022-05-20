@@ -448,23 +448,23 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
 
         String text = "Music: < " + gp.music.volumeScale + " >";
-        x = getXForCenteredText(title);
+        x = gp.tileSize * 6;
         y = gp.tileSize * 5 + (gp.tileSize/2);
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        g2.drawImage(woodPlankImage, x - 17, y-45, 270, 70, null);
         g2.drawString(text, x + 20 , y);
         if (commandNumber == 0) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 45 , y);
+            g2.drawString(">", x - 55 , y);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
         }
 
         text = "Sound: < " +gp.soundEffects.volumeScale + " >";
-        y += 80;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        y += gp.tileSize + 25;
+        g2.drawImage(woodPlankImage, x - 17, y-45, 270, 70, null);
         g2.drawString(text, x + 20 , y);
         if (commandNumber == 1) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 45 , y);
+            g2.drawString(">", x - 55 , y);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
         }
 
@@ -474,26 +474,26 @@ public class UI {
             text = "FullScreen [X]";
         }
 
-        y += 80;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 20 , y);
+        y += gp.tileSize + 25;
+        g2.drawImage(woodPlankImage, x - 17, y-45, 270, 70, null);
+        g2.drawString(text, x + 15 , y);
         if (commandNumber == 2) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 45 , y);
+            g2.drawString(">", x - 55 , y);
         }
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
         text = "Return";
-        y += 80;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 50, y+2);
+        y += gp.tileSize + 25;
+        g2.drawImage(woodPlankImage, x - 17, y-45, 270, 70, null);
+        g2.drawString(text, x + 40, y+2);
         if (commandNumber == 3) {
-            g2.drawString(">", x - 45 , y);
+            g2.drawString(">", x - 55 , y);
         }
         gp.config.saveConfig();
 
         if (gp.keyH.enterPressed){
-            int frameX = gp.tileSize * 6;
+            int frameX = gp.tileSize * 4;
             int frameY = gp.tileSize * 3 + (gp.tileSize/2) ;
             int frameWidth = gp.tileSize * 8;
             int frameHeight = gp.tileSize * 8;
@@ -513,16 +513,16 @@ public class UI {
         g2.setColor(Color.black);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
         String text = "The change will take effect";
-        g2.drawString(text, gp.tileSize*7, gp.tileSize*6);
+        g2.drawString(text, gp.tileSize*5, gp.tileSize*5);
         text = "after restarting the game";
-        g2.drawString(text, gp.tileSize*7, gp.tileSize*6+50);
+        g2.drawString(text, gp.tileSize*5, gp.tileSize*5+50);
 
         //back
         g2.setColor(Color.WHITE);
-        x = gp.tileSize*4;
+        x = gp.tileSize*6;
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
         text = "Return";
-        y = gp.tileSize*10;
+        y = gp.tileSize*9;
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
         g2.drawString(text, x + 50, y+2);
         g2.drawString(">", x - 45 , y);

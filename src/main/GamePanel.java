@@ -157,6 +157,11 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * This is method used to temporarily draw everything so that resizing becomes smoother and more effective.
+     * if the gameStare = titleState then the MainMenu is drawn else the game is drawn.
+     * @author Kristoffer
+     */
     public void drawToTempScreen() {
         if (gameState == titleState) { //MainMenu
             ui.draw(g2);
@@ -187,27 +192,49 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * This draws everything from the drawToTempScreen().
+     * @author Kristoffer
+     */
     public void drawToScreen() {
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
     }
 
+    /**
+     * Method to play and loop the music by choosing what number from the URL[].
+     * @param i what track to play from the array in the Sound class.
+     * @author Kristoffer
+     */
     public void playMusik(int i) {
         music.setClip(i);
         music.playAudio();
         music.loopAudio();
     }
 
+    /**
+     * Stops the music from playing
+     * @author Kristoffer
+     */
     public void stopMusik() {
         music.stopAudio();
     }
 
+    /**
+     * Method used to play sound effects
+     * @param i what track to play from the array in the Sound class.
+     * @author Kristoffer
+     */
     public void playSoundEffect(int i) {
         soundEffects.setClip(i);
         soundEffects.playAudio();
     }
-
+    
+    /**
+     * Method used to sett fullscreen based on the monitors' resolution.
+     * @author Kristoffer
+     */
     public void setFullScreen() {
         //Get local screen device
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

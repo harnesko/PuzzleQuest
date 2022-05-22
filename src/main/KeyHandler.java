@@ -228,7 +228,7 @@ public class KeyHandler implements KeyListener {
                 enterPressed = true;
                 gp.ui.commandNumber = 0;
                 gp.playSoundEffect(2);
-                System.exit(0);
+
             }
             if (gp.ui.commandNumber == 3) {
                 gp.ui.titleScreenState = 0;
@@ -309,7 +309,7 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.noneState;
                 gp.ui.commandNumber = 0;
                 gp.playSoundEffect(2);;
-                //System.exit(0);
+
             }
             if (gp.ui.commandNumber == 3) {
                 gp.gameState= gp.titleState;

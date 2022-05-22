@@ -41,8 +41,6 @@ public class Map {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("line count är " + lineCount);
-        System.out.println("total char är " + totalCharCount);
         return x == 1 ? lineCount : (totalCharCount / lineCount);
     }
 

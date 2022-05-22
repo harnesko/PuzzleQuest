@@ -27,9 +27,15 @@ public class KeyHandler implements KeyListener {
             mainMenuKeys(code);
         }
         if(gp.gameState == gp.playState) {
+            if (code == KeyEvent.VK_ESCAPE){
+                escPressed = !escPressed;
+            }
             gamePlayKeys(code);
         }
         if(gp.gameState == gp.optionsState) {
+            if (code == KeyEvent.VK_ESCAPE){
+                escPressed = !escPressed;
+            }
             optionKey(code);
         }
         if(gp.gameState == gp.noneState){
@@ -239,7 +245,12 @@ public class KeyHandler implements KeyListener {
      * @param code used to determine what key we use.
      * @author Kristoffer
      */
-    private void optionKey(int code) {
+    private void optionKey(int code) { // WHEN IN OPTION MENU
+        /*if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_P) {
+            escPressed = false;
+            gp.gameState = gp.playState;
+        }*/
+
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gp.ui.commandNumber--;
             gp.playSoundEffect(3);
@@ -306,9 +317,9 @@ public class KeyHandler implements KeyListener {
          * Denna Fungerar inte med ESC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          * Om den andra är ESC
          */
-        if (code == KeyEvent.VK_BACK_SPACE){
+        /*if (code == KeyEvent.VK_BACK_SPACE){
             gp.gameState = gp.playState;
-        }
+        }*/
     }
 
     /**
@@ -329,7 +340,7 @@ public class KeyHandler implements KeyListener {
 
     }
 
-    public void gamePlayKeys(int code){
+    public void gamePlayKeys(int code){ // WHEN IN GAME
         if (code == KeyEvent.VK_1){
             gp.tileManager.currentMap = "/maps/testy";
         }
@@ -351,16 +362,13 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_F2){
             fPressed = !fPressed;
         }
-        if (code == KeyEvent.VK_P){
+        /*if (code == KeyEvent.VK_P){
             escPressed = true;
-            gp.gameState =gp.optionsState;
-        }
+            gp.gameState = gp.optionsState;
+        }*/
         if (code == KeyEvent.VK_E){
             ePressed = true;
             //gp.npcList[0].speak();
-        }
-        if (code == KeyEvent.VK_ESCAPE){
-            gp.gameState =gp.optionsState;
         }
     }
 

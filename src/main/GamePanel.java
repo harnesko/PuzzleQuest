@@ -75,14 +75,15 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
-        tileManager = new TileManager(this, mapManager, "/maps/maintown");
+        tileManager = new TileManager(this, mapManager,
+                "/maps/maintown"); // BYT DETTA OM DU VILL STARTAS PÅ ANNAN MAP
     }
 
     public void setDefaultGameValues() {
         /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !!!
         // ============ PLAYER DEFAULT VALUES ============ //
         for (int i = 0; i < mapManager.getMapList().size(); i++) {
-            if (mapManager.getMapList().get(i).getMapTxtFile().equals(tileManager.currentMap)){
+            if (mapManager.getMapList().get(i).getMapTxtFile().equals(tileManager.currentMap)) {
                 player.worldX = mapManager.getMapList().get(i).getPlayerSpawnX();
                 player.worldY = mapManager.getMapList().get(i).getPlayerSpawnY();
             }
@@ -147,6 +148,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         //Don't update player/npc if the game is paused
         if (gameState == playState) {
+
             player.update();
 
             for (NPC npc : npcList) {
@@ -155,13 +157,18 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
+
     }
 
     public void drawToTempScreen() {
         if (gameState == titleState) { //MainMenu
+            if (keyH.escPressed) {
+                keyH.escPressed = false; // @author kinda, make sure att option menyn e stängd när man sitter i main menyn
+            }
             ui.draw(g2);
         } else { // allt annat till spelet
             stopMusik();
+            gameState = keyH.escPressed ? optionsState : playState; // @author kinda, checkar om man öppnar elr stänger optionmenyn
 
             tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
 

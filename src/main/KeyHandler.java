@@ -252,7 +252,7 @@ public class KeyHandler implements KeyListener {
             gp.gameState = gp.playState;
         }*/
 
-        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP && gp.ui.settingsState == 0) {
             gp.ui.commandNumber--;
             gp.playSoundEffect(3);
             if (gp.ui.commandNumber < 0) {
@@ -260,14 +260,14 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN && gp.ui.settingsState == 0) {
             gp.ui.commandNumber++;
             gp.playSoundEffect(3);
             if (gp.ui.commandNumber > 3) {
                 gp.ui.commandNumber = 0;
             }
         }
-        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT && gp.ui.settingsState == 0) {
             //Lower Music
             if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
                 gp.music.volumeScale --;
@@ -281,7 +281,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT && gp.ui.settingsState == 0) {
             //Increase Music
             if (gp.ui.commandNumber == 0 && gp.music.volumeScale < 10) {
                 gp.music.volumeScale++;
@@ -294,7 +294,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_ENTER) {
+        if (code == KeyEvent.VK_ENTER && gp.ui.settingsState == 0) {
             if (gp.ui.commandNumber == 2) {
 
                 // TODO: fixa så man frågas innan programmet stängs
@@ -309,7 +309,7 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.noneState;
                 gp.ui.commandNumber = 0;
                 gp.playSoundEffect(2);;
-                System.exit(0);
+                //System.exit(0);
             }
             if (gp.ui.commandNumber == 3) {
                 gp.gameState= gp.titleState;
@@ -318,13 +318,17 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        /**
-         * Denna Fungerar inte med ESC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         * Om den andra är ESC
-         */
-        /*if (code == KeyEvent.VK_BACK_SPACE){
-            gp.gameState = gp.playState;
-        }*/
+        if(gp.ui.settingsState == 1){
+            if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_BACK_SPACE) {
+                if (gp.ui.commandNumber == 0) {
+                    if (gp.ui.settingsState == 1) {
+                        gp.gameState = gp.optionsState;
+                        gp.ui.settingsState = 0;
+                        gp.playSoundEffect(2);
+                    }
+                }
+            }
+        }
     }
 
     /**

@@ -113,7 +113,8 @@ public class UI {
             g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
             optionsMenu();
         }
-        else if (settingsState == 1 && gp.gameState == gp.noneState){
+        else if (settingsState == 1 && gp.gameState == gp.optionsState){
+            System.out.println("ghtrhth");
             g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
             fullScreenNotification(frameX, frameY);
         }

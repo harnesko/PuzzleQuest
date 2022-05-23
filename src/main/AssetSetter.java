@@ -16,7 +16,7 @@ public class AssetSetter {
 
     public void setObject() {
         for (int i = 0; i < gp.mapManager.getMapList().size(); i++) {
-            if (gp.mapManager.getMapList().get(i).getMapTxtFile().equals("/maps/TiledTesting.txt")){
+            if (gp.mapManager.getMapList().get(i).getMapTxtFile().equals("/maps/maintown")){ //TODO: Fixa if Sats;
 
                 gp.obj[1] = new Cat();
                 gp.obj[1].worldX = 52 * gp.tileSize + (gp.tileSize/2);

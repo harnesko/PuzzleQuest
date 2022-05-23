@@ -76,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
 
         tileManager = new TileManager(this, mapManager,
-                "/maps/maintown"); // BYT DETTA OM DU VILL STARTAS PÅ ANNAN MAP
+                "/maps/testy0"); // BYT DETTA OM DU VILL STARTAS PÅ ANNAN MAP
     }
 
     public void setDefaultGameValues() {

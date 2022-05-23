@@ -36,7 +36,7 @@ public class TileManager {
         this.mapManager = mapManager;
 
         getTileImagesTEST();
-        loadMap(currentMap);
+        //loadMap(currentMap);
     }
 
     public void getTileImagesTEST() {
@@ -72,6 +72,12 @@ public class TileManager {
 
             tile[7] = new Tile(); // Sand
             tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
+
+            tile[10] = new Tile(); // MARIO TEST, TA BORT OM DU VILL
+            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcOne/npc_mario_left.png")));
+
+            tile[11] = new Tile(); // MARIO TEST, TA BORT OM DU VILL
+            tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/transparent.png")));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -162,7 +168,7 @@ public class TileManager {
         }
     }
 
-    public void loadMap(String filePath) { // om du inte fattar nåt här, skit i det. ändra bara inget
+    public void loadMap(String filePath, int i) { // om du inte fattar nåt här, skit i det. ändra bara inget
         try {
 
             /** inputstream hämtar filen, antar det som skiljer sig från buffered image är att
@@ -175,12 +181,16 @@ public class TileManager {
 
             Map map = getMap(filePath);
 
+            String url = map.getMapLayers().get(i).getMapTxtFile();
+            int layerH = map.getMapLayers().get(i).getHeight();
+            int layerW = map.getMapLayers().get(i).getWidth();
+
             /** @author Kinda, fråga om saker o ting är förvirrande **/
             if (map != null) {
-                mapTileNum = new int[map.getHeight()][map.getWidth()];
+                mapTileNum = new int[layerH][layerW];
                 System.out.println("MAP FOUND");
 
-                InputStream is = getClass().getResourceAsStream(filePath); // text file
+                InputStream is = getClass().getResourceAsStream(url); // text file
                 BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
 
                 // i = row
@@ -188,11 +198,11 @@ public class TileManager {
                 // j = col
                 int col = 0;
 
-                for (row = 0; row < map.getWidth(); row++) {
+                for (row = 0; row < layerW; row++) {
 
                     String line = br.readLine(); // här läses en line
 
-                    for (col = 0; col < map.getHeight(); col++) {
+                    for (col = 0; col < layerH; col++) {
                         if (line != null) {
                             String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
 
@@ -214,53 +224,63 @@ public class TileManager {
     }
 
     public void draw(Graphics2D g2, boolean debugON) {
+
         Map map = getMap(currentMap);
         Debug debug = new Debug(); // DELETE LATER, not now
 
-        /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
+        int layerListSize = map.getMapLayers().size();
 
-        for (int worldRow = 0; worldRow < map.getWidth(); worldRow++) {
-            for (int worldCol = 0; worldCol < map.getHeight(); worldCol++) {
+        for (int i = 0; i < layerListSize; i++) {
+            loadMap(currentMap,i);
 
-                int tileIndex = mapTileNum[worldCol][worldRow];
+            /////////
+            for (int worldRow = 0; worldRow < map.getMapLayers().get(i).getWidth(); worldRow++) {
+                for (int worldCol = 0; worldCol < map.getMapLayers().get(i).getHeight(); worldCol++) {
 
-                /** här blir worldCol & worldRow mängden av tiles.
-                 *
-                 * Så en 50x50 tiled mapp får max 50 worldCol och worldRow
-                 * Man kan säga att worldX och worldY är höjd och längden på mappen i pixel prefix. så tile nr 25
-                 * som då är 25 * tilesize (64 just nu) blir 1600 pixlar.
-                 * */
+                    int tileIndex = mapTileNum[worldCol][worldRow];
 
-                int worldX = worldCol * gp.tileSize; // i pixlar
-                int worldY = worldRow * gp.tileSize; // i pixlar
-                int screenX = worldX - gp.player.worldX + gp.player.screenX; // spelarskärmens x axel + dens bredd
-                int screenY = worldY - gp.player.worldY + gp.player.screenY; // spelarskärmens y axel + dens längd
-                // ovan variabler ger oss "världens kamera" som brukar kunna vara utanför gui:n
-                // därför kan screenX/Y bli negativ. Eftersom mappen kan vara större än bara måtten som gui:n visar oss
+                    /** här blir worldCol & worldRow mängden av tiles.
+                     *
+                     * Så en 50x50 tiled mapp får max 50 worldCol och worldRow
+                     * Man kan säga att worldX och worldY är höjd och längden på mappen i pixel prefix. så tile nr 25
+                     * som då är 25 * tilesize (64 just nu) blir 1600 pixlar.
+                     * */
 
-                /** Det som egentligen görs här är att måtten på världskameran (i pixlar) jämförs med spelarens
-                 * kamera och säkerställer att vi ritar ENDAST pixlarna/tiles:en som vi kan se inuti GUI:t. Resten
-                 * ritas endast där spelarkameran rör sig till, alltså när vi rör på gubben.
-                 *
-                 * detta ger bättre rendering performance.*/
+                    int worldX = worldCol * gp.tileSize; // i pixlar
+                    int worldY = worldRow * gp.tileSize; // i pixlar
+                    int screenX = worldX - gp.player.worldX + gp.player.screenX; // spelarskärmens x axel + dens bredd
+                    int screenY = worldY - gp.player.worldY + gp.player.screenY; // spelarskärmens y axel + dens längd
+                    // ovan variabler ger oss "världens kamera" som brukar kunna vara utanför gui:n
+                    // därför kan screenX/Y bli negativ. Eftersom mappen kan vara större än bara måtten som gui:n visar oss
+
+                    /** Det som egentligen görs här är att måtten på världskameran (i pixlar) jämförs med spelarens
+                     * kamera och säkerställer att vi ritar ENDAST pixlarna/tiles:en som vi kan se inuti GUI:t. Resten
+                     * ritas endast där spelarkameran rör sig till, alltså när vi rör på gubben.
+                     *
+                     * detta ger bättre rendering performance.*/
 
 
-                if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                        worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                        worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                        worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+                    if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+                            worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                            worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+                            worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-                    //tileIndex = playTileAnimations(tileIndex);
-                    if (tile[tileIndex] != null) {
-                        g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                        //tileIndex = playTileAnimations(tileIndex);
+                        if (tile[tileIndex] != null && tileIndex != 11) {
+                            g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                        }
+                    }
+
+                    if (debugON) { // OK att ta bort
+                        debug.showMapTiles(g2, screenX, screenY, gp.tileSize, tileIndex);
                     }
                 }
-
-                if (debugON) { // OK att ta bort
-                    debug.showMapTiles(g2, screenX, screenY, gp.tileSize, tileIndex);
-                }
             }
+            /////////
         }
+
+        /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/
+
     }
 
     public Map getMap(String file) {

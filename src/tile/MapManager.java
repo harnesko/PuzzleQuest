@@ -18,27 +18,35 @@ public class MapManager {
     }
 
     public void setupMaps(int tileSize){
+        Map testingMap = new Map("/maps/testy0", MapType.file); // MAIN MAP test
+        /*
         Map starterMap = new Map("/maps/TiledTesting.txt"); // test
-        Map testingMap = new Map("/maps/testy"); // test
         Map testMap = new Map("/maps/map01.txt"); // test
 
         Map firstMap = new Map("/maps/sawmill"); // STARTER AREA FOR PLAYER
         Map playersHome = new Map("/maps/playerHouse"); // PLAYER HOME
-        Map townMap = new Map("/maps/maintown");
+        Map townMap = new Map("/maps/maintown");*/
 
-        mapList.add(starterMap); // test
         mapList.add(testingMap); // test
+        /*
+        mapList.add(starterMap); // test
         mapList.add(testMap); // test
 
         mapList.add(firstMap);
         mapList.add(playersHome);
         mapList.add(townMap);
-
+*/
         setPlayerPosition(tileSize); // sätt ner alla positionerna som spelaren ska spawans
     }
 
     public void setPlayerPosition(int tileSize){ //  TODO: men what if det finns mer än ett spawn point?
         for (int i = 0; i < mapList.size(); i++) {
+
+            if (mapList.get(i).getMapTxtFile().equals("/maps/testy0")){
+                mapList.get(i).setPlayerSpawnX(tileSize * 2);
+                mapList.get(i).setPlayerSpawnY(tileSize * 2);
+                System.out.println("Added positioning 1");
+            }
 
             if (mapList.get(i).getMapTxtFile().equals("/maps/TiledTesting.txt")){
                 mapList.get(i).setPlayerSpawnX(tileSize * 18);

@@ -19,7 +19,11 @@ public class Player extends Entity {
 
     public final int screenX; // dessa två variabler är kameran, och de ändras inte
     public final int screenY;
-    public int hasKey = 0; //Gustav gjorde till public
+    public int hasKey = 0;//Gustav gjorde till public
+    public boolean hasCat = false;
+    public boolean hasBook;
+    public boolean hasWok;
+    public boolean hasStuff;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -149,7 +153,7 @@ public class Player extends Entity {
                 System.out.println("Key E pressed");
             }
 
-            System.out.println("Npc index = " + npcIndex);
+           // System.out.println("Npc index = " + npcIndex);
 
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
@@ -202,17 +206,39 @@ public class Player extends Entity {
             String objectName = gp.obj[index].name;
 
             switch (objectName) { // denna funktion tar bort objektet när vi passerar den
-                case "Key":
-                    hasKey++;
+                case "cat":
+                    hasCat = true;
                     gp.obj[index] = null;
-                    System.out.println("Keys: " + hasKey);
-                    gp.ui.showMessage("This dude got a Key!");
+                    System.out.println("Cat: " + hasCat);
+                    gp.ui.showMessage("Oh boi is Young-boi Mjau");
                     break;
+
+                case "Book":
+                    hasBook = true;
+                    gp.obj[index] = null;
+                    System.out.println("Book: " + hasBook);
+                    gp.ui.showMessage("Found the recipe book");
+                    break;
+
+                case "Wok":
+                    hasWok = true;
+                    gp.obj[index] = null;
+                    System.out.println("Book: " + hasBook);
+                    gp.ui.showMessage("mmm yummy yummy");
+                    break;
+
+
+                case "Stuff":
+                    hasStuff = true;
+                    gp.obj[index] = null;
+                    System.out.println("Book: " + hasBook);
+                    gp.ui.showMessage("You retried Stuff");
+                    break;
+
                 case "Door":
                     if (hasKey > 0) {
                         gp.obj[index] = null;
                         hasKey--;
-
                     }
                     else{
                         gp.ui.showMessage("hey man you need a key for that");

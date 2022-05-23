@@ -62,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
     Sound music = new Sound();
     Sound soundEffects = new Sound();
     Config config = new Config(this);
+    public AssetSetter assetSetter = new AssetSetter(this);
     // ===================================
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Player player = new Player(this, keyH);
@@ -93,6 +94,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
+        assetSetter.setObject();
         playMusik(0);
         gameState = titleState;
 

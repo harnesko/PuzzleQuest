@@ -2,10 +2,7 @@ package main;
 
 import entity.NPC_Luigi;
 import entity.NPC_Mario;
-import gameObject.Cat;
-import gameObject.Chest;
-import gameObject.Door;
-import gameObject.Key;
+import gameObject.*;
 
 public class AssetSetter {
 
@@ -21,9 +18,25 @@ public class AssetSetter {
         for (int i = 0; i < gp.mapManager.getMapList().size(); i++) {
             if (gp.mapManager.getMapList().get(i).getMapTxtFile().equals("/maps/TiledTesting.txt")){
 
-                gp.obj[6] = new Cat();
-                gp.obj[6].worldX = 10 * gp.tileSize;
-                gp.obj[6].worldY = 7 * gp.tileSize;
+                gp.obj[1] = new Cat();
+                gp.obj[1].worldX = 52 * gp.tileSize + (gp.tileSize/2);
+                gp.obj[1].worldY = 27 * gp.tileSize;
+
+                gp.obj[2] = new Book();
+                gp.obj[2].worldX = 10 * gp.tileSize + (gp.tileSize/2);
+                gp.obj[2].worldY = 14 * gp.tileSize;
+
+                gp.obj[3] = new Wok();
+                gp.obj[3].worldX = 45 * gp.tileSize + (gp.tileSize/2);
+                gp.obj[3].worldY = 30 * gp.tileSize;
+
+                gp.obj[4] = new Stuff();
+                gp.obj[4].worldX = 13 * gp.tileSize + (gp.tileSize/2);
+                gp.obj[4].worldY = 43 * gp.tileSize;
+
+                gp.obj[5] = new Door();
+                gp.obj[5].worldX = 20 * gp.tileSize;
+                gp.obj[5].worldY = 37 * gp.tileSize;
             }
         }
 

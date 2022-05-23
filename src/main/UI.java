@@ -1,6 +1,6 @@
 package main;
 
-import gameObject.Key;
+import gameObject.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,6 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40; //ska ändras sen Gustav
-    BufferedImage keyImage;
     public boolean messagesOn;
     public String message = "";
     int messageCounter = 0;
@@ -23,11 +22,15 @@ public class UI {
     public String currentDialog = "";
 
     //Images
-    //Images
     private final Image woodPlankImage = new ImageIcon("resource/Images/woodplank.png").getImage();
     private final Image woodBackground = new ImageIcon("resource/Images/woodframe.png").getImage();
     private final Image woodFrame = new ImageIcon("resource/Images/woodframe.png").getImage();
     private final Image woodFrame2 = new ImageIcon("resource/Images/woodFrame2.png").getImage();
+    BufferedImage keyImage;
+    BufferedImage bookImage;
+    BufferedImage catImage;
+    BufferedImage wokImage;
+    BufferedImage stuffImage;
 
     //Different states
     public int commandNumber = 0;
@@ -36,12 +39,28 @@ public class UI {
     public boolean fullscreen;
     public int settingsState = 0;
 
+
+
     public UI(GamePanel gp) {
         this.gp = gp;
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
+
         Key key = new Key();
         keyImage = key.image;
+
+        Cat cat = new Cat();
+        catImage = cat.image;
+
+        Book book = new Book();
+        bookImage = book.image;
+
+        Wok wok = new Wok();
+        wokImage = wok.image;
+
+        Stuff stuff = new Stuff();
+        stuffImage = stuff.image;
+
     }
 
 
@@ -62,7 +81,8 @@ public class UI {
             gameWon();
         } else {
             this.g2 = g2;
-            someStuffIDK(); //Gustav kan du ändra namnet på metoden till något mer passande.
+            someStuffIDK();
+            ;//Gustav kan du ändra namnet på metoden till något mer passande.
             //message
             if (messagesOn) { // TODO: lägga denna block av kod i nån metod utanför draw för tydlighetsskull
                 g2.setFont(g2.getFont().deriveFont(30F));
@@ -94,6 +114,8 @@ public class UI {
             }
         }
     }
+
+
 
     /**
      * This method is used to draw the Settings menu.
@@ -508,12 +530,48 @@ public class UI {
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);
 
-        //Display keys tror detta ska ligga i "gp.playstate" Hitta en bättre font än arial
+        ////Settings for the Box around the item
         g2.setFont(arial_40);
         g2.setColor(Color.white);
-        g2.drawImage(keyImage, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize, null);
-        g2.drawString("x " + gp.player.hasKey, 95, 77);
+        g2.setStroke(new BasicStroke(5));
+        int halfTile = gp.tileSize / 2;
+
+        //KEY
+        g2.drawImage(woodFrame2, halfTile, halfTile, gp.tileSize, gp.tileSize, null); //Box
+        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
+        g2.drawImage(keyImage, gp.tileSize / 2 + 10, gp.tileSize / 2 + 10, (gp.tileSize / 3) * 2, (gp.tileSize / 3) * 2, null); //Key
+        g2.drawString("x " + gp.player.hasKey, 100, gp.tileSize + 10 );
+
+        //CAT
+        g2.drawImage(woodFrame2, gp.tileSize / 2, halfTile + 70, gp.tileSize, gp.tileSize, null); //Box
+        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
+        g2.drawImage(catImage, gp.tileSize / 2, halfTile + 65 , gp.tileSize, gp.tileSize, null);
+        if(gp.player.hasCat){
+            g2.drawString("x " + "1", 100, gp.tileSize + 80);
+        }
+
+        g2.drawImage(woodFrame2, halfTile, halfTile + 140, gp.tileSize, gp.tileSize, null); //Box
+        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
+        g2.drawImage(bookImage, gp.tileSize / 2 - 5, halfTile + 140 , gp.tileSize, gp.tileSize, null);
+        if(gp.player.hasBook){
+            g2.drawString("x " + "1", 100, gp.tileSize + 150);
+        }
+
+        g2.drawImage(woodFrame2, halfTile, halfTile + 210, gp.tileSize, gp.tileSize, null); //Box
+        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
+        g2.drawImage(wokImage, gp.tileSize / 2 - 5, halfTile + 210 , gp.tileSize, gp.tileSize, null);
+        if(gp.player.hasWok){
+            g2.drawString("x " + "1", 100, gp.tileSize + 220);
+        }
+
+        g2.drawImage(woodFrame2, halfTile, halfTile + 280, gp.tileSize, gp.tileSize, null); //Box
+        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
+        g2.drawImage(stuffImage, gp.tileSize / 2 - 5, halfTile + 280 , gp.tileSize, gp.tileSize, null);
+        if(gp.player.hasStuff){
+            g2.drawString("x " + "1", 100, gp.tileSize + 290);
+        }
     }
+
 
     /**
      * This method is used to find the center based on the text length.

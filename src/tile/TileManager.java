@@ -76,9 +76,11 @@ public class TileManager {
 
             tile[10] = new Tile(); // MARIO TEST, TA BORT OM DU VILL
             tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcOne/npc_mario_left.png")));
+            tile[10].collision = true;
 
             tile[11] = new Tile(); // MARIO TEST, TA BORT OM DU VILL
             tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/transparent.png")));
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -189,7 +191,7 @@ public class TileManager {
             /** @author Kinda, fråga om saker o ting är förvirrande **/
             if (map != null) {
                 mapTileNum = new int[layerH][layerW];
-                System.out.println("MAP FOUND");
+                //System.out.println("MAP FOUND");
 
                 InputStream is = getClass().getResourceAsStream(url); // text file
                 BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
@@ -208,7 +210,7 @@ public class TileManager {
                             String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
 
                             int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
-                            if (tile[col].collision){
+                            if (tile[num].collision){
                                 collisionBoolean[col][row] = 1;
                             }
 
@@ -247,9 +249,7 @@ public class TileManager {
                 for (int worldCol = 0; worldCol < map.getMapLayers().get(i).getHeight(); worldCol++) {
 
                     int tileIndex = mapTileNum[worldCol][worldRow];
-                    if (collisionBoolean[worldRow][worldCol] == 1){
-                        tile[tileIndex].collision = true;
-                    }
+
 
                     /** här blir worldCol & worldRow mängden av tiles.
                      *
@@ -289,6 +289,9 @@ public class TileManager {
                 }
             }
             /////////
+
+
+
         }
 
         /** dessa funktioner ritar mappen genom att ta värden från textfilen vi skapar (se snabbmapguide.pdf)*/

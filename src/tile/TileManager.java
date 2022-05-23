@@ -17,6 +17,7 @@ public class TileManager {
     GamePanel gp;
     public Tile[] tile;
     public int[][] mapTileNum;
+    public int[][] collisionBoolean;
 
     // MAP
     public String currentMap = "";
@@ -228,7 +229,7 @@ public class TileManager {
 
     public void draw(Graphics2D g2, boolean debugON) {
         Map map = getMap(currentMap);
-        int[][] collisionBoolean = new int[map.getMapLayers().get(0).getWidth()][map.getMapLayers().get(0).getHeight()];
+        collisionBoolean = new int[map.getMapLayers().get(0).getWidth()][map.getMapLayers().get(0).getHeight()];
         Debug debug = new Debug(); // DELETE LATER, not now
 
         int layerListSize = map.getMapLayers().size();

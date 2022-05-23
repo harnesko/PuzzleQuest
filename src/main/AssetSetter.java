@@ -2,6 +2,7 @@ package main;
 
 import entity.NPC_Luigi;
 import entity.NPC_Mario;
+import gameObject.Cat;
 import gameObject.Chest;
 import gameObject.Door;
 import gameObject.Key;
@@ -17,7 +18,17 @@ public class AssetSetter {
     // TODO: ej effektivt, funkar ba för en mapp ju
 
     public void setObject() {
-        gp.obj[0] = new Key();
+        for (int i = 0; i < gp.mapManager.getMapList().size(); i++) {
+            if (gp.mapManager.getMapList().get(i).getMapTxtFile().equals("/maps/TiledTesting.txt")){
+
+                gp.obj[6] = new Cat();
+                gp.obj[6].worldX = 10 * gp.tileSize;
+                gp.obj[6].worldY = 7 * gp.tileSize;
+            }
+        }
+
+
+        /*gp.obj[0] = new Key();
         gp.obj[0].worldX = 23 * gp.tileSize;
         gp.obj[0].worldY = 7 * gp.tileSize;
 
@@ -43,7 +54,7 @@ public class AssetSetter {
 
         gp.obj[6] = new Chest();
         gp.obj[6].worldX = 10 * gp.tileSize;
-        gp.obj[6].worldY = 7 * gp.tileSize;
+        gp.obj[6].worldY = 7 * gp.tileSize;*/
 
 
 

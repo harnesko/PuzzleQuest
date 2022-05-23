@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.*;
+
 public class EventHandler {
 
     GamePanel gp;
@@ -7,7 +9,13 @@ public class EventHandler {
 
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
-
+/*
+        solidArea = new Rectangle();        //Hitbox
+        solidArea.x = 8;                    //Defines center of hitbox
+        solidArea.y = 16;
+        solidArea.width = 32;               //Smaller size than a tile to avoid collision problems
+        solidArea.height = 32;              //Check solidAreaFörklaring.png for guide
+ */
     public EventHandler(GamePanel gp){
         this.gp = gp;
 
@@ -18,12 +26,13 @@ public class EventHandler {
         int row = 0;
         while (map < gp.maxMap && col < gp.maxWorldCol && row < gp.maxWorldRow){
             eventRect[map][col][row] = new EventRect();
-            eventRect[map][col][row].x = 23;
+            eventRect[map][col][row].x = 23;        //position?
             eventRect[map][col][row].y = 23;
-            eventRect[map][col][row].width = 32;
+            eventRect[map][col][row].width = 32;    //size
             eventRect[map][col][row].height = 32;
             eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
             eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
+
             col++;
             if (col == gp.maxWorldCol){
                 col = 0;
@@ -34,6 +43,7 @@ public class EventHandler {
                     map++;
                 }
             }
+
         }
     }
 
@@ -48,9 +58,9 @@ public class EventHandler {
         }
         if (canTouchEvent){
             //It could be this line below that's messing it up IDK
-            if (hit(0, 23, 22, "any")){     //Set teleport entry point
-                teleport(1,12,13);                    //Set teleport exit point
-            }else if (hit(1, 12, 13, "any")){     //See comment above
+            if (hit(0, 23, 23, "any")){     //Set teleport entry point
+                teleport(1,12,13);                    //Set target map and teleport exit point
+            }else if (hit(1, 12, 13, "any")){     //Same as comment above but for another map
                 teleport(0,21,41);
             }
         }
@@ -66,7 +76,7 @@ public class EventHandler {
      * @author - Amer, Måns
      */
     public boolean hit(int map, int col, int row, String reqDirection){
-        //Todo hit is never true, figure out why. Setting hit = true -> teleport works
+        //Todo fix hit, its never true.. figure out why. Setting hit = true -> teleport works
         boolean hit = false;
 
         if (map == gp.currentMap) {
@@ -79,6 +89,7 @@ public class EventHandler {
 
             System.out.println("Eventrect col: : " + col + " Row: " + row);
             System.out.println("Player pos X: " + gp.player.worldX / gp.tileSize + " Player pos y " + gp.player.worldY / gp.tileSize);
+            System.out.println("Player solid area x: " + gp.player.solidArea.x / gp.tileSize+ "\nPlayer solid area y : " + gp.player.solidArea.y / gp.tileSize);
             /**
              * (Notes)
              * Player pos (row, col) seems correct
@@ -98,7 +109,9 @@ public class EventHandler {
             eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
             eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
         }
-        //System.out.println("Hit: " + hit);
+        if (hit) {
+            System.out.println("IT FUCKING WORKS?!");
+        }
         return hit;
     }
 

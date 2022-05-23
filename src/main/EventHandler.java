@@ -85,7 +85,7 @@ public class EventHandler {
              * eventRect pos (col)(row) is determined where?
              * Check why they never intersects, first if clause is what's breaking it (its never true).
              */
-            if (gp.player.solidArea.intersects(eventRect[map][col][row]) && !eventRect[map][col][row].eventDone) {
+            if (gp.player.solidArea.intersects(eventRect[map][col][row]) && eventRect[map][col][row].eventDone == false) {
                 if (gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")){
                     hit = true;
                     System.out.println("Teleporting..");

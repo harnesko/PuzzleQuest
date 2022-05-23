@@ -65,6 +65,8 @@ public class AssetSetter {
     public void setInteractiveTiles(){
 
         int i = 0;
-        gp.interactiveTiles[i] = new ITDryTree(gp, 25, 25);
+        gp.interactiveTiles[i] = new ITDryTree(gp, 16, 16); i++;
+        gp.interactiveTiles[i] = new ITDryTree(gp, 17, 16); i++;
+        gp.interactiveTiles[i] = new ITDryTree(gp, 18, 16); i++;
     }
 }

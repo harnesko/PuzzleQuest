@@ -147,7 +147,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         for (int i = 0; i < interactiveTiles.length; i++){
-            if (interactiveTiles[i] != null){
+            if (interactiveTiles[i] != null){ //update drytree
                 interactiveTiles[i].update();
             }
         }
@@ -163,7 +163,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             //interactive tiles ritas
             for (int i = 0; i < interactiveTiles.length; i++){
-                if (interactiveTiles[i] != null){
+                if (interactiveTiles[i] != null){//draw drytree
                     interactiveTiles[i].draw(g2);
                 }
             }

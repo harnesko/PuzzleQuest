@@ -52,6 +52,9 @@ public class Player extends Entity {
          *
          * titta på bilden i resource.extra.solidAreaFörklaring.png !!!*/
 
+        choppingArea.width = 36;
+        choppingArea.height = 36;
+
         lastBtnPressed = "";
 
     }
@@ -119,6 +122,13 @@ public class Player extends Entity {
         spriteCounter++;
         speed = 3;
 
+        if (keyH.ePressed){ //vet inte riktigt vart denna sak vara
+            chopping = true;
+        }
+        if (chopping == true){//samma här
+            chopping();
+        }
+
         if (keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {  // OM NÅN KEY ÄR PRESSED
 
             boolean shiftPressed = false;
@@ -155,6 +165,10 @@ public class Player extends Entity {
             // CHECK OBJECT COLLISION
             int objIndex = gp.collisionChecker.checkObject(this, EntityType.PLAYER);
             pickUpObject(objIndex);
+
+            //CHECK INTERACTIVE TILE COLLISION
+            gp.collisionChecker.checkEntity(this,gp.interactiveTiles);
+            //gör så att spelet kreaschar så fort player försöker röra sig... fattar inte varför
 
             //CHECK NPC COLLISION
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
@@ -211,8 +225,14 @@ public class Player extends Entity {
                 gp.npcList[npcIndex].speak();        //remove this mess later I guess
                 gp.currentSpeaker = npcIndex;       //Keeps track of what npc is currently engaged in dialogue
             }
-        }
+            //kan vara så att det inte behöver vara här men då ska inte e användas eller nått idk
+            /*else {
+                if (keyH.ePressed == true && gp.gameState != gp.dialogueState){
+                    chopping = true;
+                }*/
+            }
     }
+
 
     public void pickUpObject(int index) {
         if (index != -1) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
@@ -411,6 +431,49 @@ public class Player extends Entity {
         if (debugON) { // kan tas bort men ta ej bort rn
             debug.showPlayerCollisionBox(g2, screenX, screenY, solidArea.x, solidArea.y, solidArea.width, solidArea.height);
         }
+    }
+
+    public void chopping(){
+
+
+        int currentWorldX = worldX;
+        int currentWorldY = worldY;
+        int solidAreaWidth = solidArea.width;
+        int solidAreaHeight = solidArea.height;
+
+        switch (direction){
+            case "up": worldY -= choppingArea.height;
+            break;
+
+            case "down" : worldY += choppingArea.height;
+            break;
+
+            case "left": worldX -= choppingArea.width;
+            break;
+
+            case "right": worldX += choppingArea.width;
+            break;
+        }
+        //choppingArea becomes solidArea
+        solidArea.width = choppingArea.width;
+        solidArea.height = choppingArea.height;
+
+        //Check tile collision with the updated worldX and worldY
+       int interactiveTileIndex =  gp.collisionChecker.checkEntity(this, gp.interactiveTiles);
+       damageInteractiveTile(interactiveTileIndex);
+
+        worldX = currentWorldX;
+        worldY = currentWorldY;
+        solidArea.width = solidAreaWidth;
+        solidArea.height = solidAreaHeight;
+    }
+    public void damageInteractiveTile(int i){
+
+        if (i != 999 && gp.interactiveTiles[i].destructable == true){
+            gp.interactiveTiles[i] = null;
+            System.out.println("heya buckoo");
+        }
+
     }
 }
 

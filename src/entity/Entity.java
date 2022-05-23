@@ -18,8 +18,10 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea; // detta är ersättningen för body saken i libgdx. hjälper med collision
+    public Rectangle choppingArea = new Rectangle(0,0,0,0); //kommer skrivas över därför 0
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
+    boolean chopping = false;
     public String[] dialogues = new String[10];
     public int dialogueIndex = 0;
 

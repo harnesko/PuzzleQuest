@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 public class GamePanel extends JPanel implements Runnable {
 
     // SCREEN SETTINGS ändra helst inte dessa
-    final int originalTileSize = 32; // 16x16 tile
+    final int originalTileSize = 24; // 16x16 tile
     public final int scale = 2; // detta skapar vi eftersom vi kommer skala upp storleken på alla tiles
     // så de blir tile x scale = 16 x 3 = 48. alltså 48 pixel x 48 pixel
 
@@ -76,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
 
         tileManager = new TileManager(this, mapManager,
-                "/maps/testy0"); // BYT DETTA OM DU VILL STARTAS PÅ ANNAN MAP
+                "/mainMaps/main_town"); // BYT DETTA OM DU VILL STARTAS PÅ ANNAN MAP
     }
 
     public void setDefaultGameValues() {

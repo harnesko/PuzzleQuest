@@ -168,7 +168,7 @@ public class TileManager {
         }
     }
 
-    public void loadMap(String filePath, int i) { // om du inte fattar nåt här, skit i det. ändra bara inget
+    public void loadMap(String filePath, int i, int[][] collisionBoolean) { // om du inte fattar nåt här, skit i det. ändra bara inget
         try {
 
             /** inputstream hämtar filen, antar det som skiljer sig från buffered image är att
@@ -207,6 +207,9 @@ public class TileManager {
                             String[] numbers = line.split(","); // vi säger åt systemet att separera siffrorna
 
                             int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
+                            if (tile[col].collision){
+                                collisionBoolean[col][row] = 1;
+                            }
 
                             mapTileNum[col][row] = num;     // och sedan sparar siffran i vår map array
                         }
@@ -224,20 +227,28 @@ public class TileManager {
     }
 
     public void draw(Graphics2D g2, boolean debugON) {
-
         Map map = getMap(currentMap);
+        int[][] collisionBoolean = new int[map.getMapLayers().get(0).getWidth()][map.getMapLayers().get(0).getHeight()];
         Debug debug = new Debug(); // DELETE LATER, not now
 
         int layerListSize = map.getMapLayers().size();
 
+        boolean setCollisions = false;
+
         for (int i = 0; i < layerListSize; i++) {
-            loadMap(currentMap,i);
+            loadMap(currentMap, i, collisionBoolean);
+            if (i == (layerListSize -1)){
+                setCollisions = true;
+            }
 
             /////////
             for (int worldRow = 0; worldRow < map.getMapLayers().get(i).getWidth(); worldRow++) {
                 for (int worldCol = 0; worldCol < map.getMapLayers().get(i).getHeight(); worldCol++) {
 
                     int tileIndex = mapTileNum[worldCol][worldRow];
+                    if (collisionBoolean[worldRow][worldCol] == 1){
+                        tile[tileIndex].collision = true;
+                    }
 
                     /** här blir worldCol & worldRow mängden av tiles.
                      *

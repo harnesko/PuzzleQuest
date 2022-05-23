@@ -96,6 +96,9 @@ public class TileManager {
                     int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
 
                     mapTileNum[map][col][row] = num;     // och sedan sparar siffran i vår map array
+                    if(num == 7){
+                        System.out.println("Map : " + map + ", Hut Col: " + col + "\nHut Row: " + row);
+                    }
                     col++;
                 }
                 if (col == gp.maxWorldCol) {

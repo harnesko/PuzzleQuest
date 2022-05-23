@@ -10,7 +10,7 @@ public class EventHandler {
     EventRect[][][] eventRect;
 
     int previousEventX, previousEventY;
-    boolean canTouchEvent = true;
+    boolean canTouchEvent = false;
 /*
         solidArea = new Rectangle();        //Hitbox
         solidArea.x = 8;                    //Defines center of hitbox
@@ -62,7 +62,8 @@ public class EventHandler {
             //It could be this line below that's messing it up IDK
             if (hit(0, 23, 23, "any")){     //Set teleport entry point
                 teleport(1,12,13);                    //Set target map and teleport exit point
-            }else if (hit(1, 12, 9, "any")){     //Same as comment above but for another map
+            }
+            if (hit(1, 12, 9, "any")){     //Same as comment above but for another map
                 teleport(0,23,23);
             }
         }
@@ -92,14 +93,15 @@ public class EventHandler {
             System.out.println("Eventrect col: : " + col + " Row: " + row);
             System.out.println("Player pos X: " + gp.player.worldX / gp.tileSize + " Player pos y " + gp.player.worldY / gp.tileSize);
             System.out.println("Player solid area x: " + gp.player.solidArea.x / gp.tileSize+ "\nPlayer solid area y : " + gp.player.solidArea.y / gp.tileSize);
-            /**
-             * (Notes)
-             * Player pos (row, col) seems correct
-             * eventRect pos (col)(row) is determined where?
-             * Check why they never intersects, first if clause is what's breaking it (its never true).
+            /*
+              (Notes)
+              Player pos (row, col) seems correct
+              eventRect pos (col)(row) is determined where?
+              Check why they never intersects, first if clause is what's breaking it (its never true).
              */
 
             int teleportIndex = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
+            int tpIndex = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
             System.out.println("Test index : " + teleportIndex);
             if (teleportIndex == 7 && gp.currentMap == 0){     //Teleporter 1 is in obj[7]
                /* System.out.println("Current map no: " + gp.currentMap);
@@ -108,7 +110,8 @@ public class EventHandler {
                 System.out.println("TRUE");
                 return true;
 
-            }else if(teleportIndex == 7 && gp.currentMap == 1){
+            }
+             else if(tpIndex == 7 && gp.currentMap == 1){
                 System.out.println("Current map no: " + gp.currentMap);
                 teleport2(0,  23,23);     //Target map and position
                 System.out.println("Current map no: " + gp.currentMap);

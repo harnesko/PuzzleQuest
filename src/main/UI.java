@@ -37,7 +37,7 @@ public class UI {
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         Key key = new Key();
-        keyImage = key.image;;
+        keyImage = key.image;
     }
 
 
@@ -113,8 +113,33 @@ public class UI {
             if (gp.gameState == gp.dialogState) {
                 //todo later
             }
+
+          /*  if (gp.gameState == gp.characterState){
+                drawInventory();
+            }*/
         }
 
+    }
+
+    public void drawInventory(){
+
+        int frameX = gp.tileSize*9;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize*6;
+        int frameHeight = gp.tileSize*5;
+        drawSubWinndow(frameX,frameY,frameWidth,frameHeight);
+    }
+
+    private void drawSubWinndow(int x, int y, int width, int height) {
+
+        Color c = new Color(0,0,0,200);
+        g2.setColor(c);
+        g2.fillRoundRect(x,y,width,height,35,35);
+
+        c = new Color(255,255,255);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
     }
 
     /**
@@ -193,7 +218,6 @@ public class UI {
         }
         gp.config.saveConfig();
     }
-
     /**
      * This method draws a small sub frame to be able to be used for example the dialog frame.
      * @param g2 We send in Graphics2D to be able to draw the different objekts.
@@ -203,7 +227,7 @@ public class UI {
      * @param height height size of the window
      * @author Kristoffer
      */
-   public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
+    public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
         Color c = new Color(0,0,0);
         g2.setColor(c);
         g2.fillRoundRect(x,y,width,height,35,35);
@@ -303,7 +327,6 @@ public class UI {
             //scrollAudio();
         }
     }
-
     /**
      * This Menu draws the savesMenu and its options to choose what save to enter.
      * It also contains a return option.
@@ -477,7 +500,6 @@ public class UI {
         }
         gp.config.saveConfig();
     }
-
     /**
      * This method is used to notify the user that the game needs to be restarted for the fullscreen to take affekt.
      * @param x coordinate
@@ -495,7 +517,6 @@ public class UI {
         }
 
     }
-
     /**
      * This method is used to find the center based on the text length.
      * @param text the text we want to use to center.

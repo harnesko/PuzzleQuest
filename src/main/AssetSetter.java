@@ -5,6 +5,7 @@ import entity.NPC_Mario;
 import gameObject.Chest;
 import gameObject.Door;
 import gameObject.Key;
+import gameObject.Teleporter;
 
 public class AssetSetter {
 
@@ -46,6 +47,10 @@ public class AssetSetter {
         gp.obj[mapNum][6] = new Chest();
         gp.obj[mapNum][6].worldX = 10 * gp.tileSize;
         gp.obj[mapNum][6].worldY = 7 * gp.tileSize;
+
+        gp.obj[mapNum][7] = new Teleporter();
+        gp.obj[mapNum][6].worldX = 24 * gp.tileSize;
+        gp.obj[mapNum][6].worldY = 24 * gp.tileSize;
 
 
 

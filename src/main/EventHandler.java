@@ -116,7 +116,6 @@ public class EventHandler {
     }
 
     /**
-     *
      * @param map - Set target map to teleport into
      * @param col - Set x position on teleport
      * @param row - Set y position on teleport

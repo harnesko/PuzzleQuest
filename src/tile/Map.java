@@ -8,29 +8,40 @@ import java.util.ArrayList;
 
 public class Map {
 
+    /**
+     * Här skapas de viktigaste egenskaperna för våra mappar (t.ex mått, layers)
+     *
+     * @Author Kinda
+     **/
+
     private ArrayList<Map> mapLayers;
+
+    private ArrayList<int[][]> bufferedMaps;
     private String mapTxtFile;
     private int height; // TODO: bättre namn?
     private int width;
     private int playerSpawnX = 0;
     private int playerSpawnY = 0;
 
-    public Map(String mapTxtFile, MapType mapType){
+    public Map(String mapTxtFile, MapType mapType) {
         this.mapTxtFile = mapTxtFile;
 
-        if (mapType.equals(MapType.file)){mapLayers = new ArrayList<>(setUpLayers());
-            if (mapLayers.size() < 1){
+        if (mapType.equals(MapType.file)) {
+            mapLayers = new ArrayList<>(setUpLayers());
+            bufferedMaps = new ArrayList<>();
+
+            if (mapLayers.size() < 1) {
                 System.out.println("LIST IS NULL... ");
                 System.exit(0);
             }
-        } else if (mapType.equals(MapType.layer)){
+        } else if (mapType.equals(MapType.layer)) {
             height = measureMap(2);
             width = measureMap(1);
         }
     }
 
 
-    public ArrayList<Map> setUpLayers(){
+    public ArrayList<Map> setUpLayers() {
         InputStream is = getClass().getResourceAsStream(mapTxtFile);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
@@ -38,7 +49,7 @@ public class Map {
 
         try {
             String line;
-            while ((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 Map layer = new Map(line, MapType.layer);
                 mapLayers.add(layer);
             }
@@ -51,6 +62,7 @@ public class Map {
 
         return mapLayers != null ? mapLayers : null;
     }
+
     public int measureMap(int x) {
         InputStream is = getClass().getResourceAsStream(mapTxtFile); // text file
         BufferedReader br = new BufferedReader(new InputStreamReader(is)); // bufferedReader läser text filen
@@ -79,8 +91,12 @@ public class Map {
         return mapLayers;
     }
 
-    public void setMapLayers(ArrayList<Map> mapLayers) {
-        this.mapLayers = mapLayers;
+    public ArrayList<int[][]> getBufferedMaps() {
+        return bufferedMaps;
+    }
+
+    public void setBufferedMaps(ArrayList<int[][]> bufferedMaps) {
+        this.bufferedMaps = bufferedMaps;
     }
 
     public String getMapTxtFile() {

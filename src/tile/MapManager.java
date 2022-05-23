@@ -6,7 +6,10 @@ import java.util.ArrayList;
 
 public class MapManager {
 
-    /** tanken med denna klassen är att checka vilka mappar man tar när man laddar upp till ett nytt område **/
+    /** tanken med denna klassen är att checka vilka mappar man tar när man laddar upp till ett nytt område
+     *
+     * @Author Kinda
+     * **/
     // TODO: behövs en stage controller klass? ska allt funka i gp?
     ArrayList<Map> mapList;
 
@@ -22,19 +25,13 @@ public class MapManager {
 
         Map mainTown = new Map("/mainMaps/main_town", MapType.file);
         /*
-        Map starterMap = new Map("/maps/TiledTesting.txt"); // test
-        Map testMap = new Map("/maps/map01.txt"); // test
-
         Map firstMap = new Map("/maps/sawmill"); // STARTER AREA FOR PLAYER
         Map playersHome = new Map("/maps/playerHouse"); // PLAYER HOME
         Map townMap = new Map("/maps/maintown");*/
 
-        mapList.add(testingMap); // test
+        //mapList.add(testingMap); // test
         mapList.add(mainTown);
         /*
-        mapList.add(starterMap); // test
-        mapList.add(testMap); // test
-
         mapList.add(firstMap);
         mapList.add(playersHome);
         mapList.add(townMap);
@@ -47,7 +44,7 @@ public class MapManager {
 
             if (mapList.get(i).getMapTxtFile().equals("/mainMaps/main_town")){
                 mapList.get(i).setPlayerSpawnX(tileSize * 51);
-                mapList.get(i).setPlayerSpawnY(tileSize * 6);
+                mapList.get(i).setPlayerSpawnY(tileSize * 9);
                 System.out.println("Added positioning 1");
             }
 

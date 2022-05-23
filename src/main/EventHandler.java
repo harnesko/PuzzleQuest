@@ -1,5 +1,7 @@
 package main;
 
+import entity.EntityType;
+
 import java.awt.*;
 
 public class EventHandler {
@@ -60,8 +62,8 @@ public class EventHandler {
             //It could be this line below that's messing it up IDK
             if (hit(0, 23, 23, "any")){     //Set teleport entry point
                 teleport(1,12,13);                    //Set target map and teleport exit point
-            }else if (hit(1, 12, 13, "any")){     //Same as comment above but for another map
-                teleport(0,21,41);
+            }else if (hit(1, 12, 9, "any")){     //Same as comment above but for another map
+                teleport(0,23,23);
             }
         }
     }
@@ -96,14 +98,34 @@ public class EventHandler {
              * eventRect pos (col)(row) is determined where?
              * Check why they never intersects, first if clause is what's breaking it (its never true).
              */
-            if (gp.player.solidArea.intersects(eventRect[map][col][row]) && !eventRect[map][col][row].eventDone) {
+
+            int teleportIndex = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
+            System.out.println("Test index : " + teleportIndex);
+            if (teleportIndex == 7 && gp.currentMap == 0){     //Teleporter 1 is in obj[7]
+               /* System.out.println("Current map no: " + gp.currentMap);
+                teleport2(1,  12,13);    //Target map and position
+                System.out.println("Current map no: " + gp.currentMap);*/
+                System.out.println("TRUE");
+                return true;
+
+            }else if(teleportIndex == 7 && gp.currentMap == 1){
+                System.out.println("Current map no: " + gp.currentMap);
+                teleport2(0,  23,23);     //Target map and position
+                System.out.println("Current map no: " + gp.currentMap);
+                return true;
+            }
+            //if (gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER) != -1)
+
+
+            //This was the old block that broke stuff
+           /* if (gp.player.solidArea.intersects(eventRect[map][col][row]) && !eventRect[map][col][row].eventDone) {
                 if (gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")){
                     hit = true;
                     System.out.println("Teleporting..");
                     previousEventX = gp.player.worldX;
                     previousEventY = gp.player.worldY;
                 }
-            }
+            }*/
             gp.player.solidArea.x = gp.player.solidAreaDefaultX;
             gp.player.solidArea.y = gp.player.solidAreaDefaultY;
             eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
@@ -114,7 +136,16 @@ public class EventHandler {
         }
         return hit;
     }
-
+    public void teleport2(int targetMap, int col, int row){ //The parameters are used to update the players position
+        //Set map, followed by x/y co-ordinates for player pos(tilesize, not pixels)
+        gp.currentMap = targetMap;
+        gp.player.worldX = gp.tileSize * col;
+        gp.player.worldY = gp.tileSize * row;
+        //Set camera?
+        previousEventX = gp.player.worldX;
+        previousEventY = gp.player.worldY;
+        canTouchEvent = false;
+    }
     /**
      * @param map - Set target map to teleport into
      * @param col - Set x position on teleport

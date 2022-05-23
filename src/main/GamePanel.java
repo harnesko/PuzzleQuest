@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int worldWidth = tileSize * maxWorldCol; //Used for stopping camera from moving outside the map
     public final int worldHeight = tileSize * maxWorldRow; //Used for stopping camera from moving outside the map
     public final int maxMap = 10; // This means that it is possible to create 10 maps
-    public int currentMap = 0; // The current map number that the player is on
+    public int currentMap = 0; // The current map number that the player is on, spawn point is on map 0
 
     //FULL SCREEN
     int screenWidth2 = screenWidth;

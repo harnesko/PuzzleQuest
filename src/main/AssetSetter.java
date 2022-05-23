@@ -1,5 +1,6 @@
 package main;
 
+import entity.EntityType;
 import entity.NPC_Luigi;
 import entity.NPC_Mario;
 import gameObject.Chest;
@@ -48,10 +49,13 @@ public class AssetSetter {
         gp.obj[mapNum][6].worldX = 10 * gp.tileSize;
         gp.obj[mapNum][6].worldY = 7 * gp.tileSize;
 
-        gp.obj[mapNum][7] = new Teleporter();
-        gp.obj[mapNum][6].worldX = 24 * gp.tileSize;
-        gp.obj[mapNum][6].worldY = 24 * gp.tileSize;
+        gp.obj[0][7] = new Teleporter();
+        gp.obj[0][7].worldX = 24 * gp.tileSize;
+        gp.obj[0][7].worldY = 22 * gp.tileSize;
 
+        gp.obj[1][7] = new Teleporter();
+        gp.obj[1][7].worldX = 12 * gp.tileSize;
+        gp.obj[1][7].worldY = 9 * gp.tileSize;
 
 
     }

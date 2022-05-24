@@ -23,13 +23,14 @@ public class TileManager {
 
     GamePanel gp;
     public Tile[] tile;
-    //public int[][] mapTileNum;
+    public int[][][] mapTileNum;
     public int[][] collisionBoolean;
     private Image image;
 
     // MAP
     public String currentMap = "";
     MapManager mapManager;
+    //mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
     /**
      * current map will be used to determine the map, how it loads, current map takes inputs
      **/

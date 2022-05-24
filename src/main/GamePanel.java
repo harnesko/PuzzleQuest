@@ -59,12 +59,14 @@ public class GamePanel extends JPanel implements Runnable {
     Sound music = new Sound();
     Sound soundEffects = new Sound();
     Config config = new Config(this);
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
+    public EventHandler eHandler = new EventHandler(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     // ===================================
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Player player = new Player(this, keyH);
-    public GameObject obj[] = new GameObject[10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
-    public NPC[] npcList = new NPC[10];           //Does this need to exist or can npcs exist inside obj[]?
+    public GameObject obj[][] = new GameObject[maxMap][10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
+    public NPC[][] npcList = new NPC[maxMap][10];           //Does this need to exist or can npcs exist inside obj[]?
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // här förstorade jag skärmen
@@ -150,13 +152,15 @@ public class GamePanel extends JPanel implements Runnable {
 
             player.update();
 
-            for (NPC npc : npcList) {
+            /*for (NPC npc : npcList) {
                 if (npc != null) {
-                    npc.update();       //Update the npc movement
+                    npc.update();       //Update the npc movement*/
+            for (int i = 0; i < npcList[1].length; i++) {
+                if (npcList[currentMap][i] != null) {
+                    npcList[currentMap][i].update();
                 }
             }
         }
-
     }
 
     /**
@@ -177,8 +181,8 @@ public class GamePanel extends JPanel implements Runnable {
             tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
 
             for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].draw(g2, this);
+                if (obj[currentMap][i] != null) {
+                    obj[currentMap][i].draw(g2, this);
                 }
             }
 
@@ -186,7 +190,7 @@ public class GamePanel extends JPanel implements Runnable {
                 player.draw(g2, debugOn);
                 ui.draw(g2); //Gustav
 
-                for (NPC npc : npcList) {
+                for (NPC npc : npcList[1]) {
                     if (npc != null) {
                         npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
                     }
@@ -210,7 +214,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     /**
      * Method to play and loop the music by choosing what number from the URL[].
-     * @param i what track to play from the array in the Sound class.
+     * @param i = what track to play from the array in the Sound class.
      * @author Kristoffer
      */
     public void playMusik(int i) {
@@ -236,7 +240,7 @@ public class GamePanel extends JPanel implements Runnable {
         soundEffects.setClip(i);
         soundEffects.playAudio();
     }
-    
+
     /**
      * Method used to sett fullscreen based on the monitors' resolution.
      * @author Kristoffer

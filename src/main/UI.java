@@ -125,6 +125,8 @@ public class UI {
      */
     public void drawSettingsMenu(Graphics2D g2) {
 
+        // inget ändrat här förutom g2 parameter
+
         //Sub window
         int frameX = gp.tileSize*4;
         int frameY = gp.tileSize;

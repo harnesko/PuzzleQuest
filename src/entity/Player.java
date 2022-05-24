@@ -130,6 +130,13 @@ public class Player extends Entity {
             int objIndex = gp.collisionChecker.checkObject(this, EntityType.PLAYER);
             pickUpObject(objIndex);
 
+            // CHECK EVENT
+            gp.eHandler.checkEvent();
+            /*
+            Funkar av någon anledning inte att starta spelet då man ska checka event.
+            Kan vara pga av rendering issues. Får testa
+             */
+
             //CHECK NPC COLLISION
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
             interactWithNpc(npcIndex);
@@ -138,7 +145,7 @@ public class Player extends Entity {
             if(keyH.ePressed){
 
                 if (npcIndex != -1){
-                    gp.npcList[npcIndex].speak();
+                    gp.npcList[gp.currentMap][npcIndex].speak();
 
                 }
                 keyH.ePressed = false;
@@ -186,7 +193,7 @@ public class Player extends Entity {
     private void interactWithNpc(int npcIndex) {
         if (npcIndex != -1){
             if(keyH.ePressed){
-                gp.npcList[npcIndex].speak();
+                gp.npcList[gp.currentMap][npcIndex].speak();
                 //keyH.ePressed = false;
             }
         }
@@ -195,7 +202,7 @@ public class Player extends Entity {
     public void pickUpObject(int index) {
         if (index != -1) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
             // om index är ej empty alltså innehåller ett objekt
-            String objectName = gp.obj[index].name;
+            String objectName = gp.obj[gp.currentMap][index].name;
 
             switch (objectName) { // denna funktion tar bort objektet när vi passerar den
                 case "cat":
@@ -438,6 +445,29 @@ public class Player extends Entity {
                 }
             }
         }
+        /*
+        Conflict från amertest merge nedan, testa sen
+         int x = screenX;
+        int y = screenY;
+
+        if (screenX > worldX){
+            x = worldX;
+        }
+        if (screenY > worldY){
+            y = worldY;
+        }
+
+        int rightOffset = gp.screenWidth - screenX;
+        if (rightOffset > gp.worldWidth - worldX){
+            x = gp.screenWidth - gp.worldWidth - worldX;
+        }
+        int downOffset = gp.screenHeight - screenY;
+        if (downOffset > gp.worldHeight - worldY){
+            y = gp.screenHeight - gp.worldHeight - worldY;
+        }
+
+        g2.drawImage(image,x,y,gp.tileSize,gp.tileSize,null);
+         */
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
         if (debugON) { // kan tas bort men ta ej bort rn

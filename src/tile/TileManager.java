@@ -115,7 +115,7 @@ public class TileManager {
 
             int index = 1;
 
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 10; i++) {
                 int x = 0;
                 int y = 0;
 
@@ -124,12 +124,12 @@ public class TileManager {
                         for (int j = 0; j < 6; j++) {
                             x = 0;
                             for (int k = 0; k < 9; k++) {
-                                if(index != 11){
-                                tile[index] = new Tile();
-                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2.png")));
-                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                x += gp.tileSize;
-                                } else{
+                                if (index != 11) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    x += gp.tileSize;
+                                } else {
                                     tile[index] = new Tile();
                                     tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
                                     System.out.println("Here!");
@@ -173,7 +173,7 @@ public class TileManager {
                                 tile[index] = new Tile();
                                 tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_B1.png")));
                                 tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                if(index != 291 && index != 292){       //that one tree tile that wasn't playing nice
+                                if (index != 291 && index != 292) {       //that one tree tile that wasn't playing nice
                                     tile[index].collision = true;
                                 }
                                 x += gp.tileSize;
@@ -203,7 +203,7 @@ public class TileManager {
                                 tile[index] = new Tile();
                                 tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/SF_Outside_B.png")));
                                 tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                if(index != 545){       //545 is lightpost top-half tile
+                                if (index != 545) {       //545 is lightpost top-half tile
                                     tile[index].collision = true;
                                 }
                                 x += gp.tileSize;
@@ -213,9 +213,50 @@ public class TileManager {
                         }
                         System.out.println(index);
                         break;
+                    case 6: // ===================== nya tileset:en
+                        for (int j = 0; j < 10; j++) {
+                            x = 0;
+                            for (int k = 0; k < 15; k++) {
+                                tile[index] = new Tile();
+                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedInside.png")));
+                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                x += gp.tileSize;
+                                index++;
+                            }
+                            y += gp.tileSize;
+                        }
+                        System.out.println(index);
+                        break;
+                    case 7: // vet nt, men ha collision på
+                        for (int j = 0; j < 6; j++) {
+                            x = 0;
+                            for (int k = 0; k < 8; k++) {
+                                tile[index] = new Tile();
+                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedInside2.png")));
+                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                x += gp.tileSize;
+                                index++;
+                            }
+                            y += gp.tileSize;
+                        }
+                        System.out.println(index);
+                        break;
+                    case 8: // vet nt, men ha collision på
+                        for (int j = 0; j < 5; j++) {
+                            x = 0;
+                            for (int k = 0; k < 4; k++) {
+                                tile[index] = new Tile();
+                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedOutside.png")));
+                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                x += gp.tileSize;
+                                index++;
+                            }
+                            y += gp.tileSize;
+                        }
+                        System.out.println(index);
+                        break;
                 }
             }
-
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -304,11 +345,11 @@ public class TileManager {
                 int[][] newMapTileNum = new int[layerH][layerW];
                 newMapTileNum = loadMap(url, layerH, layerW, k, newMapTileNum, collisionBoolean);
 
-                if (map.getBufferedMaps() == null){
+                if (map.getBufferedMaps() == null) {
                     System.out.println("ERROR 283");
                     System.exit(0);
                 }
-                if (newMapTileNum == null){
+                if (newMapTileNum == null) {
                     System.out.println("ERROR 287");
                     System.exit(0);
                 }

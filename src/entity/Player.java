@@ -152,7 +152,7 @@ public class Player extends Entity {
                 System.out.println("Key E pressed");
             }
 
-           // System.out.println("Npc index = " + npcIndex);
+            // System.out.println("Npc index = " + npcIndex);
 
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
@@ -290,7 +290,6 @@ public class Player extends Entity {
 
         BufferedImage image = null;
 
-
         switch (direction) {
             case "walkup" -> {
                 if (spriteNum == 1) {
@@ -417,14 +416,12 @@ public class Player extends Entity {
         Conflict från amertest merge nedan, testa sen
          int x = screenX;
         int y = screenY;
-
         if (screenX > worldX){
             x = worldX;
         }
         if (screenY > worldY){
             y = worldY;
         }
-
         int rightOffset = gp.screenWidth - screenX;
         if (rightOffset > gp.worldWidth - worldX){
             x = gp.screenWidth - gp.worldWidth - worldX;
@@ -433,7 +430,6 @@ public class Player extends Entity {
         if (downOffset > gp.worldHeight - worldY){
             y = gp.screenHeight - gp.worldHeight - worldY;
         }
-
         g2.drawImage(image,x,y,gp.tileSize,gp.tileSize,null);
          */
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
@@ -443,4 +439,3 @@ public class Player extends Entity {
         }
     }
 }
-

@@ -28,11 +28,15 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
     public int currentMap = 0;
 
+    // WORLD SETTINGS dessa kan ändras // TODO: Update automatically?
+    public int maxWorldRow = 40;        //65 för main_town, 40 för sawmill (probably outdated)
+    public final int maxWorldCol = 42;  //65 för main_town, 42 för sawmill
 
     // EXTRA SETTINGS
     MapManager mapManager = new MapManager(this);
     boolean debugOn; // kan tas bort @author Kinda
     public int maxMap = 10;
+    public int currentSpeaker;
 
     // ===================================
     //FULL SCREEN
@@ -46,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleState = 0;
     public final int playState = 1;
     public final int optionsState = 2;
-    public final int dialogState = 3;
+    public final int dialogueState = 3;
     public final int noneState = 4;
     // ===================================
 
@@ -94,7 +98,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        assetSetter.setObject();
+        assetSetter.setObjects();
+        assetSetter.setNPC();
         playMusik(0);
         gameState = titleState;
 
@@ -162,6 +167,9 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
+        if(gameState == dialogueState) {
+            ui.drawDialogueWindow();
+        }
     }
 
     /**
@@ -175,7 +183,7 @@ public class GamePanel extends JPanel implements Runnable {
                 keyH.escPressed = false; // @author kinda, make sure att option menyn e stängd när man sitter i main menyn
             }
             ui.draw(g2);
-        } else { // allt annat till spelet
+        } else if (gameState == playState) { // allt annat till spelet
             stopMusik();
             gameState = keyH.escPressed ? optionsState : playState; // @author kinda, checkar om man öppnar elr stänger optionmenyn
 
@@ -196,9 +204,14 @@ public class GamePanel extends JPanel implements Runnable {
                         npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
                     }
                 }
+
+                // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
+            }
+            if (gameState == dialogueState) {
+                ui.drawDialogueWindow();
             }
             if (gameState == optionsState || gameState == noneState) {
-                ui.drawSettingsMenu(g2); // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
+                ui.drawSettingsMenu(g2);
             }
         }
     }
@@ -255,5 +268,10 @@ public class GamePanel extends JPanel implements Runnable {
         //Get fullscreen width & height
         screenWidth2 = GameStarter.window.getWidth();
         screenHeight2 = GameStarter.window.getHeight();
+    }
+
+    public void progressDialogue(){
+        npcList[0][currentSpeaker].progressDialogue();
+        //ui.displayNextDialogue(npcList[currentSpeaker].getCurrDialogue());
     }
 }

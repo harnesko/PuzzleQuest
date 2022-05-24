@@ -20,6 +20,8 @@ public class Entity {
     public Rectangle solidArea; // detta är ersättningen för body saken i libgdx. hjälper med collision
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
+    public String[] dialogues = new String[10];
+    public int dialogueIndex = 0;
 
     // Vi använder BufferedImage för att spara bilder o sånt som syns, glöm ej använda png
     public Entity(GamePanel gp){

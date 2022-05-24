@@ -421,6 +421,7 @@ public class TileManager {
                         if (tile[tileIndex] != null && tileIndex != 11) {
                             g2.drawImage(tile[tileIndex].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
                         }
+
                     }
 
                     if (debugON) { // OK att ta bort

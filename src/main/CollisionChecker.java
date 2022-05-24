@@ -28,7 +28,6 @@ public class CollisionChecker {
         int tileNum1, tileNum2;
         /*
         Amers version nedan, lite conflicts atm
-
         case "walkup", "runup":
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
                 tileNum1 = gp.tileManager.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];

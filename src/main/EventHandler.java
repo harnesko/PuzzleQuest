@@ -21,12 +21,14 @@ public class EventHandler {
     public EventHandler(GamePanel gp){
         this.gp = gp;
 
-        eventRect = new EventRect[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
+        int maxWorldCol = gp.mapManager.getMapList().get(0).measureMap(1);
+        int maxWorldRow = gp.mapManager.getMapList().get(0).measureMap(2);
+        eventRect = new EventRect[gp.maxMap][maxWorldCol][maxWorldRow];
 
         int map = 0;
         int col = 0;
         int row = 0;
-        while (map < gp.maxMap && col < gp.maxWorldCol && row < gp.maxWorldRow){
+        while (map < gp.maxMap && col < maxWorldCol && row < maxWorldRow){
             eventRect[map][col][row] = new EventRect();
             eventRect[map][col][row].x = 23;        //position?
             eventRect[map][col][row].y = 23;
@@ -36,11 +38,11 @@ public class EventHandler {
             eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
 
             col++;
-            if (col == gp.maxWorldCol){
+            if (col == maxWorldCol){
                 col = 0;
                 row++;
 
-                if (row == gp.maxWorldRow){
+                if (row == maxWorldRow){
                     row = 0;
                     map++;
                 }
@@ -85,8 +87,8 @@ public class EventHandler {
         if (map == gp.currentMap) {
             gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
             gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
-            eventRect[map][col][row].x = col * gp.tileSize + eventRect[map][col][row].x;
-            eventRect[map][col][row].y = row + gp.tileSize + eventRect[map][col][row].y;
+           // eventRect[map][col][row].x = col * gp.tileSize + eventRect[map][col][row].x;
+           // eventRect[map][col][row].y = row + gp.tileSize + eventRect[map][col][row].y;
 
             //first if clause is what breaks it, it's never true for w/e reason
 
@@ -116,22 +118,12 @@ public class EventHandler {
                 System.out.println("Current map no: " + gp.currentMap);
                 return true;
             }
-            //if (gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER) != -1)
 
-
-            //This was the old block that broke stuff
-           /* if (gp.player.solidArea.intersects(eventRect[map][col][row]) && !eventRect[map][col][row].eventDone) {
-                if (gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")){
-                    hit = true;
-                    System.out.println("Teleporting..");
-                    previousEventX = gp.player.worldX;
-                    previousEventY = gp.player.worldY;
-                }
-            }*/
             gp.player.solidArea.x = gp.player.solidAreaDefaultX;
             gp.player.solidArea.y = gp.player.solidAreaDefaultY;
-            eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
-            eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
+            //Everything eventRect[][][] is commented our rn, maybe it can be removed completely?
+//            eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
+//            eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
         }
         if (hit) {
             System.out.println("IT FUCKING WORKS?!");

@@ -26,11 +26,13 @@ public class GamePanel extends JPanel implements Runnable {
     public int maxScreenRow = 12; // och 12 tiles vertikalt
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels vertikalt
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
+    public int currentMap = 0;
 
 
     // EXTRA SETTINGS
     MapManager mapManager = new MapManager(this);
     boolean debugOn; // kan tas bort @author Kinda
+    public int maxMap = 10;
 
     // ===================================
     //FULL SCREEN
@@ -63,7 +65,6 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eHandler = new EventHandler(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     // ===================================
-    public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Player player = new Player(this, keyH);
     public GameObject obj[][] = new GameObject[maxMap][10]; // 10 betyder vi kan visa 10 slots, inte att vi endast kan ha 10
     public NPC[][] npcList = new NPC[maxMap][10];           //Does this need to exist or can npcs exist inside obj[]?

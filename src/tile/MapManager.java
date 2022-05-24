@@ -43,8 +43,8 @@ public class MapManager {
         for (int i = 0; i < mapList.size(); i++) {
 
             if (mapList.get(i).getMapTxtFile().equals("/mainMaps/main_town")){
-                mapList.get(i).setPlayerSpawnX(tileSize * 51);
-                mapList.get(i).setPlayerSpawnY(tileSize * 9);
+                mapList.get(i).setPlayerSpawnX(tileSize * 60);
+                mapList.get(i).setPlayerSpawnY(tileSize * 12);
                 System.out.println("Added positioning 1");
             }
 

@@ -16,42 +16,43 @@ public class AssetSetter {
     // TODO: ej effektivt, funkar ba för en mapp ju
 
     public void setObjects(){
-    int mapNum = 0;
-    gp.obj[mapNum][0] = new Key();
-    gp.obj[mapNum][0].worldX = 23 * gp.tileSize;
-    gp.obj[mapNum][0].worldY = 7 * gp.tileSize;
+        int mapNum = 0;
+        gp.obj[0][1] = new Cat();
+        gp.obj[0][1].worldX = 70 * gp.tileSize + (gp.tileSize/2);
+        gp.obj[0][1].worldY = 38 * gp.tileSize;
 
-    gp.obj[mapNum][1] = new Key();
-    gp.obj[mapNum][1].worldX = 23 * gp.tileSize;
-    gp.obj[mapNum][1].worldY = 40 * gp.tileSize;
 
-    gp.obj[mapNum][2] = new Key();
-    gp.obj[mapNum][2].worldX = 38 * gp.tileSize;
-    gp.obj[mapNum][2].worldY = 8 * gp.tileSize;
+            gp.obj[0][2] = new Book();
+            gp.obj[0][2].worldX = 6 * gp.tileSize + (gp.tileSize/2);
+            gp.obj[0][2].worldY = 18 * gp.tileSize;
 
-    gp.obj[mapNum][3] = new Door();
-    gp.obj[mapNum][3].worldX = 10 * gp.tileSize;
-    gp.obj[mapNum][3].worldY = 11 * gp.tileSize;
 
-    gp.obj[mapNum][4] = new Door();
-    gp.obj[mapNum][4].worldX = 8 * gp.tileSize;
-    gp.obj[mapNum][4].worldY = 28 * gp.tileSize;
 
-    gp.obj[mapNum][5] = new Door();
-    gp.obj[mapNum][5].worldX = 12 * gp.tileSize;
-    gp.obj[mapNum][5].worldY = 22 * gp.tileSize;
+            gp.obj[0][4] = new Stuff();
+            gp.obj[0][4].worldX = 17 * gp.tileSize + (gp.tileSize / 2);
+            gp.obj[0][4].worldY = 65 * gp.tileSize;
 
-    gp.obj[mapNum][6] = new Chest();
-    gp.obj[mapNum][6].worldX = 10 * gp.tileSize;
-    gp.obj[mapNum][6].worldY = 7 * gp.tileSize;
 
-    gp.obj[0][7] = new Teleporter();
-    gp.obj[0][7].worldX = 50 * gp.tileSize;     //[0] means map 0, Main town
-    gp.obj[0][7].worldY = 12 * gp.tileSize;
 
-    gp.obj[1][7] = new Teleporter();
-    gp.obj[1][7].worldX = 11 * gp.tileSize;
-    gp.obj[1][7].worldY = 13 * gp.tileSize;
+            gp.obj[0][3] = new Wok();
+            gp.obj[0][3].worldX = 59 * gp.tileSize + (gp.tileSize / 2);
+            gp.obj[0][3].worldY = 41 * gp.tileSize;
+
+
+        gp.obj[0][5] = new Door();
+        gp.obj[0][5].worldX = 47 * gp.tileSize - (gp.tileSize/2);
+        gp.obj[0][5].worldY = 61 * gp.tileSize;
+
+        gp.obj[0][7] = new Teleporter();
+        gp.obj[0][7].worldX = 50 * gp.tileSize;     //[0] means map 0, Main town
+        gp.obj[0][7].worldY = 12 * gp.tileSize;
+
+        gp.obj[1][7] = new Teleporter();
+        gp.obj[1][7].worldX = 11 * gp.tileSize;
+        gp.obj[1][7].worldY = 13 * gp.tileSize;
+
+        //                mapList.get(i).setPlayerSpawnX(tileSize * 51);
+        //                mapList.get(i).setPlayerSpawnY(tileSize * 9);
     }
 
     public void setNPC(){

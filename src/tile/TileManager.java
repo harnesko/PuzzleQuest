@@ -23,7 +23,7 @@ public class TileManager {
 
     GamePanel gp;
     public Tile[] tile;
-    public int[][][] mapTileNum;
+    //public int[][][] mapTileNum;
     public int[][] collisionBoolean;
     private Image image;
 
@@ -288,8 +288,13 @@ public class TileManager {
                 int layerH = map.getMapLayers().get(k).getHeight();
                 int layerW = map.getMapLayers().get(k).getWidth();
 
+                System.out.println("LAYER H " + layerH + "\nLAYER W " + layerW);
+
                 if (!createdColBoolMap1) {
                     collisionBoolean = new int[map.getMapLayers().get(0).getWidth()][map.getMapLayers().get(0).getHeight()];
+
+                    System.out.println("HEIGHT " + map.getMapLayers().get(0).getWidth() + "\nWIDTH " + map.getMapLayers().get(0).getHeight());
+
                     createdColBoolMap1 = true;
                 }
 
@@ -336,8 +341,6 @@ public class TileManager {
             int row = 0;
             // j = col
             int col = 0;
-
-            int debC = 0;
 
             for (row = 0; row < layerW; row++) {
 

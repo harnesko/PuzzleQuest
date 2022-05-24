@@ -299,6 +299,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+
         if (code == KeyEvent.VK_ENTER) {
             if (gp.ui.commandNumber == 2) {
 
@@ -322,6 +323,7 @@ public class KeyHandler implements KeyListener {
                 gp.playSoundEffect(2);
             }
         }
+
 
         if(gp.ui.settingsState == 1){
             if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_BACK_SPACE) {

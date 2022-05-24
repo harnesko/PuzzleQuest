@@ -180,7 +180,8 @@ public class GamePanel extends JPanel implements Runnable {
                 keyH.escPressed = false; // @author kinda, make sure att option menyn e stängd när man sitter i main menyn
             }
             ui.draw(g2);
-        } else if (gameState == playState) { // allt annat till spelet
+        }
+        else if (gameState == playState) { // allt annat till spelet
             stopMusik();
             gameState = keyH.escPressed ? optionsState : playState; // @author kinda, checkar om man öppnar elr stänger optionmenyn
 

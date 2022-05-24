@@ -1,6 +1,5 @@
 package entity;
 
-import gameObject.GameObject;
 import main.Debug;
 import main.GamePanel;
 import main.KeyHandler;
@@ -19,11 +18,20 @@ public class Player extends Entity {
 
     public final int screenX; // dessa två variabler är kameran, och de ändras inte
     public final int screenY;
-    public int hasKey = 0;//Gustav gjorde till public
+
+    //Items pickup
+    public int hasKey = 0;
     public boolean hasCat = false;
-    public boolean hasBook;
-    public boolean hasWok;
-    public boolean hasStuff;
+    public boolean hasBook = false;
+    public boolean hasWok = false;
+    public boolean hasStuff = false;
+
+    //Quests
+    public boolean quest1Complete = false;
+    public boolean quest2Complete = false;
+    public boolean quest3Complete = false;
+    public boolean quest4Complete = false;
+
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -207,36 +215,42 @@ public class Player extends Entity {
             switch (objectName) { // denna funktion tar bort objektet när vi passerar den
                 case "cat":
                     hasCat = true;
-                    gp.obj[index] = null;
+                    quest1Complete = true;
+                    System.out.println(quest1Complete);
+                    System.out.println(quest2Complete);
+                    gp.obj[0][index] = null;
                     System.out.println("Cat: " + hasCat);
                     gp.ui.showMessage("Oh boi is Young-boi Mjau");
                     break;
 
                 case "Book":
                     hasBook = true;
-                    gp.obj[index] = null;
+                    quest2Complete = true;
+                    gp.obj[0][index] = null;
                     System.out.println("Book: " + hasBook);
                     gp.ui.showMessage("Found the recipe book");
                     break;
 
                 case "Wok":
                     hasWok = true;
-                    gp.obj[index] = null;
+                    quest4Complete = true;
+                    hasKey++;
+                    gp.obj[0][index] = null;
                     System.out.println("Book: " + hasBook);
                     gp.ui.showMessage("mmm yummy yummy");
                     break;
 
-
                 case "Stuff":
                     hasStuff = true;
-                    gp.obj[index] = null;
+                    quest3Complete = true;
+                    gp.obj[0][index] = null;
                     System.out.println("Book: " + hasBook);
                     gp.ui.showMessage("You retried Stuff");
                     break;
 
                 case "Door":
                     if (hasKey > 0) {
-                        gp.obj[index] = null;
+                        gp.obj[0][index] = null;
                         hasKey--;
                     }
                     else{

@@ -123,10 +123,16 @@ public class TileManager {
                         for (int j = 0; j < 6; j++) {
                             x = 0;
                             for (int k = 0; k < 9; k++) {
+                                if(index != 11){
                                 tile[index] = new Tile();
                                 tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2.png")));
                                 tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
                                 x += gp.tileSize;
+                                } else{
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
+                                    System.out.println("Here!");
+                                }
                                 index++;
                             }
                             y += gp.tileSize;

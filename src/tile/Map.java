@@ -76,10 +76,6 @@ public class Map {
                 int charCount = line.split(",").length;
                 totalCharCount += charCount;
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             br.close();
         } catch (IOException e) {
             throw new RuntimeException(e);

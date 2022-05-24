@@ -4,20 +4,63 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Map {
 
+    /**
+     * Här skapas de viktigaste egenskaperna för våra mappar (t.ex mått, layers)
+     *
+     * @Author Kinda
+     **/
+
+    private ArrayList<Map> mapLayers;
+
+    private ArrayList<int[][]> bufferedMaps;
     private String mapTxtFile;
     private int height; // TODO: bättre namn?
     private int width;
     private int playerSpawnX = 0;
     private int playerSpawnY = 0;
 
-    public Map(String mapTxtFile){
+    public Map(String mapTxtFile, MapType mapType) {
         this.mapTxtFile = mapTxtFile;
 
-        height = measureMap(2);
-        width = measureMap(1);
+        if (mapType.equals(MapType.file)) {
+            mapLayers = new ArrayList<>(setUpLayers());
+            bufferedMaps = new ArrayList<>();
+
+            if (mapLayers.size() < 1) {
+                System.out.println("LIST IS NULL... ");
+                System.exit(0);
+            }
+        } else if (mapType.equals(MapType.layer)) {
+            height = measureMap(2);
+            width = measureMap(1);
+        }
+    }
+
+
+    public ArrayList<Map> setUpLayers() {
+        InputStream is = getClass().getResourceAsStream(mapTxtFile);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+        mapLayers = new ArrayList<>();
+
+        try {
+            String line;
+            while ((line = br.readLine()) != null) {
+                Map layer = new Map(line, MapType.layer);
+                mapLayers.add(layer);
+            }
+
+            br.close();
+        } catch (IOException e) {
+            System.out.println("ERROR IN SETUPLAYERS");
+            System.exit(0);
+        }
+
+        return mapLayers != null ? mapLayers : null;
     }
 
     public int measureMap(int x) {
@@ -42,6 +85,18 @@ public class Map {
             throw new RuntimeException(e);
         }
         return x == 1 ? lineCount : (totalCharCount / lineCount);
+    }
+
+    public ArrayList<Map> getMapLayers() {
+        return mapLayers;
+    }
+
+    public ArrayList<int[][]> getBufferedMaps() {
+        return bufferedMaps;
+    }
+
+    public void setBufferedMaps(ArrayList<int[][]> bufferedMaps) {
+        this.bufferedMaps = bufferedMaps;
     }
 
     public String getMapTxtFile() {

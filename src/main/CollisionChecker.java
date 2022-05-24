@@ -30,34 +30,42 @@ public class CollisionChecker {
         switch (entity.direction) {
             case "walkup", "runup":
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityTopRow];
-                tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityTopRow];
-                if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
+                tileNum1 = gp.tileManager.collisionBoolean[entityLeftCol][entityTopRow];
+                tileNum2 = gp.tileManager.collisionBoolean[entityRightCol][entityTopRow];
+
+                if (tileNum1 == 1 || tileNum2 == 1) {
                     entity.collisionOn = true;
+                    System.out.println("HEJ");
                 }
                 break;
             case "walkdown", "rundown":
                 entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityBottomRow];
-                tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityBottomRow];
-                if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
+                tileNum1 = gp.tileManager.collisionBoolean[entityLeftCol][entityBottomRow];
+                tileNum2 = gp.tileManager.collisionBoolean[entityRightCol][entityBottomRow];
+
+                if (tileNum1 == 1 || tileNum2 == 1) {
                     entity.collisionOn = true;
+                    System.out.println("HEJ");
                 }
                 break;
             case "walkleft", "runleft":
                 entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityTopRow];
-                tileNum2 = gp.tileManager.mapTileNum[entityLeftCol][entityBottomRow];
-                if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
+                tileNum1 = gp.tileManager.collisionBoolean[entityLeftCol][entityTopRow];
+                tileNum2 = gp.tileManager.collisionBoolean[entityLeftCol][entityBottomRow];
+
+                if (tileNum1 == 1 || tileNum2 == 1) {
                     entity.collisionOn = true;
+                    System.out.println("HEJ");
                 }
                 break;
             case "walkright", "runright":
                 entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[entityRightCol][entityTopRow];
-                tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityBottomRow];
-                if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
+                tileNum1 = gp.tileManager.collisionBoolean[entityRightCol][entityTopRow];
+                tileNum2 = gp.tileManager.collisionBoolean[entityRightCol][entityBottomRow];
+
+                if (tileNum1 == 1 || tileNum2 == 1) {
                     entity.collisionOn = true;
+                    System.out.println("HEJ");
                 }
                 break;
         }
@@ -80,8 +88,6 @@ public class CollisionChecker {
                 }else if(type == EntityType.NPC){
                     //check stuff 
                 }
-
-
                 switch (entity.direction) {
                     case "walkup", "runup" -> {
                         entity.solidArea.y -= entity.speed;
@@ -138,10 +144,7 @@ public class CollisionChecker {
 
         }
         return index;
-
     }
-
-
     public int checkEntity(Entity entity, Entity[] target){
         int index = -1;
 
@@ -191,10 +194,7 @@ public class CollisionChecker {
                 target[i].solidArea.x = target[i].solidAreaDefaultX;
                 target[i].solidArea.y = target[i].solidAreaDefaultY;
             }
-
         }
-
         return index;
     }
-
 }

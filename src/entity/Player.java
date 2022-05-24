@@ -109,21 +109,13 @@ public class Player extends Entity {
                 shiftPressed = true;
                 speed = 6;
                 // TODO: speed 5, animations run klart. men behöver xtra animation (idle mellan gående animation change)
-                if (spriteCounter > 7) {
-                    if (spriteNum == 1) {
-                        spriteNum = 2;
-                    } else if (spriteNum == 2) {
-                        spriteNum = 1;
-                    }
+                if (spriteCounter > 3) {
+                    spriteNum = spriteNum == 1 ? 2 : spriteNum == 2 ? 3 : 1;
                     spriteCounter = 0;
                 }
             } else {  // OM SHIFT ÄR INTE PRESSED
                 if (spriteCounter > 12) {
-                    if (spriteNum == 1) {
-                        spriteNum = 2;
-                    } else if (spriteNum == 2) {
-                        spriteNum = 1;
-                    }
+                    spriteNum = spriteNum == 1 ? 3 : 1;
                     spriteCounter = 0;
                 }
             }
@@ -299,6 +291,10 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
+                    image = idleUp1;
+                    break;
+                }
+                if (spriteNum == 3) {
                     image = walkUp2;
                     break;
                 }
@@ -309,6 +305,10 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
+                    image = idleDown1;
+                    break;
+                }
+                if (spriteNum == 3) {
                     image = walkDown2;
                     break;
                 }
@@ -319,6 +319,10 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
+                    image = idleLeft1;
+                    break;
+                }
+                if (spriteNum == 3) {
                     image = walkLeft2;
                     break;
                 }
@@ -329,6 +333,10 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
+                    image = idleRight1;
+                    break;
+                }
+                if (spriteNum == 3) {
                     image = walkRight2;
                     break;
                 }
@@ -339,6 +347,10 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
+                    image = idleUp1;
+                    break;
+                }
+                if (spriteNum == 3) {
                     image = runUp2;
                     break;
                 }
@@ -349,6 +361,10 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
+                    image = idleDown1;
+                    break;
+                }
+                if (spriteNum == 3) {
                     image = runDown2;
                     break;
                 }
@@ -359,6 +375,10 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
+                    image = idleLeft1;
+                    break;
+                }
+                if (spriteNum == 3) {
                     image = runLeft2;
                     break;
                 }
@@ -369,6 +389,10 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
+                    image = idleRight1;
+                    break;
+                }
+                if (spriteNum == 3) {
                     image = runRight2;
                     break;
                 }

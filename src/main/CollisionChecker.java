@@ -39,6 +39,8 @@ public class CollisionChecker {
                 break;
          */
 
+
+
         switch (entity.direction) {
             case "walkup", "runup":
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;

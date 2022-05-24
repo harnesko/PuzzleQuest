@@ -19,6 +19,7 @@ public class KeyHandler implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
+
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
@@ -40,6 +41,15 @@ public class KeyHandler implements KeyListener {
         }
         if(gp.gameState == gp.noneState){
             optionsBackButton(code);
+        }
+        if(gp.gameState == gp.dialogueState){
+            if(code == KeyEvent.VK_E || code == KeyEvent.VK_ENTER  ){      //E or Enter key progresses dialogue
+                //gp.ui.displayNextDialogue("Input proper string here");
+                gp.progressDialogue();
+                gp.ui.displayNextDialogue(gp.npcList[gp.currentSpeaker].getCurrDialogue());
+            } else if (code == KeyEvent.VK_ESCAPE){                     //Esc exits dialogue state
+                gp.gameState = gp.playState;
+            }
         }
     }
 
@@ -246,13 +256,8 @@ public class KeyHandler implements KeyListener {
      * @param code used to determine what key we use.
      * @author Kristoffer
      */
-    private void optionKey(int code) { // WHEN IN OPTION MENU
-        /*if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_P) {
-            escPressed = false;
-            gp.gameState = gp.playState;
-        }*/
-
-        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP && gp.ui.settingsState == 0) {
+    private void optionKey(int code) {
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gp.ui.commandNumber--;
             gp.playSoundEffect(3);
             if (gp.ui.commandNumber < 0) {
@@ -260,14 +265,14 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN && gp.ui.settingsState == 0) {
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
             gp.ui.commandNumber++;
             gp.playSoundEffect(3);
             if (gp.ui.commandNumber > 3) {
                 gp.ui.commandNumber = 0;
             }
         }
-        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT && gp.ui.settingsState == 0) {
+        if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
             //Lower Music
             if (gp.ui.commandNumber == 0 && gp.music.volumeScale > 0) {
                 gp.music.volumeScale --;
@@ -281,7 +286,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT && gp.ui.settingsState == 0) {
+        if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
             //Increase Music
             if (gp.ui.commandNumber == 0 && gp.music.volumeScale < 10) {
                 gp.music.volumeScale++;
@@ -294,7 +299,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_ENTER && gp.ui.settingsState == 0) {
+        if (code == KeyEvent.VK_ENTER) {
             if (gp.ui.commandNumber == 2) {
 
                 // TODO: fixa så man frågas innan programmet stängs
@@ -349,10 +354,7 @@ public class KeyHandler implements KeyListener {
 
     }
 
-    public void gamePlayKeys(int code){ // WHEN IN GAME
-        if (code == KeyEvent.VK_1){
-            gp.tileManager.currentMap = "/maps/testy";
-        }
+    public void gamePlayKeys(int code){
         if (code == KeyEvent.VK_W){
             upPressed = true;
         }
@@ -371,13 +373,16 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_F2){
             fPressed = !fPressed;
         }
-        /*if (code == KeyEvent.VK_P){
+        if (code == KeyEvent.VK_P){
             escPressed = true;
-            gp.gameState = gp.optionsState;
-        }*/
+            gp.gameState =gp.optionsState;
+        }
         if (code == KeyEvent.VK_E){
             ePressed = true;
             //gp.npcList[0].speak();
+        }
+        if (code == KeyEvent.VK_ESCAPE){
+            gp.gameState =gp.optionsState;
         }
     }
 

@@ -58,6 +58,11 @@ public class Player extends Entity {
         lastBtnPressed = "";
 
     }
+    /*
+    //Sawmill default pos, tested and works
+        worldX = gp.tileSize * 21;                               //left/right    //Use tile * 21 for sawmill default
+        worldY = ((gp.tileSize * 11) + (gp.tileSize / 2));       //up /down      //Use tile * 11 for sawmill default
+     */
 
 
     public void getPlayerImage() {
@@ -148,13 +153,13 @@ public class Player extends Entity {
                     gp.npcList[gp.currentMap][npcIndex].speak();
 
                 }
+            if(npcIndex == -1){
                 keyH.ePressed = false;
                 System.out.println("Key E pressed");
             }
 
-           // System.out.println("Npc index = " + npcIndex);
 
-
+            //System.out.println("Npc index = " + npcIndex);
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
                 switch (direction) {
@@ -190,11 +195,17 @@ public class Player extends Entity {
 
     }
 
+    /**
+     *
+     * @param npcIndex - Used to determine what NPC the player is near, -1 if no npcs around
+     * @author Måns
+     */
     private void interactWithNpc(int npcIndex) {
         if (npcIndex != -1){
-            if(keyH.ePressed){
-                gp.npcList[gp.currentMap][npcIndex].speak();
-                //keyH.ePressed = false;
+            if(keyH.ePressed && gp.gameState != gp.dialogueState){
+                gp.gameState = gp.dialogueState;
+                gp.npcList[npcIndex].speak();        //remove this mess later I guess
+                gp.currentSpeaker = npcIndex;       //Keeps track of what npc is currently engaged in dialogue
             }
         }
     }

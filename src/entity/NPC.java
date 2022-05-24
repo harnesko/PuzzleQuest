@@ -29,6 +29,8 @@ public abstract class NPC extends Entity{       //Super class for all npc's
     private int screenX; // Are these needed for an NPC or is it only for Player?
     private int screenY;
     public int directionalDelay = 0;
+    int dialogueIndex = 0;
+    String[] dialogues = new String[10];
 
     public NPC (GamePanel gp){
         super(gp);
@@ -120,9 +122,17 @@ public abstract class NPC extends Entity{       //Super class for all npc's
 
 
     }
+    public void progressDialogue(){
+        if (dialogueIndex < dialogues.length){
+            dialogueIndex++;
+        }else{
+            dialogueIndex = 1;
+        }
+    }
 
     //Every NPC should say something, this is just to make sure that they know that
     public abstract void speak();
 
 
+    public abstract String getCurrDialogue();
 }

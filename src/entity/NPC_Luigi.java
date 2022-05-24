@@ -15,9 +15,6 @@ import java.util.Objects;
  */
 public class NPC_Luigi extends NPC{
     public GamePanel gp;
-    public String[] npcLuigiDialogue = new String[10];
-    private int screenX; // Are these needed for an NPC or is it only for Player?
-    private int screenY;
     BufferedImage luigi_image1 = null;
     public boolean isQuestDone = false;
     public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
@@ -36,20 +33,31 @@ public class NPC_Luigi extends NPC{
         loadNpcImage();
     }
 
+    //I guess move this method to super? Depending on how we will do the other npc interactions
     @Override
     public void speak() {
-        for (String str : npcLuigiDialogue){
-            if(str != null){
-                gp.ui.showMessage(str);
-            }
+        if(dialogues[dialogueIndex] == null || (dialogueIndex >= dialogues.length - 1)) {
+            System.out.println("Resetting dialogue..");
+            dialogueIndex = 0;
+        }else{
+            gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
+            dialogueIndex++;
         }
     }
+
     public void progressQuest(){
         for (int i = 0; i < questProgress.length; i++){
             if(!questProgress[i]) {
                 questProgress[i] = true;
                 break;
             }
+        }
+    }
+    public String getCurrDialogue(){
+        if(dialogueIndex <= dialogues.length){
+            return dialogues[dialogueIndex];
+        }else{
+            return "No more dialogue..";
         }
     }
 
@@ -63,11 +71,10 @@ public class NPC_Luigi extends NPC{
         try{
             luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcTwo/npc_luigi_left.png")));
             if(luigi_image1 == null){
-                System.out.println("here");
+                System.out.println("Load image failed..");
             }
-        }catch (Exception e){
+        }catch (Exception e) {
             e.printStackTrace();
-            System.out.println("also here");
         }
         return luigi_image1;   //todo make void i guess
     }
@@ -153,10 +160,10 @@ public class NPC_Luigi extends NPC{
 
     public void createDialogue(){
         //Mostly for testing purposes rn, do it properly later or something
-        npcLuigiDialogue[0] = "Hello";
-        npcLuigiDialogue[1] = "Nintendo couldn't make this game if they tried";
-        npcLuigiDialogue[2] = "bla bla bla";
-        npcLuigiDialogue[3] = "bla bla bla";
-        npcLuigiDialogue[4] = "You need go and speak with Mario!";
+        dialogues[0] = "Hello";
+        dialogues[1] = "Nintendo couldn't make this\n game if they tried";
+        dialogues[2] = "bla bla bla";
+        dialogues[3] = "bla bla bla";
+        dialogues[4] = "You need go and speak with Mario!";
     }
 }

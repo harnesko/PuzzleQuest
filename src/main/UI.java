@@ -15,12 +15,14 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40; //ska ändras sen Gustav
+    BufferedImage keyImage;
     public boolean messagesOn;
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
     public String currentDialog = "";
 
+    //Images
     //Images
     private final Image woodPlankImage = new ImageIcon("resource/Images/woodplank.png").getImage();
     private final Image woodBackground = new ImageIcon("resource/Images/woodframe.png").getImage();
@@ -39,13 +41,10 @@ public class UI {
     public boolean fullscreen;
     public int settingsState = 0;
 
-
-
     public UI(GamePanel gp) {
         this.gp = gp;
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
-
         Key key = new Key();
         keyImage = key.image;
 
@@ -109,13 +108,11 @@ public class UI {
                 g2.fillRect(0, 0, 200, 200);
             }
 
-            if (gp.gameState == gp.dialogState) {
-                //todo later
+            if (gp.gameState == gp.dialogueState) {
+                drawDialogueWindow();
             }
         }
     }
-
-
 
     /**
      * This method is used to draw the Settings menu.
@@ -125,10 +122,8 @@ public class UI {
      */
     public void drawSettingsMenu(Graphics2D g2) {
 
-        // inget ändrat här förutom g2 parameter
-
         //Sub window
-        int frameX = gp.tileSize*4;
+        int frameX = gp.tileSize*6;
         int frameY = gp.tileSize;
         int frameWidth = gp.tileSize*8;
         int frameHeight = gp.tileSize*10;
@@ -137,7 +132,7 @@ public class UI {
             g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
             optionsMenu();
         }
-        else if (settingsState == 1 && gp.gameState == gp.optionsState){
+        else if (settingsState == 1 && gp.gameState == gp.noneState){
             g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
             fullScreenNotification(frameX, frameY);
         }
@@ -148,7 +143,7 @@ public class UI {
     public void optionsMenu(){
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55F));
         String title = "Settings";
-        int x = gp.tileSize*7 - 45;
+        int x = 525;
         int y = gp.tileSize * 3 - 50;
         g2.drawString(title,x,y);
 
@@ -156,7 +151,7 @@ public class UI {
 
         String text = "Music: < " + gp.music.volumeScale + " >";
 
-        x = gp.tileSize*6;
+        x = gp.tileSize*8;
         y = gp.tileSize * 4 + (gp.tileSize/2);
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
         g2.drawString(text, x + 20 , y);
@@ -219,8 +214,51 @@ public class UI {
      * @author Kristoffer
      */
     public void drawSubWindow(Graphics2D g2, int x, int y, int width, int height) {
-        g2.drawImage(woodFrame,x,y,width,height,null);
+        //Dialogue window
+        Color c = new Color(0, 0, 0, 200);        //4th param = opacity
+        g2.setColor(c);
+        g2.fillRoundRect(x, y, width, height, 35, 35);
 
+        //Text color
+        c = new Color(255, 255, 255);
+        //Defines a line along the edge for aesthetics
+        c = new Color(81, 88, 129);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
+    }
+    /**
+     * This method uses the method drawSubWindow() to use its frame into a dialogue
+     * @author Måns
+     */
+    public void drawDialogueWindow(){
+        int x = gp.tileSize * 2;    //gp.tileSize * 2; //x position
+        int y = gp.tileSize * 8;    //gp.tileSize / 2; //y position
+        int width = 800;                 //gp.screenWidth - (gp.tileSize * 4);
+        int height = 200;                //gp.tileSize * 5;
+
+        drawSubWindow(g2, x, y, width, height);
+
+        x = gp.tileSize * 2 + 20; //text x position
+        y += gp.tileSize;       //text y position
+        if(currentDialog != null){
+            g2.drawString(currentDialog, x, y);
+        }
+    }
+
+    /**
+     * This method updates the npc dialogue window when the player presses E or Enter
+     * If dialogue has been exausted, it will set the gameState to playState.
+     * @param str - The current string of dialogue that's to be displayed.
+     * @author Måns
+     */
+    public void displayNextDialogue(String str){
+        currentDialog = str;
+        if(currentDialog != null){
+            g2.drawString(currentDialog, gp.tileSize * 2 + 20, 600);
+        }else{
+            gp.gameState = gp.playState;
+        }
     }
     /**
      * This is an organised method to dictate what is being drawn in the MainMenu.
@@ -428,23 +466,23 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
 
         String text = "Music: < " + gp.music.volumeScale + " >";
-        x = gp.tileSize * 6;
+        x = getXForCenteredText(title);
         y = gp.tileSize * 5 + (gp.tileSize/2);
-        g2.drawImage(woodPlankImage, x - 17, y-45, 270, 70, null);
+        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
         g2.drawString(text, x + 20 , y);
         if (commandNumber == 0) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 55 , y);
+            g2.drawString(">", x - 45 , y);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
         }
 
         text = "Sound: < " +gp.soundEffects.volumeScale + " >";
-        y += gp.tileSize + 25;
-        g2.drawImage(woodPlankImage, x - 17, y-45, 270, 70, null);
+        y += 80;
+        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
         g2.drawString(text, x + 20 , y);
         if (commandNumber == 1) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 55 , y);
+            g2.drawString(">", x - 45 , y);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
         }
 
@@ -454,26 +492,26 @@ public class UI {
             text = "FullScreen [X]";
         }
 
-        y += gp.tileSize + 25;
-        g2.drawImage(woodPlankImage, x - 17, y-45, 270, 70, null);
-        g2.drawString(text, x + 15 , y);
+        y += 80;
+        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        g2.drawString(text, x + 20 , y);
         if (commandNumber == 2) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 55 , y);
+            g2.drawString(">", x - 45 , y);
         }
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
         text = "Return";
-        y += gp.tileSize + 25;
-        g2.drawImage(woodPlankImage, x - 17, y-45, 270, 70, null);
-        g2.drawString(text, x + 40, y+2);
+        y += 80;
+        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        g2.drawString(text, x + 50, y+2);
         if (commandNumber == 3) {
-            g2.drawString(">", x - 55 , y);
+            g2.drawString(">", x - 45 , y);
         }
         gp.config.saveConfig();
 
         if (gp.keyH.enterPressed){
-            int frameX = gp.tileSize * 4;
+            int frameX = gp.tileSize * 6;
             int frameY = gp.tileSize * 3 + (gp.tileSize/2) ;
             int frameWidth = gp.tileSize * 8;
             int frameHeight = gp.tileSize * 8;
@@ -488,26 +526,25 @@ public class UI {
      * @param y coordinate
      * * @author Kristoffer
      */
-    public void fullScreenNotification(int x, int y){ //centrera möget
+    public void fullScreenNotification(int x, int y){
 
         g2.setColor(Color.black);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
         String text = "The change will take effect";
-        g2.drawString(text, gp.tileSize*5, gp.tileSize*5);
+        g2.drawString(text, gp.tileSize*7, gp.tileSize*6);
         text = "after restarting the game";
-        g2.drawString(text, gp.tileSize*5, gp.tileSize*5+50);
+        g2.drawString(text, gp.tileSize*7, gp.tileSize*6+50);
 
         //back
         g2.setColor(Color.WHITE);
-        x = gp.tileSize*6;
+        x = gp.tileSize*8;
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
         text = "Return";
-        y = gp.tileSize*9;
+        y = gp.tileSize*10;
         g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
         g2.drawString(text, x + 50, y+2);
         g2.drawString(">", x - 45 , y);
     }
-
     public void gameWon(){
         g2.setFont(arial_40);
         g2.setColor(Color.white);
@@ -532,48 +569,12 @@ public class UI {
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);
 
-        ////Settings for the Box around the item
+        //Display keys tror detta ska ligga i "gp.playstate" Hitta en bättre font än arial
         g2.setFont(arial_40);
         g2.setColor(Color.white);
-        g2.setStroke(new BasicStroke(5));
-        int halfTile = gp.tileSize / 2;
-
-        //KEY
-        g2.drawImage(woodFrame2, halfTile, halfTile, gp.tileSize, gp.tileSize, null); //Box
-        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
-        g2.drawImage(keyImage, gp.tileSize / 2 + 10, gp.tileSize / 2 + 10, (gp.tileSize / 3) * 2, (gp.tileSize / 3) * 2, null); //Key
-        g2.drawString("x " + gp.player.hasKey, 100, gp.tileSize + 10 );
-
-        //CAT
-        g2.drawImage(woodFrame2, gp.tileSize / 2, halfTile + 70, gp.tileSize, gp.tileSize, null); //Box
-        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
-        g2.drawImage(catImage, gp.tileSize / 2, halfTile + 65 , gp.tileSize, gp.tileSize, null);
-        if(gp.player.hasCat){
-            g2.drawString("x " + "1", 100, gp.tileSize + 80);
-        }
-
-        g2.drawImage(woodFrame2, halfTile, halfTile + 140, gp.tileSize, gp.tileSize, null); //Box
-        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
-        g2.drawImage(bookImage, gp.tileSize / 2 - 5, halfTile + 140 , gp.tileSize, gp.tileSize, null);
-        if(gp.player.hasBook){
-            g2.drawString("x " + "1", 100, gp.tileSize + 150);
-        }
-
-        g2.drawImage(woodFrame2, halfTile, halfTile + 210, gp.tileSize, gp.tileSize, null); //Box
-        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
-        g2.drawImage(wokImage, gp.tileSize / 2 - 5, halfTile + 210 , gp.tileSize, gp.tileSize, null);
-        if(gp.player.hasWok){
-            g2.drawString("x " + "1", 100, gp.tileSize + 220);
-        }
-
-        g2.drawImage(woodFrame2, halfTile, halfTile + 280, gp.tileSize, gp.tileSize, null); //Box
-        //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
-        g2.drawImage(stuffImage, gp.tileSize / 2 - 5, halfTile + 280 , gp.tileSize, gp.tileSize, null);
-        if(gp.player.hasStuff){
-            g2.drawString("x " + "1", 100, gp.tileSize + 290);
-        }
+        g2.drawImage(keyImage, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize, null);
+        g2.drawString("x " + gp.player.hasKey, 95, 77);
     }
-
 
     /**
      * This method is used to find the center based on the text length.

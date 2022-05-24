@@ -86,7 +86,7 @@ public class NPC_Wock extends NPC{
     @Override
     public void update() {
         //super.update();     //fix this mess later with inheritence, super method gives nullpointer on gamepanel instance for w/e reason
-        setAction();
+        setDirection();
         collisionOn = false;
         gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance. Npc doesn't properly detect player rn, fix later
 

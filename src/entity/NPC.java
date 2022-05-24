@@ -67,7 +67,7 @@ public abstract class NPC extends Entity{       //Super class for all npc's
      * Update direction after a few seconds
      * Npc needs to check collision properly
      */
-    public void setAction(){
+    public void setDirection(){
         directionalDelay++;
 
         if (directionalDelay > 100) {
@@ -91,7 +91,7 @@ public abstract class NPC extends Entity{       //Super class for all npc's
     }
 
     public void update() {
-        setAction();
+        setDirection();
         this.collisionOn = false;
         gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance
 

@@ -15,7 +15,6 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40; //ska ändras sen Gustav
-    BufferedImage keyImage;
     public boolean messagesOn;
     public String message = "";
     int messageCounter = 0;

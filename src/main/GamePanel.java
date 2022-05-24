@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     int FPS = 60;
 
-    TileManager tileManager = new TileManager(this);
+    TileManager tileManager;
     KeyHandler keyH = new KeyHandler(this); // knapparna WASD
     Thread gameThread; // tiden för spelet
     // ===================================
@@ -98,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        assetSetter.setObject();
+        assetSetter.setObjects();
         assetSetter.setNPC();
         playMusik(0);
         gameState = titleState;
@@ -205,13 +205,14 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
 
-             // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
+                // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
             }
-            if(gameState == dialogueState){
+            if (gameState == dialogueState) {
                 ui.drawDialogueWindow();
             }
-        if (gameState == optionsState || gameState == noneState) {
-            ui.drawSettingsMenu(g2);
+            if (gameState == optionsState || gameState == noneState) {
+                ui.drawSettingsMenu(g2);
+            }
         }
     }
 
@@ -270,7 +271,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void progressDialogue(){
-        npcList[currentSpeaker].progressDialogue();
+        npcList[0][currentSpeaker].progressDialogue();
         //ui.displayNextDialogue(npcList[currentSpeaker].getCurrDialogue());
     }
 }

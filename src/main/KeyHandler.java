@@ -46,7 +46,7 @@ public class KeyHandler implements KeyListener {
             if(code == KeyEvent.VK_E || code == KeyEvent.VK_ENTER  ){      //E or Enter key progresses dialogue
                 //gp.ui.displayNextDialogue("Input proper string here");
                 gp.progressDialogue();
-                gp.ui.displayNextDialogue(gp.npcList[gp.currentSpeaker].getCurrDialogue());
+                gp.ui.displayNextDialogue(gp.npcList[gp.currentSpeaker][gp.maxMap].getCurrDialogue());
             } else if (code == KeyEvent.VK_ESCAPE){                     //Esc exits dialogue state
                 gp.gameState = gp.playState;
             }

@@ -58,11 +58,6 @@ public class Player extends Entity {
         lastBtnPressed = "";
 
     }
-    /*
-    //Sawmill default pos, tested and works
-        worldX = gp.tileSize * 21;                               //left/right    //Use tile * 21 for sawmill default
-        worldY = ((gp.tileSize * 11) + (gp.tileSize / 2));       //up /down      //Use tile * 11 for sawmill default
-     */
 
 
     public void getPlayerImage() {
@@ -114,13 +109,13 @@ public class Player extends Entity {
                 shiftPressed = true;
                 speed = 6;
                 // TODO: speed 5, animations run klart. men behöver xtra animation (idle mellan gående animation change)
-                if (spriteCounter > 3) {
-                    spriteNum = spriteNum == 1 ? 2 : spriteNum == 2 ? 3 : 1;
+                if (spriteCounter > 7) {
+                    spriteNum = spriteNum == 1 ? 2 : 1;
                     spriteCounter = 0;
                 }
             } else {  // OM SHIFT ÄR INTE PRESSED
                 if (spriteCounter > 12) {
-                    spriteNum = spriteNum == 1 ? 3 : 1;
+                    spriteNum = spriteNum == 1 ? 2 : 1;
                     spriteCounter = 0;
                 }
             }
@@ -153,13 +148,13 @@ public class Player extends Entity {
                     gp.npcList[gp.currentMap][npcIndex].speak();
 
                 }
-            if(npcIndex == -1){
                 keyH.ePressed = false;
                 System.out.println("Key E pressed");
             }
 
+            // System.out.println("Npc index = " + npcIndex);
 
-            //System.out.println("Npc index = " + npcIndex);
+
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
                 switch (direction) {
@@ -195,17 +190,11 @@ public class Player extends Entity {
 
     }
 
-    /**
-     *
-     * @param npcIndex - Used to determine what NPC the player is near, -1 if no npcs around
-     * @author Måns
-     */
     private void interactWithNpc(int npcIndex) {
         if (npcIndex != -1){
-            if(keyH.ePressed && gp.gameState != gp.dialogueState){
-                gp.gameState = gp.dialogueState;
-                gp.npcList[npcIndex].speak();        //remove this mess later I guess
-                gp.currentSpeaker = npcIndex;       //Keeps track of what npc is currently engaged in dialogue
+            if(keyH.ePressed){
+                gp.npcList[gp.currentMap][npcIndex].speak();
+                //keyH.ePressed = false;
             }
         }
     }
@@ -301,7 +290,6 @@ public class Player extends Entity {
 
         BufferedImage image = null;
 
-
         switch (direction) {
             case "walkup" -> {
                 if (spriteNum == 1) {
@@ -309,10 +297,6 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = idleUp1;
-                    break;
-                }
-                if (spriteNum == 3) {
                     image = walkUp2;
                     break;
                 }
@@ -323,10 +307,6 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = idleDown1;
-                    break;
-                }
-                if (spriteNum == 3) {
                     image = walkDown2;
                     break;
                 }
@@ -337,10 +317,6 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = idleLeft1;
-                    break;
-                }
-                if (spriteNum == 3) {
                     image = walkLeft2;
                     break;
                 }
@@ -351,10 +327,6 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = idleRight1;
-                    break;
-                }
-                if (spriteNum == 3) {
                     image = walkRight2;
                     break;
                 }
@@ -365,10 +337,6 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = idleUp1;
-                    break;
-                }
-                if (spriteNum == 3) {
                     image = runUp2;
                     break;
                 }
@@ -379,10 +347,6 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = idleDown1;
-                    break;
-                }
-                if (spriteNum == 3) {
                     image = runDown2;
                     break;
                 }
@@ -393,10 +357,6 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = idleLeft1;
-                    break;
-                }
-                if (spriteNum == 3) {
                     image = runLeft2;
                     break;
                 }
@@ -407,10 +367,6 @@ public class Player extends Entity {
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = idleRight1;
-                    break;
-                }
-                if (spriteNum == 3) {
                     image = runRight2;
                     break;
                 }
@@ -460,14 +416,12 @@ public class Player extends Entity {
         Conflict från amertest merge nedan, testa sen
          int x = screenX;
         int y = screenY;
-
         if (screenX > worldX){
             x = worldX;
         }
         if (screenY > worldY){
             y = worldY;
         }
-
         int rightOffset = gp.screenWidth - screenX;
         if (rightOffset > gp.worldWidth - worldX){
             x = gp.screenWidth - gp.worldWidth - worldX;
@@ -476,7 +430,6 @@ public class Player extends Entity {
         if (downOffset > gp.worldHeight - worldY){
             y = gp.screenHeight - gp.worldHeight - worldY;
         }
-
         g2.drawImage(image,x,y,gp.tileSize,gp.tileSize,null);
          */
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
@@ -486,4 +439,3 @@ public class Player extends Entity {
         }
     }
 }
-

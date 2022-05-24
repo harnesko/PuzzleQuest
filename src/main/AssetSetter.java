@@ -42,9 +42,9 @@ public class AssetSetter {
         gp.obj[0][5].worldX = 47 * gp.tileSize - (gp.tileSize/2);
         gp.obj[0][5].worldY = 61 * gp.tileSize;
 
-        gp.obj[0][7] = new Teleporter();
-        gp.obj[0][7].worldX = 50 * gp.tileSize;     //[0] means map 0, Main town
-        gp.obj[0][7].worldY = 12 * gp.tileSize;
+        gp.obj[0][6] = new Teleporter();
+        gp.obj[0][6].worldX = 60 * gp.tileSize + (gp.tileSize/2);     //[0] means map 0, Main town
+        gp.obj[0][6].worldY = 10 * gp.tileSize;
 
         gp.obj[1][7] = new Teleporter();
         gp.obj[1][7].worldX = 11 * gp.tileSize;

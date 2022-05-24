@@ -19,7 +19,7 @@ public class UI {
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
-    public String currentDialog = "";
+    public String currentDialogue = "";
 
     //Images
     //Images
@@ -151,32 +151,11 @@ public class UI {
         g2.setColor(c);
         g2.fillRoundRect(x, y, width, height, 35, 35);
 
-        //Text color
         c = new Color(255, 255, 255);
-        //Defines a line along the edge for aesthetics
         c = new Color(81, 88, 129);
         g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
-    }
-
-    /**
-     * This method uses the method drawSubWindow() to use its frame into a dialogue
-     * @author Måns
-     */
-    public void drawDialogueWindow(){
-        int x = gp.tileSize * 2;    //gp.tileSize * 2; //x position
-        int y = gp.tileSize * 8;    //gp.tileSize / 2; //y position
-        int width = 800;                 //gp.screenWidth - (gp.tileSize * 4);
-        int height = 200;                //gp.tileSize * 5;
-
-        drawSubWindow(g2, x, y, width, height);
-
-        x = gp.tileSize * 2 + 20; //text x position
-        y += gp.tileSize;       //text y position
-        if(currentDialog != null){
-            g2.drawString(currentDialog, x, y);
-        }
     }
 
     /**
@@ -197,7 +176,29 @@ public class UI {
             settingsMenu();
         }
     }
+    /**
+     * This method uses the method drawSubWindow() to use its frame into a dialogue
+     * @author Måns
+     */
+    public void drawDialogueWindow(){
+        int x = gp.tileSize;    //gp.tileSize * 2; //x position
+        int y = gp.tileSize * 9;    //gp.tileSize / 2; //y position
+        int width = 800;                 //gp.screenWidth - (gp.tileSize * 4);
+        int height = 200;                //gp.tileSize * 5;
 
+        drawSubWindow(g2, x, y, width, height);
+
+
+        x = gp.tileSize + 30; //text x position
+        y += 2;       //text y position
+        if(currentDialogue != null){
+            //g2.drawString(currentDialogue, x, y);
+            //fix this later but rn do the ugly version up top
+            for(String currentDialogue : currentDialogue.split("\n")){    //Regex magic -> new line
+                g2.drawString(currentDialogue, x, y += g2.getFontMetrics().getHeight());     //I know it's not centered, but it's really late rn
+            }
+        }
+    }
     /**
      * This method updates the npc dialogue window when the player presses E or Enter
      * If dialogue has been exausted, it will set the gameState to playState.
@@ -205,10 +206,13 @@ public class UI {
      * @author Måns
      */
     public void displayNextDialogue(String str){
-        currentDialog = str;
-        if(currentDialog != null){
+        currentDialogue = str;
+        if(currentDialogue != null){
             try {
-                g2.drawString(currentDialog, gp.tileSize * 2 + 20, 600);
+                g2.drawString(currentDialogue, gp.tileSize * 2 + 20, 600);
+        /*for(String currentDialogue : currentDialogue.split("\n")){    //Regex magic -> new line
+            g2.drawString(currentDialogue, gp.tileSize * 2 + 20, 600);
+        }*/
             } catch (NullPointerException e) {
                //I really don't know why this error occurs or how to fix it so..¯\_(ツ)_/¯   /m
             }

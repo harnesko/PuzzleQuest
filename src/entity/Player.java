@@ -147,7 +147,6 @@ public class Player extends Entity {
             //CHECK NPC COLLISION
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
             interactWithNpc(npcIndex);
-            //todo Se om vi kan ta bort parametrar, köra alla objekt i samma array och kolla typ med "instanceof" metoden
             //Checka igenom CollisionChecker
             if(keyH.ePressed){
                 if (npcIndex != -1){
@@ -199,7 +198,7 @@ public class Player extends Entity {
         if (npcIndex != -1){
             if(keyH.ePressed){
                 gp.gameState = gp.dialogueState;
-                gp.npcList[gp.currentMap][npcIndex].speak();
+                //gp.npcList[gp.currentMap][npcIndex].speak();
                 gp.currentSpeaker = npcIndex;
                 //keyH.ePressed = false;
             }

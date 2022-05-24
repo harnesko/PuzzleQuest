@@ -54,11 +54,11 @@ public class NPC_CatLady extends NPC{
     }
     public void createDialogue(){
         //Starting dialogue
-        firstDialogue[0] = "Cracy Cat Lady: Mike! Mike! HaVe YoU sEeN mY CaT!?";
-        firstDialogue[1] = "You: Which one?";
-        firstDialogue[2] = "Cracy Cat Lady: Don’t be ridiculous Mike I only have 6.";
-        firstDialogue[3] = "You: I wasn’t being… never mind where is it?";
-        firstDialogue[4] = "Cracy Cat Lady: I don’t know but he likes to hang around Wocks Wok for some odd reason.";
+        firstDialogue[0] = "Cracy Cat Lady:\nMike! Mike! HaVe YoU sEeN mY CaT!?";
+        firstDialogue[1] = "You:\nWhich one?";
+        firstDialogue[2] = "Cracy Cat Lady:\nDon’t be ridiculous Mike, I only have 6.";
+        firstDialogue[3] = "You:\nI wasn’t being… never mind where is it?";
+        firstDialogue[4] = "Cracy Cat Lady:\nI don’t know but he likes to hang around Wocks Wok\nfor some odd reason.";
 
         //Only available once cat is found
         secondDialogue[0] = "Cracy cat-lady: There is one more thing you could do for me.";
@@ -86,7 +86,7 @@ public class NPC_CatLady extends NPC{
             System.out.println("Resetting dialogue..");
             dialogueIndex = 0;
         }else{
-            gp.ui.currentDialog = firstDialogue[dialogueIndex]; //use e to go through dialaogue lines later
+            gp.ui.currentDialogue = firstDialogue[dialogueIndex]; //use e to go through dialaogue lines later
             dialogueIndex++;
         }
     }

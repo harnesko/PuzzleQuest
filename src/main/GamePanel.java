@@ -155,7 +155,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         //Don't update player/npc if the game is paused
         if (gameState == playState) {
-
             player.update();
 
             for (int i = 0; i < npcList[currentMap].length; i++) {
@@ -200,10 +199,8 @@ public class GamePanel extends JPanel implements Runnable {
                 for (NPC npc : npcList[currentMap]) {
                     if (npc != null) {
                         npc.draw(g2);
-
                     }
                 }
-
                 // här skickas g2, innan kunde den inte göra det pga super.paintComponent var kommenterad bort
             }
             if (gameState == dialogueState) {
@@ -270,7 +267,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void progressDialogue(){
-        npcList[0][currentSpeaker].progressDialogue();
+        npcList[currentMap][currentSpeaker].progressDialogue();
         //ui.displayNextDialogue(npcList[currentSpeaker].getCurrDialogue());
     }
 }

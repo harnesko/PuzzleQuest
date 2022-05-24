@@ -16,7 +16,7 @@ public class GameStarter {
         window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Puzzle Quest Demo ?!!");
+        window.setTitle("HomeQuest");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

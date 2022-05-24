@@ -66,7 +66,7 @@ public class NPC_Wock extends NPC{
             System.out.println("Resetting dialogue..");
             dialogueIndex = 0;
         }else{
-            gp.ui.currentDialog = firstDialogue[dialogueIndex]; //use e to go through dialaogue lines later
+            gp.ui.currentDialogue = firstDialogue[dialogueIndex]; //use e to go through dialaogue lines later
             dialogueIndex++;
         }
     }

@@ -35,7 +35,6 @@ public class CollisionChecker {
 
                 if (tileNum1 == 1 || tileNum2 == 1) {
                     entity.collisionOn = true;
-                    System.out.println("HEJ");
                 }
                 break;
             case "walkdown", "rundown":
@@ -45,7 +44,6 @@ public class CollisionChecker {
 
                 if (tileNum1 == 1 || tileNum2 == 1) {
                     entity.collisionOn = true;
-                    System.out.println("HEJ");
                 }
                 break;
             case "walkleft", "runleft":
@@ -55,7 +53,6 @@ public class CollisionChecker {
 
                 if (tileNum1 == 1 || tileNum2 == 1) {
                     entity.collisionOn = true;
-                    System.out.println("HEJ");
                 }
                 break;
             case "walkright", "runright":
@@ -65,7 +62,6 @@ public class CollisionChecker {
 
                 if (tileNum1 == 1 || tileNum2 == 1) {
                     entity.collisionOn = true;
-                    System.out.println("HEJ");
                 }
                 break;
         }
@@ -141,7 +137,6 @@ public class CollisionChecker {
                 gp.obj[i].solidArea.x = gp.obj[i].solidAreaDefaultX;
                 gp.obj[i].solidArea.y = gp.obj[i].solidAreaDefaultY;
             }
-
         }
         return index;
     }

@@ -166,7 +166,9 @@ public class TileManager {
                                 tile[index] = new Tile();
                                 tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_B1.png")));
                                 tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                tile[index].collision = true;
+                                if(index != 291 && index != 292){       //that one tree tile that wasn't playing nice
+                                    tile[index].collision = true;
+                                }
                                 x += gp.tileSize;
                                 index++;
                             }
@@ -194,7 +196,9 @@ public class TileManager {
                                 tile[index] = new Tile();
                                 tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/SF_Outside_B.png")));
                                 tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                tile[index].collision = true;
+                                if(index != 545){       //545 is lightpost top-half tile
+                                    tile[index].collision = true;
+                                }
                                 x += gp.tileSize;
                                 index++;
                             }
@@ -398,7 +402,7 @@ public class TileManager {
                      * kamera och säkerställer att vi ritar ENDAST pixlarna/tiles:en som vi kan se inuti GUI:t. Resten
                      * ritas endast där spelarkameran rör sig till, alltså när vi rör på gubben.
                      *
-                     * detta ger bättre rendering performance.*/
+                     * Detta ger bättre rendering performance.*/
 
 
                     if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&

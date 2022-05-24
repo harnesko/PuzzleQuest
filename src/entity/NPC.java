@@ -8,8 +8,6 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 import java.util.Random;
 
-import entity.Entity;
-
 /**
  * Abstract superclass for all NPC implementation
  * @author Måns Harnesk
@@ -30,7 +28,9 @@ public abstract class NPC extends Entity{       //Super class for all npc's
     private int screenY;
     public int directionalDelay = 0;
     int dialogueIndex = 0;
-    String[] dialogues = new String[10];
+    String[] firstDialogue = new String[10];
+    String[] stepTwoDialogue = new String[10];
+    String[] stepThreeDialogue = new String[10];
 
     public NPC (GamePanel gp){
         super(gp);
@@ -123,12 +123,13 @@ public abstract class NPC extends Entity{       //Super class for all npc's
 
     }
     public void progressDialogue(){
-        if (dialogueIndex < dialogues.length){
+        if (dialogueIndex < firstDialogue.length){
             dialogueIndex++;
         }else{
             dialogueIndex = 1;
         }
     }
+
 
     //Every NPC should say something, this is just to make sure that they know that
     public abstract void speak();

@@ -6,7 +6,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Class for npc 1, currently a placeholder .png image. Please don't tell Nintendo
@@ -14,7 +13,7 @@ import java.util.Random;
  * @version 1.4
  */
 
-public class NPC_Mario extends NPC{
+public class NPC_Wock extends NPC{
 
     private int screenX; // Are these needed for an NPC or is it only for Player?
     private int screenY;
@@ -22,7 +21,7 @@ public class NPC_Mario extends NPC{
     public GamePanel gp;
     public String[] npcMarioDialogue = new String[5];
 
-    public NPC_Mario(GamePanel gp){
+    public NPC_Wock(GamePanel gp){
         super(gp);
         this.gp = gp;           //I don't understand why this line needs to be here but if it's not it goes to shit
         direction = "down";
@@ -63,17 +62,17 @@ public class NPC_Mario extends NPC{
 
     @Override
     public void speak() {
-        if(dialogues[dialogueIndex] == null || (dialogueIndex >= dialogues.length - 1)) {
+        if(firstDialogue[dialogueIndex] == null || (dialogueIndex >= firstDialogue.length - 1)) {
             System.out.println("Resetting dialogue..");
             dialogueIndex = 0;
         }else{
-            gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
+            gp.ui.currentDialog = firstDialogue[dialogueIndex]; //use e to go through dialaogue lines later
             dialogueIndex++;
         }
     }
     public String getCurrDialogue(){
-        if(dialogueIndex <= dialogues.length){
-            return dialogues[dialogueIndex];
+        if(dialogueIndex <= firstDialogue.length){
+            return firstDialogue[dialogueIndex];
         }else{
             return "No more dialogue..";
         }

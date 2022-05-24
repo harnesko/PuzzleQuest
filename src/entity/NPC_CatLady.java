@@ -13,15 +13,21 @@ import java.util.Objects;
  * @author Måns Harnesk
  * @version 1.2
  */
-public class NPC_Luigi extends NPC{
+public class NPC_CatLady extends NPC{
     public GamePanel gp;
     BufferedImage luigi_image1 = null;
+    /*
+    Step 1: Speak to Cracy to start quest, get the objective to fetch her cat, return cat to complete step 1
+    Step 2: Cracy sends player to collect food from  William Dock, step is complete when food is returned (complete docks quest first!)
+    Step 3: Profit
+     */
+    public boolean[] questProgress = {false, false};
     public boolean isQuestDone = false;
     public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
-    public boolean[] questProgress = {false, false, false};
+    private final String[] secondDialogue = new String[10];
+    private final String[] thirdDialogue = new String[20];
 
-
-    public NPC_Luigi(GamePanel gp) {
+    public NPC_CatLady(GamePanel gp) {
         super(gp);
         this.gp = gp;           //I dont understand why this line needs to be here but if it's not it goes to shit
         direction = "walkdown";
@@ -47,21 +53,40 @@ public class NPC_Luigi extends NPC{
         return luigi_image1;
     }
     public void createDialogue(){
-        //Mostly for testing purposes rn, do it properly later or something
-        dialogues[0] = "Mike! Mike! HaVe YoU sEeN mY CaT!?";
-        dialogues[1] = "You - Which one?\n";
-        dialogues[2] = "Don’t be ridiculous Mike I only have 6.\n";
-        dialogues[3] = "You - I wasn’t being… never mind where is it?";
-        dialogues[4] = " I don’t know but he likes to hang around Wocks Wok for some odd reason.";
+        //Starting dialogue
+        firstDialogue[0] = "Cracy Cat Lady: Mike! Mike! HaVe YoU sEeN mY CaT!?";
+        firstDialogue[1] = "You: Which one?";
+        firstDialogue[2] = "Cracy Cat Lady: Don’t be ridiculous Mike I only have 6.";
+        firstDialogue[3] = "You: I wasn’t being… never mind where is it?";
+        firstDialogue[4] = "Cracy Cat Lady: I don’t know but he likes to hang around Wocks Wok for some odd reason.";
+
+        //Only available once cat is found
+        secondDialogue[0] = "Cracy cat-lady: There is one more thing you could do for me.";
+        secondDialogue[1] = "Player *Sigh* What?";
+        secondDialogue[2] = "Cracy cat-lady: All this talk of Wocks Wok made me super hungry. Do you mind getting me some?";
+        secondDialogue[3] = "Player: *Mutters* Jesus Christ. Fine!";
+
+        //Only available once food is brought
+        thirdDialogue[0] = "Cracy cat-lady: Thank you Mike, here is your house key back!";
+        thirdDialogue[1] = "Player: Wait a minute you stole my house key?";
+        thirdDialogue[2] = "Cracy cat-lady: Well of course I did. I needed you to help me out before you went home.";
+        thirdDialogue[3] = "Player: Jesus christ you really are insane!";
+        thirdDialogue[4] = "Cracy cat-lady: Thank you!";
+        thirdDialogue[5] = "Player: So anything else you need doing?";
+        thirdDialogue[6] = "Cracy cat-lady: Nope that’s it.";
+        thirdDialogue[7] = "Player: That’s it?";
+        thirdDialogue[8] = "Cracy cat lady: That’s it.";
+        thirdDialogue[9] = "Player: That’s it?";
+        thirdDialogue[10] = "Cracy cat lady: That’s it.";
     }
 
     @Override
     public void speak() {
-        if(dialogues[dialogueIndex] == null || (dialogueIndex >= dialogues.length - 1)) {
+        if(firstDialogue[dialogueIndex] == null || (dialogueIndex >= firstDialogue.length - 1)) {
             System.out.println("Resetting dialogue..");
             dialogueIndex = 0;
         }else{
-            gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
+            gp.ui.currentDialog = firstDialogue[dialogueIndex]; //use e to go through dialaogue lines later
             dialogueIndex++;
         }
     }
@@ -75,8 +100,8 @@ public class NPC_Luigi extends NPC{
         }
     }
     public String getCurrDialogue(){
-        if(dialogueIndex <= dialogues.length){
-            return dialogues[dialogueIndex];
+        if(dialogueIndex <= firstDialogue.length){
+            return firstDialogue[dialogueIndex];
         }else{
             return "No more dialogue..";
         }

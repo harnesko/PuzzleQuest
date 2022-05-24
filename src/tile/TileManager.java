@@ -428,7 +428,7 @@ public class TileManager {
                     }
 
                     if (debugON) { // OK att ta bort
-                        debug.showMapTiles(g2, screenX, screenY, gp.tileSize, tileIndex);
+                        //debug.showMapTiles(g2, screenX, screenY, gp.tileSize, tileIndex);
                     }
                 }
             }

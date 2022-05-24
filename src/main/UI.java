@@ -79,7 +79,7 @@ public class UI {
             gameWon();
         } else {
             this.g2 = g2;
-            drawInventroy();
+            drawInventory();
             //message
             if (messagesOn) { // TODO: lägga denna block av kod i nån metod utanför draw för tydlighetsskull
                 g2.setFont(g2.getFont().deriveFont(30F));
@@ -207,7 +207,11 @@ public class UI {
     public void displayNextDialogue(String str){
         currentDialog = str;
         if(currentDialog != null){
-            g2.drawString(currentDialog, gp.tileSize * 2 + 20, 600);
+            try {
+                g2.drawString(currentDialog, gp.tileSize * 2 + 20, 600);
+            } catch (NullPointerException e) {
+               //I really don't know why this error occurs or how to fix it so..¯\_(ツ)_/¯   /m
+            }
         }else{
             gp.gameState = gp.playState;
         }
@@ -565,7 +569,7 @@ public class UI {
         gp.gameThread = null;
     }
 
-    public void drawInventroy(){
+    public void drawInventory(){
         //g2.setFont(); //todo later
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);

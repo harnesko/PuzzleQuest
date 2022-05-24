@@ -1,8 +1,7 @@
 package main;
 
-import entity.EntityType;
-import entity.NPC_Luigi;
-import entity.NPC_Mario;
+import entity.NPC_CatLady;
+import entity.NPC_Wock;
 import gameObject.*;
 
 public class AssetSetter {
@@ -59,14 +58,13 @@ public class AssetSetter {
 
         int mainTown = 0;
         //Mario
-        gp.npcList[mainTown][0] = new NPC_Mario(gp);
-        gp.npcList[mainTown][0].worldX = 40 * gp.tileSize;
-        gp.npcList[mainTown][0].worldY = 32 * gp.tileSize;
+        gp.npcList[mainTown][0] = new NPC_Wock(gp);
+        gp.npcList[mainTown][0].worldX = 45 * gp.tileSize;
+        gp.npcList[mainTown][0].worldY = 40 * gp.tileSize;
 
         //Luigi
-        gp.npcList[mainTown][1] = new NPC_Luigi(gp);
-        gp.npcList[mainTown][1].worldX = 40 * gp.tileSize;
-
-        gp.npcList[mainTown][1].worldY = 35 * gp.tileSize;
+        gp.npcList[mainTown][1] = new NPC_CatLady(gp);
+        gp.npcList[mainTown][1].worldX = 45 * gp.tileSize;
+        gp.npcList[mainTown][1].worldY = 41 * gp.tileSize;
     }
 }

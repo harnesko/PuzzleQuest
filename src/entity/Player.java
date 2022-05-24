@@ -108,7 +108,6 @@ public class Player extends Entity {
     public void update() {
         spriteCounter++;
         speed = 3;
-
         if (keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {  // OM NÅN KEY ÄR PRESSED
 
             boolean shiftPressed = false;

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Chest extends GameObject{
-
     public Chest() {
         name = "Chest";
         try {

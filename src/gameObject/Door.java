@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Door extends GameObject{
-
     public Door() {
         name = "Door";
         try {

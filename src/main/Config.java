@@ -4,15 +4,26 @@ import java.io.*;
 
 /**
  * Config reader/writer.
- * @auther Kristoffer
+ * @author Kristoffer
  */
 public class Config {
     GamePanel gp;
 
+    /**
+     * Constructor setting the GamePanel class.
+     * @param gp we send in the GamePanel class
+     * @author Kristoffer
+     */
     public Config(GamePanel gp) {
         this.gp = gp;
     }
 
+    /**
+     * Method used to write down the variables for if fullscreen,musicVolume and soundEffectVolume.
+     * This is done by using a BuffertWriter that writs this into the config.txt file.
+     * So that next time the player starts the game the settings will be saved.
+     * @author Kristoffer
+     */
     public void saveConfig(){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("config.txt"));
@@ -40,6 +51,11 @@ public class Config {
         }
     }
 
+    /**
+     * This method is used to set the variables we previously saved by using a BuffertReader.
+     * It reads the Config.txt file and applies the respective variabels the value stored.
+     * @author Kristoffer
+     */
     public void loadConfig(){
         try {
             BufferedReader br = new BufferedReader(new FileReader("config.txt"));
@@ -64,9 +80,6 @@ public class Config {
             gp.soundEffects.volumeScale = Integer.parseInt(s);
 
             br.close();
-
-
-
 
         } catch (IOException e) {
             e.printStackTrace();

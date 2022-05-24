@@ -331,7 +331,7 @@ public class Player extends Entity {
                     break;
                 }
             }
-            case "runup" -> {
+            case "runup" -> { // hej
                 if (spriteNum == 1) {
                     image = runUp1;
                     break;

@@ -26,14 +26,35 @@ public class NPC_Luigi extends NPC{
         this.gp = gp;           //I dont understand why this line needs to be here but if it's not it goes to shit
         direction = "walkdown";
         speed = 1;
-        createDialogue();
 
         solidArea = new Rectangle(4, 8, 8, 16);
         collisionOn = true;
+        createDialogue();
         loadNpcImage();
     }
+    public BufferedImage loadNpcImage(){
+        //BufferedImage luigi_image1 = null;
+        BufferedImage npcImage2 = null;
 
-    //I guess move this method to super? Depending on how we will do the other npc interactions
+        try{
+            luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcTwo/npc_luigi_left.png")));
+            if(luigi_image1 == null){
+                System.out.println("Load image failed..");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return luigi_image1;
+    }
+    public void createDialogue(){
+        //Mostly for testing purposes rn, do it properly later or something
+        dialogues[0] = "Mike! Mike! HaVe YoU sEeN mY CaT!?";
+        dialogues[1] = "You - Which one?\n";
+        dialogues[2] = "Don’t be ridiculous Mike I only have 6.\n";
+        dialogues[3] = "You - I wasn’t being… never mind where is it?";
+        dialogues[4] = " I don’t know but he likes to hang around Wocks Wok for some odd reason.";
+    }
+
     @Override
     public void speak() {
         if(dialogues[dialogueIndex] == null || (dialogueIndex >= dialogues.length - 1)) {
@@ -61,23 +82,6 @@ public class NPC_Luigi extends NPC{
         }
     }
 
-
-
-    //Make this return void later i guess
-    public BufferedImage loadNpcImage(){
-        //BufferedImage luigi_image1 = null;
-        BufferedImage npcImage2 = null;
-
-        try{
-            luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcTwo/npc_luigi_left.png")));
-            if(luigi_image1 == null){
-                System.out.println("Load image failed..");
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        return luigi_image1;   //todo make void i guess
-    }
     @Override
     public void update() {
         //super.update();     //fix this mess later, super method gives nullpointer on gamepanel instance for some reason, i cba to check rn
@@ -106,15 +110,7 @@ public class NPC_Luigi extends NPC{
             }
             spriteCounter = 0;
         }
-
     }
-
-    //Set NPC spawn point (remember npc can move!)
-    public void setDefaultNpcPosition(){
-        this.worldX = gp.tileSize * 35;
-        this.worldY = gp.tileSize * 32;
-    }
-
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         switch (direction) {
@@ -153,17 +149,9 @@ public class NPC_Luigi extends NPC{
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
         image = loadNpcImage();     //only for debug purposes, replace this with the switch case above later
-        //System.out.println("Image is : " + image);      //Image is sometimes null??
         g2.drawImage(image, screenX, screenY, 32, 32, null);
 
     }
 
-    public void createDialogue(){
-        //Mostly for testing purposes rn, do it properly later or something
-        dialogues[0] = "Hello";
-        dialogues[1] = "Nintendo couldn't make this\n game if they tried";
-        dialogues[2] = "bla bla bla";
-        dialogues[3] = "bla bla bla";
-        dialogues[4] = "You need go and speak with Mario!";
-    }
+
 }

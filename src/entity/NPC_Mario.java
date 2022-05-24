@@ -32,8 +32,6 @@ public class NPC_Mario extends NPC{
         collisionOn = true;
         createDialogue();
         loadNpcImage();
-        setDefaultNpcPosition();
-
     }
     public BufferedImage loadNpcImage(){
         BufferedImage npcImage1 = null;
@@ -45,7 +43,7 @@ public class NPC_Mario extends NPC{
         }catch (Exception e){
             e.printStackTrace();
         }
-        return npcImage1;   //todo make void i guess
+        return npcImage1;
     }
 
     /**
@@ -62,18 +60,24 @@ public class NPC_Mario extends NPC{
         npcMarioDialogue[3] = "bla bla bla";
         npcMarioDialogue[4] = "Please bring this item back to Luigi?";
     }
-    public String getCurrDialogue(){
-        return dialogues[dialogueIndex];
-    }
 
-    public  void speak(){
-        for (String str : npcMarioDialogue){
-            if(str != null)               //ClassCastException ibland i ui???? :(
-                gp.ui.showMessage(str);
+    @Override
+    public void speak() {
+        if(dialogues[dialogueIndex] == null || (dialogueIndex >= dialogues.length - 1)) {
+            System.out.println("Resetting dialogue..");
+            dialogueIndex = 0;
+        }else{
+            gp.ui.currentDialog = dialogues[dialogueIndex]; //use e to go through dialaogue lines later
+            dialogueIndex++;
         }
     }
-
-
+    public String getCurrDialogue(){
+        if(dialogueIndex <= dialogues.length){
+            return dialogues[dialogueIndex];
+        }else{
+            return "No more dialogue..";
+        }
+    }
     /**
      * Randomize a direction the NPC will use and pretend its pathfinding
      * Update direction after a few seconds
@@ -148,9 +152,4 @@ public class NPC_Mario extends NPC{
         image = loadNpcImage();     //only for debug purposes, replace this with the switch case above later
         g2.drawImage(image, screenX, screenY, 32, 32, null);
     }
-    public void setDefaultNpcPosition(){
-        this.worldX = 800;
-        this.worldY = 356;
-    }
-
 }

@@ -56,15 +56,16 @@ public class AssetSetter {
 
     public void setNPC(){
 
-        int mapNum = 0;
+        int mainTown = 0;
         //Mario
-        gp.npcList[mapNum][0] = new NPC_Mario(gp);
-        gp.npcList[mapNum][0].worldX = 1460;
-        gp.npcList[mapNum][0].worldY = 1355;
+        gp.npcList[mainTown][0] = new NPC_Mario(gp);
+        gp.npcList[mainTown][0].worldX = 40 * gp.tileSize;
+        gp.npcList[mainTown][0].worldY = 32 * gp.tileSize;
 
         //Luigi
-        gp.npcList[mapNum][1] = new NPC_Luigi(gp);
-        gp.npcList[mapNum][1].worldX = 1390;
-        gp.npcList[mapNum][1].worldY = 1355;
+        gp.npcList[mainTown][1] = new NPC_Luigi(gp);
+        gp.npcList[mainTown][1].worldX = 40 * gp.tileSize;
+
+        gp.npcList[mainTown][1].worldY = 35 * gp.tileSize;
     }
 }

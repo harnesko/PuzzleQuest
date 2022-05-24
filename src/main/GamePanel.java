@@ -158,10 +158,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             player.update();
 
-            /*for (NPC npc : npcList) {
-                if (npc != null) {
-                    npc.update();       //Update the npc movement*/
-            for (int i = 0; i < npcList[1].length; i++) {
+            for (int i = 0; i < npcList[currentMap].length; i++) {
                 if (npcList[currentMap][i] != null) {
                     npcList[currentMap][i].update();
                 }
@@ -199,9 +196,10 @@ public class GamePanel extends JPanel implements Runnable {
                 player.draw(g2, debugOn);
                 ui.draw(g2); //Gustav
 
-                for (NPC npc : npcList[1]) {
+                for (NPC npc : npcList[currentMap]) {
                     if (npc != null) {
-                        npc.draw(g2);       //NullPointerException atm???      ¯\_(ツ)_/¯
+                        npc.draw(g2);
+
                     }
                 }
 

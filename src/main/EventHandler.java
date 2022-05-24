@@ -87,24 +87,10 @@ public class EventHandler {
         if (map == gp.currentMap) {
             gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
             gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
-           // eventRect[map][col][row].x = col * gp.tileSize + eventRect[map][col][row].x;
-           // eventRect[map][col][row].y = row + gp.tileSize + eventRect[map][col][row].y;
-
-            //first if clause is what breaks it, it's never true for w/e reason
-
-            System.out.println("Eventrect col: : " + col + " Row: " + row);
-            System.out.println("Player pos X: " + gp.player.worldX / gp.tileSize + " Player pos y " + gp.player.worldY / gp.tileSize);
-            System.out.println("Player solid area x: " + gp.player.solidArea.x / gp.tileSize+ "\nPlayer solid area y : " + gp.player.solidArea.y / gp.tileSize);
-            /*
-              (Notes)
-              Player pos (row, col) seems correct
-              eventRect pos (col)(row) is determined where?
-              Check why they never intersects, first if clause is what's breaking it (its never true).
-             */
 
             int teleportIndex = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
             int tpIndex = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
-            System.out.println("Test index : " + teleportIndex);
+
             if (teleportIndex == 7 && gp.currentMap == 0){     //Teleporter 1 is in obj[7]
                /* System.out.println("Current map no: " + gp.currentMap);
                 teleport2(1,  12,13);    //Target map and position
@@ -129,16 +115,6 @@ public class EventHandler {
             System.out.println("IT FUCKING WORKS?!");
         }
         return hit;
-    }
-    public void teleport2(int targetMap, int col, int row){ //The parameters are used to update the players position
-        //Set map, followed by x/y co-ordinates for player pos(tilesize, not pixels)
-        gp.currentMap = targetMap;
-        gp.player.worldX = gp.tileSize * col;
-        gp.player.worldY = gp.tileSize * row;
-        //Set camera?
-        previousEventX = gp.player.worldX;
-        previousEventY = gp.player.worldY;
-        canTouchEvent = false;
     }
     /**
      * @param map - Set target map to teleport into

@@ -156,14 +156,20 @@ public class CollisionChecker {
 
     }
 
+    /**
+     * @param entity - player subclass checks this, solidarea (hitbox) calculated
+     * @param target - An array of the NPCs, calculating their hitbox with the world x/y
+     * @return int index of what npc is near. If no npc near return -1
+     * @author Måns
+     */
 
     public int checkEntity(Entity entity, Entity[][] target){
         int index = -1;
 
-        for (int i = 0; i < target[1].length; i++) {
+        for (int i = 0; i < target[gp.currentMap].length; i++) {
             if (target[gp.currentMap][i] != null){
 
-                // Get entity's solid area position
+                // Get players solid area position
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
@@ -175,6 +181,7 @@ public class CollisionChecker {
                     case "walkup", "runup" -> {
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) { // intersects är en solidArea metod
+
                             entity.collisionOn = true;
                             index = i;
                         }

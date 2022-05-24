@@ -66,7 +66,7 @@ public class EventHandler {
                 teleport(1,12,13);                    //Set target map and teleport exit point
             }
             if (hit(1, 12, 9, "any")){     //Same as comment above but for another map
-                teleport(0,23,23);
+                teleport(0,50,13);
             }
         }
     }

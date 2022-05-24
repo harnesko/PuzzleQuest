@@ -76,12 +76,12 @@ Kristoffers version nedan, lite conflict atm
         gp.obj[mapNum][6].worldY = 7 * gp.tileSize;
 
         gp.obj[0][7] = new Teleporter();
-        gp.obj[0][7].worldX = 24 * gp.tileSize;
-        gp.obj[0][7].worldY = 22 * gp.tileSize;
+        gp.obj[0][7].worldX = 50 * gp.tileSize;     //[0] means map 0, Main town
+        gp.obj[0][7].worldY = 12 * gp.tileSize;
 
         gp.obj[1][7] = new Teleporter();
-        gp.obj[1][7].worldX = 12 * gp.tileSize;
-        gp.obj[1][7].worldY = 9 * gp.tileSize;
+        gp.obj[1][7].worldX = 11 * gp.tileSize;
+        gp.obj[1][7].worldY = 13 * gp.tileSize;
 
 
     }

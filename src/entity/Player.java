@@ -122,8 +122,8 @@ public class Player extends Entity {
         spriteCounter++;
         speed = 3;
 
-        if (keyH.ePressed){ //vet inte riktigt vart denna sak vara
-            chopping = true;
+        if (keyH.enterPressed){ //vet inte riktigt vart denna sak vara
+            chopping = true; 
         }
         if (chopping == true){//samma här
             chopping();
@@ -167,8 +167,8 @@ public class Player extends Entity {
             pickUpObject(objIndex);
 
             //CHECK INTERACTIVE TILE COLLISION
-            gp.collisionChecker.checkEntity(this,gp.interactiveTiles);
-            //gör så att spelet kreaschar så fort player försöker röra sig... fattar inte varför
+           // gp.collisionChecker.checkEntity(this,gp.interactiveTiles);
+            //gör så att spelet kraschar så fort player försöker röra sig... fattar inte varför
 
             //CHECK NPC COLLISION
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
@@ -226,7 +226,7 @@ public class Player extends Entity {
                 gp.currentSpeaker = npcIndex;       //Keeps track of what npc is currently engaged in dialogue
             }
             //kan vara så att det inte behöver vara här men då ska inte e användas eller nått idk
-            /*else {
+           /* else {
                 if (keyH.ePressed == true && gp.gameState != gp.dialogueState){
                     chopping = true;
                 }*/

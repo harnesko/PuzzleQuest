@@ -124,7 +124,7 @@ public class UI {
         int frameX = gp.tileSize*4;
         int frameY = gp.tileSize;
         int frameWidth = gp.tileSize*8;
-        int frameHeight = gp.tileSize*10;
+        int frameHeight = gp.tileSize*11;
 
         if(settingsState == 0){
             g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
@@ -134,71 +134,6 @@ public class UI {
             g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
             fullScreenNotification(frameX, frameY);
         }
-    }
-
-
-    public void optionsMenu(){
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55F));
-        String title = "Settings";
-        int x = gp.tileSize*7 - 45;
-        int y = gp.tileSize * 3 - 50;
-        g2.drawString(title,x,y);
-
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
-
-        String text = "Music: < " + gp.music.volumeScale + " >";
-
-        x = gp.tileSize*6;
-        y = gp.tileSize * 4 + (gp.tileSize/2);
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 20 , y);
-        if (commandNumber == 0) {
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 60 , y);
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
-        }
-
-        text = "Sound: < " +gp.soundEffects.volumeScale + " >";
-        y += 100;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 20 , y);
-        if (commandNumber == 1) {
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 60 , y);
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
-        }
-
-
-        if(!fullscreen){
-            text = "FullScreen [ ]";
-            if(gp.keyH.enterPressed) {
-                settingsState = 1;
-            }
-        }else{
-            text = "FullScreen [X]";
-            if(gp.keyH.enterPressed) {
-                settingsState = 1;
-            }
-        }
-
-        y += 100;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 20 , y);
-        if (commandNumber == 2) {
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 60 , y);
-        }
-
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
-        text = "Return to Menu";
-        y += 100;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
-        g2.drawString(text, x + 15, y + 2);
-        if (commandNumber == 3) {
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            g2.drawString(">", x - 80 , y);
-        }
-        gp.config.saveConfig();
     }
 
     /**
@@ -224,6 +159,7 @@ public class UI {
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
     }
+
     /**
      * This method uses the method drawSubWindow() to use its frame into a dialogue
      * @author Måns
@@ -244,20 +180,6 @@ public class UI {
     }
 
     /**
-     * This method updates the npc dialogue window when the player presses E or Enter
-     * If dialogue has been exausted, it will set the gameState to playState.
-     * @param str - The current string of dialogue that's to be displayed.
-     * @author Måns
-     */
-    public void displayNextDialogue(String str){
-        currentDialog = str;
-        if(currentDialog != null){
-            g2.drawString(currentDialog, gp.tileSize * 2 + 20, 600);
-        }else{
-            gp.gameState = gp.playState;
-        }
-    }
-    /**
      * This is an organised method to dictate what is being drawn in the MainMenu.
      * By using the game title states we control if the MainMenu is drawn or the settings Menu or the Saves menu.
      * @author Kristoffer
@@ -275,6 +197,22 @@ public class UI {
             settingsMenu();
         }
     }
+
+    /**
+     * This method updates the npc dialogue window when the player presses E or Enter
+     * If dialogue has been exausted, it will set the gameState to playState.
+     * @param str - The current string of dialogue that's to be displayed.
+     * @author Måns
+     */
+    public void displayNextDialogue(String str){
+        currentDialog = str;
+        if(currentDialog != null){
+            g2.drawString(currentDialog, gp.tileSize * 2 + 20, 600);
+        }else{
+            gp.gameState = gp.playState;
+        }
+    }
+
     /**
      * This method draws the MainMenu screen with the possible sub Menus the player could choose.
      * Its being draw by the g2 variable to draw the different objekts.
@@ -431,6 +369,7 @@ public class UI {
             g2.drawString(">", x - 45, y);
         }
     }
+
     /**
      * This Menu draws the SettingsMenu and its options to change.
      * Then these variables are written in the config file to be saved once the player starts the game again.
@@ -463,7 +402,7 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
 
         String text = "Music: < " + gp.music.volumeScale + " >";
-        x = gp.tileSize * 6;
+        x = gp.tileSize * 5 + 16;
         y = gp.tileSize * 5 + (gp.tileSize/2);
         g2.drawImage(woodPlankImage, x - 17, y-45, 270, 70, null);
         g2.drawString(text, x + 20 , y);
@@ -517,6 +456,71 @@ public class UI {
         }
     }
 
+    public void optionsMenu(){
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 45F));
+        String title = "Settings";
+        int x = gp.tileSize*7 - 40;
+        int y = gp.tileSize * 3 - 40 ;
+        int halfTile = gp.tileSize / 2;
+        g2.drawString(title,x,y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
+
+        String text = "Music: < " + gp.music.volumeScale + " >";
+
+        x = gp.tileSize*5 + halfTile;
+        y = gp.tileSize * 4 + (gp.tileSize/2);
+        g2.drawImage(woodPlankImage, x - 10, y-40, 250, 60, null);
+        g2.drawString(text, x + 15 , y);
+        if (commandNumber == 0) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            g2.drawString(">", x - 40 , y);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
+        }
+
+        text = "Sound: < " +gp.soundEffects.volumeScale + " >";
+        y += 85;
+        g2.drawImage(woodPlankImage, x - 10, y-40, 250, 60, null);
+        g2.drawString(text, x + 15 , y);
+        if (commandNumber == 1) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            g2.drawString(">", x - 40 , y);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
+        }
+
+
+        if(!fullscreen){
+            text = "FullScreen [ ]";
+            if(gp.keyH.enterPressed) {
+                settingsState = 1;
+            }
+        }else{
+            text = "FullScreen [X]";
+            if(gp.keyH.enterPressed) {
+                settingsState = 1;
+            }
+        }
+
+        y += 85;
+        g2.drawImage(woodPlankImage, x - 10, y-40, 250, 60, null);;
+        g2.drawString(text, x + 15 , y);
+        if (commandNumber == 2) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            g2.drawString(">", x - 40 , y);
+        }
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+        text = "Return to Menu";
+        y += 85;
+        g2.drawImage(woodPlankImage, x - 10, y-40, 250, 60, null);
+        g2.drawString(text, x + 15, y + 2);
+        if (commandNumber == 3) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            g2.drawString(">", x - 40 , y);
+        }
+        gp.config.saveConfig();
+    }
+
     /**
      * This method is used to notify the user that the game needs to be restarted for the fullscreen to take affekt.
      * @param x coordinate
@@ -525,22 +529,23 @@ public class UI {
      */
     public void fullScreenNotification(int x, int y){
         g2.setColor(Color.black);
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 25F));
         String text = "The change will take effect";
-        g2.drawString(text, gp.tileSize*5, gp.tileSize*5);
+        g2.drawString(text, gp.tileSize * 5 - 10, gp.tileSize*5);
         text = "after restarting the game";
-        g2.drawString(text, gp.tileSize*5, gp.tileSize*5+50);
+        g2.drawString(text, gp.tileSize * 5 - 10, gp.tileSize*5+50);
 
         //back
         g2.setColor(Color.WHITE);
-        x = gp.tileSize*6;
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        x = gp.tileSize * 5 + 30;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
         text = "Return";
-        y = gp.tileSize*9;
-        g2.drawImage(woodPlankImage, x - 10, y-45, 270, 70, null);
+        y = gp.tileSize * 10;
+        g2.drawImage(woodPlankImage, x - 10, y-40, 250, 60, null);
         g2.drawString(text, x + 50, y+2);
         g2.drawString(">", x - 45 , y);
     }
+
     public void gameWon(){
         g2.setFont(arial_40);
         g2.setColor(Color.white);

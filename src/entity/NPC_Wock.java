@@ -14,12 +14,19 @@ import java.util.Objects;
  */
 
 public class NPC_Wock extends NPC{
-
+    public GamePanel gp;
+    public BufferedImage marioLeft, marioRight;
     private int screenX; // Are these needed for an NPC or is it only for Player?
     private int screenY;
-    public BufferedImage marioLeft, marioRight;
-    public GamePanel gp;
+
+    //Move this copy pasted mess to npc abstract class when there's time lol
     public String[] npcMarioDialogue = new String[5];
+    public boolean[] questProgress = {false, false};
+    public boolean isQuestDone = false;
+    public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
+    private final String[] secondDialogue = new String[10];
+    private final String[] thirdDialogue = new String[20];
+    private String[] currentDialogue = new String[20];
 
     public NPC_Wock(GamePanel gp){
         super(gp);
@@ -52,44 +59,85 @@ public class NPC_Wock extends NPC{
      * Later work on a dialogue box or something    - NOPE
      */
     public void createDialogue(){
-        //Mostly for testing purposes rn, do it properly later or something
-        npcMarioDialogue[0] = "Hello";
-        npcMarioDialogue[1] = "Nintendo couldn't make this game if they tried";
-        npcMarioDialogue[2] = "bla bla bla";
-        npcMarioDialogue[3] = "bla bla bla";
-        npcMarioDialogue[4] = "Please bring this item back to Luigi?";
+        firstDialogue[0] = "You:\nCan i get a Wocks special?";
+        firstDialogue[1] = "Diliam Wock:\nHeya Mike.\nSure can do but you know I’m glad you came!";
+        firstDialogue[2] = "You:\nWhy?";
+        firstDialogue[3] = "Diliam Wock:\nWell you know my parents recipe book and I can’t find it.";
+        firstDialogue[4] = "Diliam Wock:\nIt’s a new seasonal special and I can’t remember\nthe exact recipe for this new season.";
+        firstDialogue[5] = "Diliam Wock:\nCould you go get it for me?";
+        firstDialogue[6] = "You:\n...";
+        firstDialogue[7] = "You:\nFine";
+        firstDialogue[8] = "Diliam Wock:\nI think they hid it somewhere around their old house.\nHappy Hunting!";
     }
 
+    /**
+     * Sets instance varaible dialogue[] to match quest progress in getCurrDialogue()
+     * Sets UI dialogue variable to local dialogue array, while keeping track of index
+     * @author Måns
+     */
     @Override
     public void speak() {
-        if(firstDialogue[dialogueIndex] == null || (dialogueIndex >= firstDialogue.length - 1)) {
+        getCurrDialogue();
+        if(currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
             System.out.println("Resetting dialogue..");
             dialogueIndex = 0;
         }else{
-            gp.ui.currentDialogue = firstDialogue[dialogueIndex]; //use e to go through dialaogue lines later
+            gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
             dialogueIndex++;
         }
     }
+
+    /**
+     * Finds the first spot in the array that's not yet been completed, and completes it
+     * @author Måns
+     */
+    public void progressQuest(){
+        for (int i = 0; i < questProgress.length; i++){
+            if(!questProgress[i]) {
+                questProgress[i] = true;
+                break;
+            }
+        }
+    }
+
+    /**
+     * Checks current quest progress and returns the corresponding dialogue
+     * @return Current string of dialogue from the array
+     * @author Måns
+     */
     public String getCurrDialogue(){
-        if(dialogueIndex <= firstDialogue.length){
-            return firstDialogue[dialogueIndex];
+        if (!questProgress[0]) {
+            currentDialogue = firstDialogue;
+        }else if(!questProgress[1]){
+            currentDialogue = secondDialogue;
         }else{
+            currentDialogue = thirdDialogue;
+        }
+
+        if (dialogueIndex <= currentDialogue.length) {
+            return currentDialogue[dialogueIndex];
+        } else {
             return "No more dialogue..";
         }
     }
+
     /**
-     * Randomize a direction the NPC will use and pretend its pathfinding
-     * Update direction after a few seconds
-     * Change picture to match walking direction (WIP)
+     * Done every frame, 60times / second
+     * @author Måns
      */
-    //Remove and put in super later I guess
     @Override
     public void update() {
-        //super.update();     //fix this mess later with inheritence, super method gives nullpointer on gamepanel instance for w/e reason
         setDirection();
-        collisionOn = false;
-        gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance. Npc doesn't properly detect player rn, fix later
+        //walk();
+    }
 
+    /**
+     * Makes the npc move around by checking the tile collision and moving accordingly
+     * @author Måns
+     */
+    public void walk(){
+        collisionOn = false;
+        gp.collisionChecker.checkTile(this);        //"this" will be the sub-class instance
         // IF COLLISION IS FALSE, NPC CAN MOVE
         if (!collisionOn) {
             switch (direction) {
@@ -122,33 +170,35 @@ public class NPC_Wock extends NPC{
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = marioLeft;          //fix marioLeft2 later
+                    image = marioRight;          //fix luigiLeft2 later
                     break;
                 }
             }
             case "walkright" -> {
                 if (spriteNum == 1) {
-                    image = marioRight;
+                    image = marioLeft;
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = marioRight;
+                    image = marioLeft;
+                    System.out.println();
                     break;
                 }
             }
             case "up" -> {
-                image = marioRight;
+                image = marioLeft;
                 break;
             }
             case "down" -> {
                 image = marioLeft;
-                //System.out.println("npc looks down");
-                break;  //fix this mess later
+                //fix this when we have more images
+                //fix this mess later
             }
         }
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
         image = loadNpcImage();     //only for debug purposes, replace this with the switch case above later
         g2.drawImage(image, screenX, screenY, 32, 32, null);
+
     }
 }

@@ -21,7 +21,7 @@ public class NPC_CatLady extends NPC{
     Step 2: Cracy sends player to collect food from  William Dock, step is complete when food is returned (complete docks quest first!)
     Step 3: Profit
      */
-    public boolean[] questProgress = {true, true};
+    public boolean[] questProgress = {false, false};
     public boolean isQuestDone = false;
     public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
     private final String[] secondDialogue = new String[10];
@@ -129,13 +129,11 @@ public class NPC_CatLady extends NPC{
         }else{
             currentDialogue = thirdDialogue;
         }
-
         if (dialogueIndex <= currentDialogue.length) {
             return currentDialogue[dialogueIndex];
         } else {
-            return "No more dialogue..";
+            return "Cracy cat-lady:\nOh my lovely Young-boi.\nThank you Mike for getting him!";
         }
-
     }
 
     /**
@@ -176,7 +174,6 @@ public class NPC_CatLady extends NPC{
             }
             spriteCounter = 0;
         }
-
     }
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
@@ -219,6 +216,4 @@ public class NPC_CatLady extends NPC{
         g2.drawImage(image, screenX, screenY, 32, 32, null);
 
     }
-
-
 }

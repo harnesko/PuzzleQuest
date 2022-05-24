@@ -47,7 +47,7 @@ public class TileManager {
         this.mapManager = mapManager;
 
         getTileImage();
-        setupAllMaps();
+        setupNewMap(currentMap);
     }
 
     public void getTileImagesTEST() {
@@ -110,8 +110,8 @@ public class TileManager {
             tile[0] = new Tile();
             tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/transparent.png")));
 
-            tile[636] = new Tile(); // ÄNDRA OM FLER TILES LÄGGS TILL, JUST NU ÄR DET 635 ST TILES
-            tile[636].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/black.png")));
+            tile[854] = new Tile(); // ÄNDRA OM FLER TILES LÄGGS TILL, JUST NU ÄR DET 635 ST TILES
+            tile[854].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/black.png")));
 
             int index = 1;
 
@@ -211,26 +211,24 @@ public class TileManager {
                             }
                             y += gp.tileSize;
                         }
-                        System.out.println(index);
                         break;
                     case 6: // ===================== nya tileset:en
-                        for (int j = 0; j < 10; j++) {
+                        for (int j = 0; j < 5; j++) {// todo:
                             x = 0;
-                            for (int k = 0; k < 15; k++) {
+                            for (int k = 0; k < 4; k++) {// todo:
                                 tile[index] = new Tile();
-                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedInside.png")));
+                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedOutside.png")));
                                 tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
                                 x += gp.tileSize;
                                 index++;
                             }
                             y += gp.tileSize;
                         }
-                        System.out.println(index);
                         break;
                     case 7: // vet nt, men ha collision på
-                        for (int j = 0; j < 6; j++) {
+                        for (int j = 0; j < 6; j++) {// todo:
                             x = 0;
-                            for (int k = 0; k < 8; k++) {
+                            for (int k = 0; k < 8; k++) {// todo:
                                 tile[index] = new Tile();
                                 tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedInside2.png")));
                                 tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
@@ -239,14 +237,13 @@ public class TileManager {
                             }
                             y += gp.tileSize;
                         }
-                        System.out.println(index);
                         break;
                     case 8: // vet nt, men ha collision på
-                        for (int j = 0; j < 5; j++) {
+                        for (int j = 0; j < 6; j++) { // todo:
                             x = 0;
-                            for (int k = 0; k < 4; k++) {
+                            for (int k = 0; k < 15; k++) { // todo:
                                 tile[index] = new Tile();
-                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedOutside.png")));
+                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedInside.png")));
                                 tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
                                 x += gp.tileSize;
                                 index++;
@@ -313,48 +310,48 @@ public class TileManager {
         }
     }
 
-    public void setupAllMaps() {
+    public void setupNewMap(String currentMap) {
         ArrayList<Map> mapList = mapManager.getMapList();
-        // TODO: måste ha tre st collisionBoolean mappar, kan hårdkoda så länge?
-        boolean createdColBoolMap1 = false;
-        boolean createdColBoolMap2 = false;
-        boolean createdColBoolMap3 = false;
-        // TODO: hårdkodar så länge (fixa for loopen så den kör alla tre inte ba ettan)
+
+        boolean colBoolCreated = false;
 
         for (int j = 0; j < mapList.size(); j++) {
-            Map map = mapList.get(j);
 
-            for (int k = 0; k < map.getMapLayers().size(); k++) {
-                String url = map.getMapLayers().get(k).getMapTxtFile();
-                int layerH = map.getMapLayers().get(k).getHeight();
-                int layerW = map.getMapLayers().get(k).getWidth();
+            if (mapList.get(j).getMapTxtFile().equals(currentMap)) {
+                Map map = mapList.get(j);
 
-                System.out.println("LAYER H " + layerH + "\nLAYER W " + layerW);
+                for (int k = 0; k < map.getMapLayers().size(); k++) {
+                    String url = map.getMapLayers().get(k).getMapTxtFile();
+                    int layerH = map.getMapLayers().get(k).getHeight();
+                    int layerW = map.getMapLayers().get(k).getWidth();
 
-                if (!createdColBoolMap1) {
-                    collisionBoolean = new int[map.getMapLayers().get(0).getWidth()][map.getMapLayers().get(0).getHeight()];
+                    System.out.println("LAYER H " + layerH + "\nLAYER W " + layerW);
 
-                    System.out.println("HEIGHT " + map.getMapLayers().get(0).getWidth() + "\nWIDTH " + map.getMapLayers().get(0).getHeight());
+                    if (!colBoolCreated) {
+                        collisionBoolean = new int[map.getMapLayers().get(0).getWidth()][map.getMapLayers().get(0).getHeight()];
 
-                    createdColBoolMap1 = true;
+                        System.out.println("HEIGHT " + map.getMapLayers().get(0).getWidth() + "\nWIDTH " + map.getMapLayers().get(0).getHeight());
+
+                        colBoolCreated = true;
+                    }
+
+                    /** denna for loop går igenom alla mappar o deras layers för o uppdatera dom
+                     * sen skickar den tbx goda, färdiga listor som kmr kallas på i draw **/
+
+                    int[][] newMapTileNum = new int[layerH][layerW];
+                    newMapTileNum = loadMap(url, layerH, layerW, k, newMapTileNum, collisionBoolean);
+
+                    if (map.getBufferedMaps() == null) {
+                        System.out.println("ERROR 283");
+                        System.exit(0);
+                    }
+                    if (newMapTileNum == null) {
+                        System.out.println("ERROR 287");
+                        System.exit(0);
+                    }
+
+                    map.getBufferedMaps().add(newMapTileNum);
                 }
-
-                /** denna for loop går igenom alla mappar o deras layers för o uppdatera dom
-                 * sen skickar den tbx goda, färdiga listor som kmr kallas på i draw **/
-
-                int[][] newMapTileNum = new int[layerH][layerW];
-                newMapTileNum = loadMap(url, layerH, layerW, k, newMapTileNum, collisionBoolean);
-
-                if (map.getBufferedMaps() == null) {
-                    System.out.println("ERROR 283");
-                    System.exit(0);
-                }
-                if (newMapTileNum == null) {
-                    System.out.println("ERROR 287");
-                    System.exit(0);
-                }
-
-                map.getBufferedMaps().add(newMapTileNum);
             }
         }
     }

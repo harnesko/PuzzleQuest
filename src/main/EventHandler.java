@@ -109,11 +109,10 @@ public class EventHandler {
                 System.out.println("Current map no: " + gp.currentMap);*/
                 System.out.println("TRUE");
                 return true;
-
             }
              else if(tpIndex == 7 && gp.currentMap == 1){
                 System.out.println("Current map no: " + gp.currentMap);
-                teleport2(0,  23,23);     //Target map and position
+                //teleport2(0,  23,23);     //Target map and position
                 System.out.println("Current map no: " + gp.currentMap);
                 return true;
             }

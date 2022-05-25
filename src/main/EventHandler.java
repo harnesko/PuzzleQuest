@@ -63,7 +63,7 @@ public class EventHandler {
         if (canTouchEvent){
             //It could be this line below that's messing it up IDK
             if (hit(0, 22, 40, "any")){     //Set teleport entry point
-                teleport(1,60,10);                    //Set target map and teleport exit point
+                teleport(1,60,15);                    //Set target map and teleport exit point
             }
             if (hit(1, 18, 16, "any")){     //Same as comment above but for another map
                 teleport(0,50,13);
@@ -93,11 +93,11 @@ public class EventHandler {
             int tpIndexMainTown = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
             int tpIndexSawmill = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
 
-            if (tpIndexMainTown == 7 && gp.currentMap == 0){     //Teleporter 1 is in obj[7]
+            if (tpIndexMainTown == 7 && gp.currentMap == 1){     //Teleporter 1 is in obj[7]
                 System.out.println("TRUE");
                 hit = true;
             }
-             else if(tpIndexSawmill == 7 && gp.currentMap == 1){
+             else if(tpIndexSawmill == 7 && gp.currentMap == 0){
                 System.out.println("Current map no: " + gp.currentMap);
                 //teleport2(0,  23,23);     //Target map and position
                 System.out.println("Current map no: " + gp.currentMap);

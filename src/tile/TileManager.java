@@ -55,10 +55,10 @@ public class TileManager {
         // TODO: textsträngen på den nya mappen som han ska till. I detta fall är det antingen "/mainMaps/sawmill" eller "/mainMaps/main_town"
 
         switch (targetMap){
-            case 0:
+            case 1:
                 this.currentMap = "/mainMaps/main_town";
                 break;
-            case 1:
+            case 0:
                 this.currentMap = "/mainMaps/sawmill";
                 break;
             default:

@@ -49,7 +49,7 @@ public class AssetSetter {
 
     public void setNPC(){
 
-        int mainTown = 0;
+        int mainTown = 1;
         //Wock
         gp.npcList[mainTown][0] = new NPC_Wock(gp);
         gp.npcList[mainTown][0].worldX = 48 * gp.tileSize;

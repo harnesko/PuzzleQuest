@@ -44,7 +44,7 @@ public class NPC_CatLady extends NPC{
         BufferedImage npcImage2 = null;
 
         try{
-            luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcCatlady/npc_luigi_left.png")));
+            luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcCatlady/NPC_Catlady.png")));
             if(luigi_image1 == null){
                 System.out.println("Load image failed..");
             }

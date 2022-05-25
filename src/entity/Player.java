@@ -159,9 +159,9 @@ public class Player extends Entity {
         spriteCounter++;
         speed = 3;
         if (keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {  // OM NÅN KEY ÄR PRESSED
-
+            //System.out.println("Player pos x : " + worldX / gp.tileSize + "\n Player pos y: " + worldY / gp.tileSize );
             boolean shiftPressed = false;
-            System.out.println("Current map is: " + gp.currentMap);
+
 
             if (keyH.shiftPressed) { // OM SHIFT ÄR PRESSED
                 shiftPressed = true;

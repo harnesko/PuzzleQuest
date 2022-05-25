@@ -62,10 +62,10 @@ public class EventHandler {
         }
         if (canTouchEvent){
             //It could be this line below that's messing it up IDK
-            if (hit(0, 23, 23, "any")){     //Set teleport entry point
-                teleport(1,26,19);                    //Set target map and teleport exit point
+            if (hit(0, 22, 40, "any")){     //Set teleport entry point
+                teleport(1,60,10);                    //Set target map and teleport exit point
             }
-            if (hit(1, 12, 9, "any")){     //Same as comment above but for another map
+            if (hit(1, 18, 16, "any")){     //Same as comment above but for another map
                 teleport(0,50,13);
             }
         }

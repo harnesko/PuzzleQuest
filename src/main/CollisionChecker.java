@@ -30,7 +30,7 @@ public class CollisionChecker {
         Amers version nedan, lite conflicts atm
         case "walkup", "runup":
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
+                tileNum1 = gp.tileManager.mapTileNum[gp.curren-wtMap][entityLeftCol][entityTopRow];
                 tileNum2 = gp.tileManager.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
                 if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
                     entity.collisionOn = true;

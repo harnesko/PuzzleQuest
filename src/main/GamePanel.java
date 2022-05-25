@@ -81,11 +81,11 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
 
         tileManager = new TileManager(this, mapManager,
-                "/mainMaps/sawmill"); // BYT DETTA OM DU VILL STARTAS PÅ ANNAN MAP
+                "/mainMaps/main_town"); // BYT DETTA OM DU VILL STARTAS PÅ ANNAN MAP
     }
 
     public void setDefaultGameValues() {
-        /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ // TODO: byt värden här !!!
+        /** VALUES TILL STARTING MAP, STARTING PLAYER LOCATION....**/ //
         // ============ PLAYER DEFAULT VALUES ============ //
         for (int i = 0; i < mapManager.getMapList().size(); i++) {
             if (mapManager.getMapList().get(i).getMapTxtFile().equals(tileManager.currentMap)) {

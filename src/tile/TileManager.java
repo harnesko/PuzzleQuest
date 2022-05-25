@@ -50,8 +50,16 @@ public class TileManager {
         setupNewMap(currentMap);
     }
 
+    public void switchMaps(String newMapUrl){ // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // TODO: när spelaren kolliderar med ett teleport objekt eller whatever, kalla på denna metod o skicka
+        // TODO: textsträngen på den nya mappen som han ska till. I detta fall är det antingen "/mainMaps/sawmill" eller "/mainMaps/main_town"
+
+        this.currentMap = newMapUrl;
+        getTileImage();
+        setupNewMap(currentMap);
+    }
+
     public void getTileImagesTEST() {
-        // TODO: för kinda, ersätta, lägga till, byta gfx sen
         try {
             //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
             tile[0] = new Tile(); // Background
@@ -106,7 +114,7 @@ public class TileManager {
          * ============= tar nån bort denna metoden så kmr jag söka upp dig /kinda
          ***/
 
-        if (currentMap.equals("/mainMaps/sawmill")) {
+        if (currentMap.equals("/mainMaps/main_town")) {
             try {
 
                 tile[0] = new Tile();

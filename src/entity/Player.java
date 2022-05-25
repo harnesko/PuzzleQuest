@@ -3,11 +3,13 @@ package entity;
 import main.Debug;
 import main.GamePanel;
 import main.KeyHandler;
+import tile.Tile;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Player extends Entity {
 
@@ -67,38 +69,86 @@ public class Player extends Entity {
 
     }
 
-
-    public void getPlayerImage() {
+    public void getPlayerImage() { // NY
         try {
             // IDLE animations
-            idleDown1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_idleD1.png"));
-            idleDown2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_idleD2.png"));
-            idleLeft1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_idleL1.png"));
-            idleLeft2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_idleL2.png"));
-            idleUp1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_idleU1.png"));
-            idleUp2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_idleU2.png"));
-            idleRight1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_idleR1.png"));
-            idleRight2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_idleR2.png"));
+            idleDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            idleDown1 = idleDown1.getSubimage(48, 0, gp.tileSize, gp.tileSize);
+            idleLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            idleLeft1 = idleLeft1.getSubimage(48, 48, gp.tileSize, gp.tileSize);
+            idleRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            idleRight1 = idleRight1.getSubimage(48, 96, gp.tileSize, gp.tileSize);
+            idleUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            idleUp1 = idleUp1.getSubimage(48, 144, gp.tileSize, gp.tileSize);
 
             // WALK animations
-            walkDown1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_downW1.png"));
-            walkDown2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_downW2.png"));
-            walkLeft1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_leftW1.png"));
-            walkLeft2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_leftW2.png"));
-            walkUp1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_upW1.png"));
-            walkUp2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_upW2.png"));
-            walkRight1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_rightW1.png"));
-            walkRight2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_rightW2.png"));
+            walkDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkDown1 = walkDown1.getSubimage(0, 0, gp.tileSize, gp.tileSize);
+            runDown1 = walkDown1;
+
+            walkDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkDown2 = walkDown2.getSubimage(96, 0, gp.tileSize, gp.tileSize);
+            runDown2 = walkDown2;
+
+            walkLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkLeft1 = walkLeft1.getSubimage(0, 48, gp.tileSize, gp.tileSize);
+            runLeft1 = walkLeft1;
+
+            walkLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkLeft2 = walkLeft2.getSubimage(96, 48, gp.tileSize, gp.tileSize);
+            runLeft2 = walkLeft2;
+
+            walkRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkRight1 = walkRight1.getSubimage(0, 96, gp.tileSize, gp.tileSize);
+            runRight1 = walkRight1;
+
+            walkRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkRight2 = walkRight2.getSubimage(96, 96, gp.tileSize, gp.tileSize);
+            runRight2 = walkRight2;
+
+            walkUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkUp1 = walkUp1.getSubimage(0, 144, gp.tileSize, gp.tileSize);
+            runUp1 = walkUp1;
+
+            walkUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkUp2 = walkUp2.getSubimage(96, 144, gp.tileSize, gp.tileSize);
+            runUp2 = walkUp2;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getPlayerImageOriginal() {
+        try {
+            // IDLE animations
+            idleDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idleD1.png")));
+            idleDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idleD2.png")));
+            idleLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idleL1.png")));
+            idleLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idleL2.png")));
+            idleUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idleU1.png")));
+            idleUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idleU2.png")));
+            idleRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idleR1.png")));
+            idleRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_idleR2.png")));
+
+            // WALK animations
+            walkDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_downW1.png")));
+            walkDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_downW2.png")));
+            walkLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_leftW1.png")));
+            walkLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_leftW2.png")));
+            walkUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_upW1.png")));
+            walkUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_upW2.png")));
+            walkRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_rightW1.png")));
+            walkRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_rightW2.png")));
 
             // RUN animations
-            runDown1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_downR1.png"));
-            runDown2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_downR2.png"));
-            runLeft1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_leftR1.png"));
-            runLeft2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_leftR2.png"));
-            runUp1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_upR1.png"));
-            runUp2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_upR2.png"));
-            runRight1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_rightR1.png"));
-            runRight2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_rightR2.png"));
+            runDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_downR1.png")));
+            runDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_downR2.png")));
+            runLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_leftR1.png")));
+            runLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_leftR2.png")));
+            runUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_upR1.png")));
+            runUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_upR2.png")));
+            runRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_rightR1.png")));
+            runRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_rightR2.png")));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,7 +166,7 @@ public class Player extends Entity {
                 shiftPressed = true;
                 speed = 6;
                 // TODO: speed 5, animations run klart. men behöver xtra animation (idle mellan gående animation change)
-                if (spriteCounter > 7) {
+                if (spriteCounter > 6) {
                     spriteNum = spriteNum == 1 ? 2 : 1;
                     spriteCounter = 0;
                 }
@@ -148,8 +198,8 @@ public class Player extends Entity {
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
             interactWithNpc(npcIndex);
             //Checka igenom CollisionChecker
-            if(keyH.ePressed){
-                if (npcIndex != -1){
+            if (keyH.ePressed) {
+                if (npcIndex != -1) {
                     gp.npcList[gp.currentMap][npcIndex].speak();
                 }
                 keyH.ePressed = false;
@@ -180,10 +230,10 @@ public class Player extends Entity {
         }
 
 
-        if (spriteCounter > 30) {
+        /*if (spriteCounter > 30) {
             spriteNum = spriteNum == 1 ? 2 : 1; // kinda
             spriteCounter = 0;
-        }
+        }*/
 
 
         // flytta denna upp till första if-satsen om ni inte vill ha animerad-medan-stilla gubbe
@@ -195,8 +245,8 @@ public class Player extends Entity {
     }
 
     private void interactWithNpc(int npcIndex) {
-        if (npcIndex != -1){
-            if(keyH.ePressed){
+        if (npcIndex != -1) {
+            if (keyH.ePressed) {
                 gp.gameState = gp.dialogueState;
                 //gp.npcList[gp.currentMap][npcIndex].speak();
                 gp.currentSpeaker = npcIndex;
@@ -250,8 +300,7 @@ public class Player extends Entity {
                     if (hasKey > 0) {
                         gp.obj[0][index] = null;
                         hasKey--;
-                    }
-                    else{
+                    } else {
                         gp.ui.showMessage("hey man you need a key for that");
                     }
                     break;
@@ -262,8 +311,8 @@ public class Player extends Entity {
         }
     }
 
-    public String setMovement(boolean shift){
-        if (shift){
+    public String setMovement(boolean shift) {
+        if (shift) {
             if (keyH.upPressed) {
                 direction = "runup";
                 return "idleup";

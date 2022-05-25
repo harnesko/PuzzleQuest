@@ -47,7 +47,7 @@ public class TileManager {
         this.mapManager = mapManager;
 
         getTileImage();
-        setupAllMaps();
+        setupNewMap(currentMap);
     }
 
     public void getTileImagesTEST() {
@@ -105,122 +105,289 @@ public class TileManager {
         /***
          * ============= tar nån bort denna metoden så kmr jag söka upp dig /kinda
          ***/
-        try {
 
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/transparent.png")));
+        if (currentMap.equals("/mainMaps/sawmill")) {
+            try {
 
-            tile[636] = new Tile(); // ÄNDRA OM FLER TILES LÄGGS TILL, JUST NU ÄR DET 635 ST TILES
-            tile[636].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/black.png")));
+                tile[0] = new Tile();
+                tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/transparent.png")));
 
-            int index = 1;
+                tile[656] = new Tile();
+                tile[656].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2.png")));
+                tile[656].image = tile[656].image.getSubimage(48, 48, gp.tileSize, gp.tileSize);
+                // TEST TEST TEST.. svart byttes ut mot gräs
+                //tile[656] = new Tile(); // ÄNDRA OM FLER TILES LÄGGS TILL, JUST NU ÄR DET 635 ST TILES
+                //tile[656].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/black.png")));
 
-            for (int i = 0; i < 6; i++) {
-                int x = 0;
-                int y = 0;
+                int index = 1;
 
-                switch (i) {
-                    case 0: // MARK, GRÄS, SAND...
-                        for (int j = 0; j < 6; j++) {
-                            x = 0;
-                            for (int k = 0; k < 9; k++) {
-                                if(index != 11){
-                                tile[index] = new Tile();
-                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2.png")));
-                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                x += gp.tileSize;
-                                } else{
+                for (int i = 0; i < 10; i++) {
+                    int x = 0;
+                    int y = 0;
+
+                    switch (i) {
+                        case 0: // MARK, GRÄS, SAND...
+                            for (int j = 0; j < 6; j++) {
+                                x = 0;
+                                for (int k = 0; k < 9; k++) {
+                                    if (index != 11) {
+                                        tile[index] = new Tile();
+                                        tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2.png")));
+                                        tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                        x += gp.tileSize;
+                                    } else {
+                                        tile[index] = new Tile();
+                                        tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
+                                        System.out.println("Here!");
+                                    }
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            break;
+                        case 1: // MARK, GRÄS, SAND DETALJER...
+                            for (int j = 0; j < 6; j++) {
+                                x = 0;
+                                for (int k = 0; k < 6; k++) {
                                     tile[index] = new Tile();
-                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
-                                    System.out.println("Here!");
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2b.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    x += gp.tileSize;
+                                    index++;
                                 }
-                                index++;
+                                y += gp.tileSize;
                             }
-                            y += gp.tileSize;
-                        }
-                        break;
-                    case 1: // MARK, GRÄS, SAND DETALJER...
-                        for (int j = 0; j < 6; j++) {
-                            x = 0;
-                            for (int k = 0; k < 6; k++) {
-                                tile[index] = new Tile();
-                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2b.png")));
-                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                x += gp.tileSize;
-                                index++;
-                            }
-                            y += gp.tileSize;
-                        }
-                        break;
-                    case 2: // VÄGGAR, TAK
-                        for (int j = 0; j < 8; j++) {
-                            x = 0;
-                            for (int k = 0; k < 12; k++) {
-                                tile[index] = new Tile();
-                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A3.png")));
-                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                tile[index].collision = true;
-                                x += gp.tileSize;
-                                index++;
-                            }
-                            y += gp.tileSize;
-                        }
-                        break;
-                    case 3: // TRÄD, VÄXTER, UTOMHUS DETALJ...
-                        for (int j = 0; j < 8; j++) {
-                            x = 0;
-                            for (int k = 0; k < 16; k++) {
-                                tile[index] = new Tile();
-                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_B1.png")));
-                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                if(index != 291 && index != 292){       //that one tree tile that wasn't playing nice
+                            break;
+                        case 2: // VÄGGAR, TAK
+                            for (int j = 0; j < 8; j++) {
+                                x = 0;
+                                for (int k = 0; k < 12; k++) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A3.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
                                     tile[index].collision = true;
+                                    x += gp.tileSize;
+                                    index++;
                                 }
-                                x += gp.tileSize;
-                                index++;
+                                y += gp.tileSize;
                             }
-                            y += gp.tileSize;
-                        }
-                        break;
-                    case 4: // HUS DETALJER
-                        for (int j = 0; j < 8; j++) {
-                            x = 0;
-                            for (int k = 0; k < 8; k++) {
-                                tile[index] = new Tile();
-                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_B2.png")));
-                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                tile[index].collision = true;
-                                x += gp.tileSize;
-                                index++;
+                            break;
+                        case 3: // TRÄD, VÄXTER, UTOMHUS DETALJ...
+                            for (int j = 0; j < 8; j++) {
+                                x = 0;
+                                for (int k = 0; k < 16; k++) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_B1.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    if (index != 291 && index != 292) {       //that one tree tile that wasn't playing nice
+                                        tile[index].collision = true;
+                                    }
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
                             }
-                            y += gp.tileSize;
-                        }
-                        break;
-                    case 5: // vet nt, men ha collision på
-                        for (int j = 0; j < 16; j++) {
-                            x = 0;
-                            for (int k = 0; k < 16; k++) {
-                                tile[index] = new Tile();
-                                tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/SF_Outside_B.png")));
-                                tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
-                                if(index != 545){       //545 is lightpost top-half tile
+                            break;
+                        case 4: // HUS DETALJER
+                            for (int j = 0; j < 8; j++) {
+                                x = 0;
+                                for (int k = 0; k < 8; k++) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_B2.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
                                     tile[index].collision = true;
+                                    x += gp.tileSize;
+                                    index++;
                                 }
-                                x += gp.tileSize;
-                                index++;
+                                y += gp.tileSize;
                             }
-                            y += gp.tileSize;
-                        }
-                        System.out.println(index);
-                        break;
+                            break;
+                        case 5: // vet nt, men ha collision på
+                            for (int j = 0; j < 16; j++) {
+                                x = 0;
+                                for (int k = 0; k < 16; k++) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/SF_Outside_B.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    if (index != 545) {       //545 is lightpost top-half tile
+                                        tile[index].collision = true;
+                                    }
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            break;
+                        case 6: // ===================== nya tileset:en
+                            for (int j = 0; j < 5; j++) {// todo:
+                                x = 0;
+                                for (int k = 0; k < 4; k++) {// todo:
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedOutside.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            System.out.println(index);
+                            break;
+                    }
                 }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
+        if (currentMap.equals("/mainMaps/sawmill")) {
+            try {
+
+                tile[0] = new Tile();
+                tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/transparent.png")));
+
+                tile[854] = new Tile();
+                tile[854].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2.png")));
+                tile[854].image = tile[854].image.getSubimage(48, 48, gp.tileSize, gp.tileSize);
+                // TEST TEST TEST.. svart byttes ut mot gräs
+                //tile[854] = new Tile(); // ÄNDRA OM FLER TILES LÄGGS TILL, JUST NU ÄR DET 635 ST TILES
+                //tile[854].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/black.png")));
+
+                int index = 1;
+
+                for (int i = 0; i < 10; i++) {
+                    int x = 0;
+                    int y = 0;
+
+                    switch (i) {
+                        case 0: // MARK, GRÄS, SAND...
+                            for (int j = 0; j < 6; j++) {
+                                x = 0;
+                                for (int k = 0; k < 9; k++) {
+                                    if (index != 11) {
+                                        tile[index] = new Tile();
+                                        tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2.png")));
+                                        tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                        x += gp.tileSize;
+                                    } else {
+                                        tile[index] = new Tile();
+                                        tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
+                                        System.out.println("Here!");
+                                    }
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            break;
+                        case 1: // MARK, GRÄS, SAND DETALJER...
+                            for (int j = 0; j < 8; j++) {
+                                x = 0;
+                                for (int k = 0; k < 16; k++) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_B1.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            break;
+                        case 2: // VÄGGAR, TAK
+                            for (int j = 0; j < 10; j++) { // todo:
+                                x = 0;
+                                for (int k = 0; k < 15; k++) { // todo:
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedInside.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    tile[index].collision = true;
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            break;
+                        case 3: // TRÄD, VÄXTER, UTOMHUS DETALJ...
+                            for (int j = 0; j < 8; j++) {
+                                x = 0;
+                                for (int k = 0; k < 12; k++) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A3.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    if (index != 291 && index != 292) {       //that one tree tile that wasn't playing nice
+                                        tile[index].collision = true;
+                                    }
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            break;
+                        case 4: // HUS DETALJER
+                            for (int j = 0; j < 8; j++) {
+                                x = 0;
+                                for (int k = 0; k < 8; k++) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_B2.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    tile[index].collision = true;
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            break;
+                        case 5: // vet nt, men ha collision på
+                            for (int j = 0; j < 16; j++) {
+                                x = 0;
+                                for (int k = 0; k < 16; k++) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/SF_Outside_B.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    if (index != 545) {       //545 is lightpost top-half tile
+                                        tile[index].collision = true;
+                                    }
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            break;
+                        case 6: // ===================== nya tileset:en
+                            for (int j = 0; j < 6; j++) {
+                                x = 0;
+                                for (int k = 0; k < 6; k++) {
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2b.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            break;
+                        case 7: // vet nt, men ha collision på
+                            for (int j = 0; j < 6; j++) {// todo:
+                                x = 0;
+                                for (int k = 0; k < 8; k++) {// todo:
+                                    tile[index] = new Tile();
+                                    tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/EditedInside2.png")));
+                                    tile[index].image = tile[index].image.getSubimage(x, y, gp.tileSize, gp.tileSize);
+                                    x += gp.tileSize;
+                                    index++;
+                                }
+                                y += gp.tileSize;
+                            }
+                            System.out.println(index);
+                            break;
+                    }
+                }
+            } catch (
+                    IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
     }
+
 
     public void getTileImages() { // debug, testa här först sen kopiera över uppåt
         try {
@@ -272,48 +439,48 @@ public class TileManager {
         }
     }
 
-    public void setupAllMaps() {
+    public void setupNewMap(String currentMap) {
         ArrayList<Map> mapList = mapManager.getMapList();
-        // TODO: måste ha tre st collisionBoolean mappar, kan hårdkoda så länge?
-        boolean createdColBoolMap1 = false;
-        boolean createdColBoolMap2 = false;
-        boolean createdColBoolMap3 = false;
-        // TODO: hårdkodar så länge (fixa for loopen så den kör alla tre inte ba ettan)
+
+        boolean colBoolCreated = false;
 
         for (int j = 0; j < mapList.size(); j++) {
-            Map map = mapList.get(j);
 
-            for (int k = 0; k < map.getMapLayers().size(); k++) {
-                String url = map.getMapLayers().get(k).getMapTxtFile();
-                int layerH = map.getMapLayers().get(k).getHeight();
-                int layerW = map.getMapLayers().get(k).getWidth();
+            if (mapList.get(j).getMapTxtFile().equals(currentMap)) {
+                Map map = mapList.get(j);
 
-                System.out.println("LAYER H " + layerH + "\nLAYER W " + layerW);
+                for (int k = 0; k < map.getMapLayers().size(); k++) {
+                    String url = map.getMapLayers().get(k).getMapTxtFile();
+                    int layerH = map.getMapLayers().get(k).getHeight();
+                    int layerW = map.getMapLayers().get(k).getWidth();
 
-                if (!createdColBoolMap1) {
-                    collisionBoolean = new int[map.getMapLayers().get(0).getWidth()][map.getMapLayers().get(0).getHeight()];
+                    System.out.println("LAYER H " + layerH + "\nLAYER W " + layerW);
 
-                    System.out.println("HEIGHT " + map.getMapLayers().get(0).getWidth() + "\nWIDTH " + map.getMapLayers().get(0).getHeight());
+                    if (!colBoolCreated) {
+                        collisionBoolean = new int[map.getMapLayers().get(0).getWidth()][map.getMapLayers().get(0).getHeight()];
 
-                    createdColBoolMap1 = true;
+                        System.out.println("HEIGHT " + map.getMapLayers().get(0).getWidth() + "\nWIDTH " + map.getMapLayers().get(0).getHeight());
+
+                        colBoolCreated = true;
+                    }
+
+                    /** denna for loop går igenom alla mappar o deras layers för o uppdatera dom
+                     * sen skickar den tbx goda, färdiga listor som kmr kallas på i draw **/
+
+                    int[][] newMapTileNum = new int[layerH][layerW];
+                    newMapTileNum = loadMap(url, layerH, layerW, k, newMapTileNum, collisionBoolean);
+
+                    if (map.getBufferedMaps() == null) {
+                        System.out.println("ERROR 283");
+                        System.exit(0);
+                    }
+                    if (newMapTileNum == null) {
+                        System.out.println("ERROR 287");
+                        System.exit(0);
+                    }
+
+                    map.getBufferedMaps().add(newMapTileNum);
                 }
-
-                /** denna for loop går igenom alla mappar o deras layers för o uppdatera dom
-                 * sen skickar den tbx goda, färdiga listor som kmr kallas på i draw **/
-
-                int[][] newMapTileNum = new int[layerH][layerW];
-                newMapTileNum = loadMap(url, layerH, layerW, k, newMapTileNum, collisionBoolean);
-
-                if (map.getBufferedMaps() == null){
-                    System.out.println("ERROR 283");
-                    System.exit(0);
-                }
-                if (newMapTileNum == null){
-                    System.out.println("ERROR 287");
-                    System.exit(0);
-                }
-
-                map.getBufferedMaps().add(newMapTileNum);
             }
         }
     }
@@ -352,8 +519,7 @@ public class TileManager {
 
                         int num = Integer.parseInt(numbers[col]); // vi vill ha int så vi översätter
                         if (this.tile[num] == null) {
-                            System.out.println("ERROR at 287: " + num);
-                            System.exit(0);
+                            System.out.println("Found null error in tile.[" + num + "]");
                         }
                         if (tile[num].collision) {
                             collisionBoolean[col][row] = 1;

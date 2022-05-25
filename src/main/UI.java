@@ -181,10 +181,16 @@ public class UI {
      * @author Måns
      */
     public void drawDialogueWindow(){
+        //Position
         int x = gp.tileSize;    //gp.tileSize * 2; //x position
         int y = gp.tileSize * 9;    //gp.tileSize / 2; //y position
-        int width = 800;                 //gp.screenWidth - (gp.tileSize * 4);
-        int height = 200;                //gp.tileSize * 5;
+        //Size
+        int width = 675;                 //gp.screenWidth - (gp.tileSize * 4);
+        int height = 190;                //gp.tileSize * 5;
+
+        //Dirty attempt at scaling, remove later i guess
+        //x = x / 8 * 6 - 20;
+        //y = y / 8 * 6 - 20;
 
         drawSubWindow(g2, x, y, width, height);
 

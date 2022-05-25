@@ -44,6 +44,10 @@ public class MapManager {
                 mapList.get(i).setPlayerSpawnX(tileSize * 60);
                 mapList.get(i).setPlayerSpawnY(tileSize * 12);
                 System.out.println("Added positioning for MAIN TOWN");
+
+                //Testing spawn coords, currently set to main town square
+                /*mapList.get(1).setPlayerSpawnX(tileSize * 50);
+                mapList.get(1).setPlayerSpawnY(tileSize * 40);*/
             }
         }
     }

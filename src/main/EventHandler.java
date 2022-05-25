@@ -81,28 +81,28 @@ public class EventHandler {
      * @author - Amer, Måns
      */
     public boolean hit(int map, int col, int row, String reqDirection){
-        //Todo fix hit, its never true.. figure out why. Setting hit = true -> teleport works
+        //I guess clean up this method a little, remove un-used parameters and stuff when there is time
         boolean hit = false;
 
         if (map == gp.currentMap) {
             gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
             gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
 
-            int teleportIndex = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
-            int tpIndex = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
+            int tpIndexMainTown = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
+            int tpIndexSawmill = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
 
-            if (teleportIndex == 7 && gp.currentMap == 0){     //Teleporter 1 is in obj[7]
+            if (tpIndexMainTown == 7 && gp.currentMap == 0){     //Teleporter 1 is in obj[7]
                /* System.out.println("Current map no: " + gp.currentMap);
                 teleport2(1,  12,13);    //Target map and position
                 System.out.println("Current map no: " + gp.currentMap);*/
                 System.out.println("TRUE");
-                return true;
+                hit = true;
             }
-             else if(tpIndex == 7 && gp.currentMap == 1){
+             else if(tpIndexSawmill == 7 && gp.currentMap == 1){
                 System.out.println("Current map no: " + gp.currentMap);
                 //teleport2(0,  23,23);     //Target map and position
                 System.out.println("Current map no: " + gp.currentMap);
-                return true;
+                hit = true;
             }
 
             gp.player.solidArea.x = gp.player.solidAreaDefaultX;
@@ -110,9 +110,6 @@ public class EventHandler {
             //Everything eventRect[][][] is commented our rn, maybe it can be removed completely?
 //            eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
 //            eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
-        }
-        if (hit) {
-            System.out.println("IT FUCKING WORKS?!");
         }
         return hit;
     }

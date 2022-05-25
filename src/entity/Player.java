@@ -161,6 +161,7 @@ public class Player extends Entity {
         if (keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {  // OM NÅN KEY ÄR PRESSED
 
             boolean shiftPressed = false;
+            System.out.println("Current map is: " + gp.currentMap);
 
             if (keyH.shiftPressed) { // OM SHIFT ÄR PRESSED
                 shiftPressed = true;

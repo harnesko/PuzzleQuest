@@ -94,12 +94,26 @@ public class NPC_CatLady extends NPC{
     @Override
     public void speak() {
         getCurrDialogue();
-        if(currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
-            System.out.println("Resetting dialogue..");
-            dialogueIndex = 0;
-        }else{
-            gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
-            dialogueIndex++;
+        if (gp.player.hasCat) {
+            gp.ui.currentDialogue = "My cat! Thank you!";
+            progressQuest();
+            System.out.println("Quest progressed..");
+            gp.player.hasCat = false;
+            System.out.println("Cat returned");
+        } else if(gp.player.hasWok){
+            gp.ui.currentDialogue = "My food! Thank you!";
+            progressQuest();
+            System.out.println("Quest progressed..");
+            gp.player.hasWok = false;
+            System.out.println("Wok lost..");
+        }else {
+            if(currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
+                System.out.println("Resetting dialogue..");
+                dialogueIndex = 0;
+            }else{
+                gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
+                dialogueIndex++;
+            }
         }
     }
 

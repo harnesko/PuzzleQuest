@@ -63,13 +63,15 @@ public class EventHandler {
         if (canTouchEvent){
             //It could be this line below that's messing it up IDK
             if (hit(0, 23, 23, "any")){     //Set teleport entry point
-                teleport(1,12,13);                    //Set target map and teleport exit point
+                teleport(1,26,19);                    //Set target map and teleport exit point
             }
             if (hit(1, 12, 9, "any")){     //Same as comment above but for another map
                 teleport(0,50,13);
             }
         }
-    }
+    }/*
+    mapList.get(i).setPlayerSpawnX(tileSize * 26);
+                mapList.get(i).setPlayerSpawnY(tileSize * 19);
 
     /**
      *
@@ -92,9 +94,6 @@ public class EventHandler {
             int tpIndexSawmill = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
 
             if (tpIndexMainTown == 7 && gp.currentMap == 0){     //Teleporter 1 is in obj[7]
-               /* System.out.println("Current map no: " + gp.currentMap);
-                teleport2(1,  12,13);    //Target map and position
-                System.out.println("Current map no: " + gp.currentMap);*/
                 System.out.println("TRUE");
                 hit = true;
             }
@@ -120,6 +119,7 @@ public class EventHandler {
      * @author - Amer
      */
     public void teleport(int map, int col, int row){ //The parameters are used to update the players position
+        gp.tileManager.switchMaps(map);
         gp.currentMap = map;
         gp.player.worldX = gp.tileSize * col;
         gp.player.worldY = gp.tileSize * row;

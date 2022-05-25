@@ -45,8 +45,8 @@ public class NPC_Wock extends NPC{
 
 
         try{
-           npcImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcOne/npc_mario_left.png")));
-           npcImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcOne/npc_mario_right.png")));
+           npcImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_left.png")));
+           npcImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_right.png")));
         }catch (Exception e){
             e.printStackTrace();
         }

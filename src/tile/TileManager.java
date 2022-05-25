@@ -50,11 +50,20 @@ public class TileManager {
         setupNewMap(currentMap);
     }
 
-    public void switchMaps(String newMapUrl){ // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public void switchMaps(int targetMap){ // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // TODO: när spelaren kolliderar med ett teleport objekt eller whatever, kalla på denna metod o skicka
         // TODO: textsträngen på den nya mappen som han ska till. I detta fall är det antingen "/mainMaps/sawmill" eller "/mainMaps/main_town"
 
-        this.currentMap = newMapUrl;
+        switch (targetMap){
+            case 0:
+                this.currentMap = "/mainMaps/main_town";
+                break;
+            case 1:
+                this.currentMap = "/mainMaps/sawmill";
+                break;
+            default:
+                break;
+        }
         getTileImage();
         setupNewMap(currentMap);
     }
@@ -93,7 +102,7 @@ public class TileManager {
             tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
 
             tile[10] = new Tile(); // MARIO TEST, TA BORT OM DU VILL
-            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcOne/npc_mario_left.png")));
+            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_left.png")));
             tile[10].collision = true;
 
             tile[11] = new Tile(); // MARIO TEST, TA BORT OM DU VILL

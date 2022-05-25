@@ -44,7 +44,7 @@ public class NPC_CatLady extends NPC{
         BufferedImage npcImage2 = null;
 
         try{
-            luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcTwo/npc_luigi_left.png")));
+            luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcCatlady/npc_luigi_left.png")));
             if(luigi_image1 == null){
                 System.out.println("Load image failed..");
             }
@@ -93,7 +93,6 @@ public class NPC_CatLady extends NPC{
      */
     @Override
     public void speak() {
-        getCurrDialogue();
         if (gp.player.hasCat) {
             gp.ui.currentDialogue = "My cat! Thank you!";
             progressQuest();
@@ -107,6 +106,7 @@ public class NPC_CatLady extends NPC{
             gp.player.hasWok = false;
             System.out.println("Wok lost..");
         }else {
+            getCurrDialogue();
             if(currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
                 System.out.println("Resetting dialogue..");
                 dialogueIndex = 0;

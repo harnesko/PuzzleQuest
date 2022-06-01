@@ -1,6 +1,7 @@
 package main;
 
 import entity.NPC_CatLady;
+import entity.NPC_Clerk;
 import entity.NPC_Wock;
 import gameObject.*;
 
@@ -19,13 +20,12 @@ public class AssetSetter {
         gp.obj[1][1].worldX = 70 * gp.tileSize + (gp.tileSize/2);
         gp.obj[1][1].worldY = 38 * gp.tileSize;
 
-
         gp.obj[1][5] = new Door();
         gp.obj[1][5].worldX = 47 * gp.tileSize - (gp.tileSize/2);
         gp.obj[1][5].worldY = 61 * gp.tileSize;
 
         gp.obj[1][7] = new Teleporter();
-        gp.obj[1][7].worldX = 60 * gp.tileSize + (gp.tileSize/2);     //[0] means map 0, Main town
+        gp.obj[1][7].worldX = 60 * gp.tileSize + (gp.tileSize/2);
         gp.obj[1][7].worldY = 10 * gp.tileSize;
 
         gp.obj[0][7] = new Teleporter();
@@ -41,12 +41,18 @@ public class AssetSetter {
         int mainTown = 1;
         //Wock
         gp.npcList[mainTown][0] = new NPC_Wock(gp);
-        gp.npcList[mainTown][0].worldX = 48 * gp.tileSize;
-        gp.npcList[mainTown][0].worldY = 39 * gp.tileSize;
+        gp.npcList[mainTown][0].worldX = 59 * gp.tileSize + (gp.tileSize / 2);
+        gp.npcList[mainTown][0].worldY = 41 * gp.tileSize;
 
         //Cracy cat lady
         gp.npcList[mainTown][1] = new NPC_CatLady(gp);
-        gp.npcList[mainTown][1].worldX = 50 * gp.tileSize;
-        gp.npcList[mainTown][1].worldY = 39 * gp.tileSize;
+        gp.npcList[mainTown][1].worldX = 62 * gp.tileSize;
+        gp.npcList[mainTown][1].worldY = 21 * gp.tileSize + (gp.tileSize / 2);
+
+
+        gp.npcList[mainTown][2] = new NPC_Clerk(gp);
+        gp.npcList[mainTown][2].worldX = 17 * gp.tileSize + (gp.tileSize / 2);
+        gp.npcList[mainTown][2].worldY = 65 * gp.tileSize;
+
     }
 }

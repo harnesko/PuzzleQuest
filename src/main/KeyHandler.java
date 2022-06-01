@@ -301,6 +301,9 @@ public class KeyHandler implements KeyListener {
                 gp.playSoundEffect(2);
             }
         }
+        if (code == KeyEvent.VK_BACK_SPACE) {
+            gp.gameState = gp.playState;
+        }
 
 
         if (code == KeyEvent.VK_ENTER) {

@@ -288,7 +288,7 @@ public class Player extends Entity {
                     if(quest2Complete){
                         gp.obj[1][4] = new Ingredient();
                         gp.obj[1][4].worldX = 17 * gp.tileSize + (gp.tileSize / 2);
-                        gp.obj[1][4].worldY = 65 * gp.tileSize;
+                        gp.obj[1][4].worldY = 67 * gp.tileSize;
                     }
                     break;
 
@@ -310,7 +310,7 @@ public class Player extends Entity {
                     if(quest3Complete){
                         gp.obj[1][3] = new Wok();
                         gp.obj[1][3].worldX = 59 * gp.tileSize + (gp.tileSize / 2);
-                        gp.obj[1][3].worldY = 41 * gp.tileSize;
+                        gp.obj[1][3].worldY = 42 * gp.tileSize;
                     }
                     break;
 

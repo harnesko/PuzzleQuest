@@ -69,6 +69,16 @@ public class NPC_Wock extends NPC{
         firstDialogue[6] = "You:\n...";
         firstDialogue[7] = "You:\nFine";
         firstDialogue[8] = "Diliam Wock:\nI think they hid it somewhere around their old house.\nHappy Hunting!";
+
+        secondDialogue[0] = "Diliam Wock:\nThank you thank you… Hmmmm it seems I am out of MSG.\n";
+        secondDialogue[1] = "Diliam Wock:\nCould you go by Francesca's store and get me some?";
+        secondDialogue[2] = "You:\nMother f… sure yeah I’ll do it";
+
+        thirdDialogue[0] = "Diliam Wock:\n Aaah yes thank you my friend!\n ";
+        thirdDialogue[1] = "Diliam Wock:\n A steaming hot season special for you!\n ";
+        thirdDialogue[2] = "You:\n Yepp. Bye.\n ";
+
+
     }
 
     /**

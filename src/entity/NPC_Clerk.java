@@ -60,30 +60,10 @@ public class NPC_Clerk extends NPC{
      */
     public void createDialogue(){
         //Starting dialogue
-        firstDialogue[0] = "Cracy Cat Lady:\nMike! Mike! HaVe YoU sEeN mY CaT!?";
-        firstDialogue[1] = "You:\nWhich one?";
-        firstDialogue[2] = "Cracy Cat Lady:\nDon’t be ridiculous Mike, I only have like 6.";
-        firstDialogue[3] = "You:\nI wasn’t being… never mind where is it?";
-        firstDialogue[4] = "Cracy Cat Lady:\nI don’t know but he likes to hang around Wocks Wok\nfor some odd reason.";
-
-        //Only available once cat is found
-        secondDialogue[0] = "Cracy cat-lady:\nThere is one more thing you could do for me.";
-        secondDialogue[1] = "Player:\n*Sigh* What?";
-        secondDialogue[2] = "Cracy cat-lady:\nAll this talk of Wocks Wok made me super hungry.\nDo you mind getting me some?";
-        secondDialogue[3] = "Player:\n*Mutters* Jesus Christ. Fine!";
-
-        //Only available once food is brought
-        thirdDialogue[0] = "Cracy cat-lady:\nThank you Mike, here is your house key back!";
-        thirdDialogue[1] = "Player:\nWait a minute you stole my house key?";
-        thirdDialogue[2] = "Cracy cat-lady:\nWell of course I did.\nI needed you to help me out before you went home.";
-        thirdDialogue[3] = "Player:\nJesus christ you really are insane!";
-        thirdDialogue[4] = "Cracy cat-lady:\nThank you!";
-        thirdDialogue[5] = "Player:\nSo anything else you need doing?";
-        thirdDialogue[6] = "Cracy cat-lady:\nNope that’s it.";
-        thirdDialogue[7] = "Player:\nThat’s it?";
-        thirdDialogue[8] = "Cracy cat lady:\nThat’s it.";
-        thirdDialogue[9] = "Player:\nThat’s it?";
-        thirdDialogue[10] = "Cracy cat lady:\nThat’s it.";
+        firstDialogue[0] = "Francesca Abraham:\n Heyo watcha need buddy?";
+        firstDialogue[1] = "You:\nA big bag of MSG for Wock Wok";
+        firstDialogue[2] = "Francesca Abrahamn:\n Oooh so Diliam’s got you running errands for him?\n Well tell him I said hi!\n";
+        firstDialogue[3] = "You:\nYeah yeah… just hand over the MSG.";
     }
 
     /**

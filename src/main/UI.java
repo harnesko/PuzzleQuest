@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 /**
  * UI class is for the interface.
+ *  @author Kristoffer, Måns, Gustav
  */
 
 public class UI {
@@ -56,7 +57,7 @@ public class UI {
         Wok wok = new Wok();
         wokImage = wok.image;
 
-        Stuff stuff = new Stuff();
+        Ingredient stuff = new Ingredient();
         stuffImage = stuff.image;
 
     }
@@ -136,15 +137,6 @@ public class UI {
         }
     }
 
-    public void test(Graphics2D g2){
-        int frameX = gp.tileSize*4;
-        int frameY = gp.tileSize;
-        int frameWidth = gp.tileSize*8;
-        int frameHeight = gp.tileSize*11;
-
-        g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
-        fullScreenNotification(frameX, frameY);
-    }
 
     /**
      * This method draws a small sub frame to be able to be used for example the dialog frame.
@@ -479,7 +471,13 @@ public class UI {
             fullScreenNotification(frameX, frameY);
         }
     }
-
+    /**
+     * This Menu draws the in-game SettingsMenu and its options to change.
+     * Then these variables are written in the config file to be saved once the player starts the game again.
+     * It also contains a return option.
+     * It is drawn by using the g2 variable
+     * @author Kristoffer
+     */
     public void optionsMenu(){
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 45F));
         String title = "Settings";
@@ -588,7 +586,10 @@ public class UI {
 
         gp.gameThread = null;
     }
-
+    /**
+     * This Metod draws the inventry UI in-game that shows the player what items it has gotten.
+     * @author Kristoffer, Gustav
+     */
     public void drawInventory(){
         //g2.setFont(); //todo later
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

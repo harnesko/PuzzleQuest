@@ -4,8 +4,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * Fixat i denna klassen
+ * This Class is for combining the Keyboard with the in-game Functions.
+ * @author Kristoffer, Kinda, Måns
  */
+
+
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed, ePressed, enterPressed, fPressed;

@@ -6,7 +6,7 @@ import java.awt.*;
 public class GameStarter {
     public static JFrame window;
     /**
-     * Bla bla bla
+     * Starts a Jframe with the game as a panel inside.
      *  @author Kinda
      *  Added an if statment so if fullscreen is activated setUndecorated is activated.
      *  This removes the borders so that the screen is just the game.

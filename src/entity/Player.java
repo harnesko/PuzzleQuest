@@ -1,12 +1,11 @@
 package entity;
 
 import gameObject.Book;
-import gameObject.Stuff;
+import gameObject.Ingredient;
 import gameObject.Wok;
 import main.Debug;
 import main.GamePanel;
 import main.KeyHandler;
-import tile.Tile;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -287,7 +286,7 @@ public class Player extends Entity {
                     System.out.println("Book: " + hasBook);
                     gp.ui.showMessage("Found the recipe book");
                     if(quest2Complete){
-                        gp.obj[1][4] = new Stuff();
+                        gp.obj[1][4] = new Ingredient();
                         gp.obj[1][4].worldX = 17 * gp.tileSize + (gp.tileSize / 2);
                         gp.obj[1][4].worldY = 65 * gp.tileSize;
                     }
@@ -302,12 +301,12 @@ public class Player extends Entity {
                     gp.ui.showMessage("mmm yummy yummy");
                     break;
 
-                case "Stuff":
+                case "Ingredient":
                     hasStuff = true;
                     quest3Complete = true;
                     gp.obj[1][index] = null;
                     System.out.println("Book: " + hasBook);
-                    gp.ui.showMessage("You retried Stuff");
+                    gp.ui.showMessage("You retrieved the ingredient");
                     if(quest3Complete){
                         gp.obj[1][3] = new Wok();
                         gp.obj[1][3].worldX = 59 * gp.tileSize + (gp.tileSize / 2);

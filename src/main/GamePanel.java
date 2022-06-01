@@ -182,7 +182,8 @@ public class GamePanel extends JPanel implements Runnable {
         }
         else if (gameState == playState) { // allt annat till spelet
             stopMusik();
-            gameState = keyH.escPressed ? optionsState : playState; // @author kinda, checkar om man öppnar elr stänger optionmenyn
+            //gameState = keyH.escPressed ? optionsState : playState; // @author kinda, checkar om man öppnar elr stänger optionmenyn,
+
 
             tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager
 

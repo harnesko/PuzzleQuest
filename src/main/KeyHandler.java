@@ -8,7 +8,8 @@ import java.awt.event.KeyListener;
  */
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed, escPressed, ePressed, enterPressed, fPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed,
+            escPressed, ePressed, enterPressed, fPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp){
@@ -36,8 +37,8 @@ public class KeyHandler implements KeyListener {
         if(gp.gameState == gp.optionsState) {
             if (code == KeyEvent.VK_ESCAPE){
                 escPressed = !escPressed;
+                optionKey(code);
             }
-            optionKey(code);
         }
         if(gp.gameState == gp.noneState){
             optionsBackButton(code);

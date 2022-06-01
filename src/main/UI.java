@@ -130,10 +130,20 @@ public class UI {
             g2.drawImage(woodBackground, frameX, frameY, frameWidth, frameHeight, null);
             optionsMenu();
         }
-        else if (settingsState == 1 && gp.gameState == gp.optionsState){
+        if (settingsState == 1){
             g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
             fullScreenNotification(frameX, frameY);
         }
+    }
+
+    public void test(Graphics2D g2){
+        int frameX = gp.tileSize*4;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize*8;
+        int frameHeight = gp.tileSize*11;
+
+        g2.drawImage(woodFrame2, frameX, frameY, frameWidth, frameHeight, null);
+        fullScreenNotification(frameX, frameY);
     }
 
     /**
@@ -182,10 +192,10 @@ public class UI {
      */
     public void drawDialogueWindow(){
         //Position
-        int x = gp.tileSize;    //gp.tileSize * 2; //x position
+        int x = 0;    //gp.tileSize * 2; //x position
         int y = gp.tileSize * 9;    //gp.tileSize / 2; //y position
         //Size
-        int width = 675;                 //gp.screenWidth - (gp.tileSize * 4);
+        int width = gp.screenWidth2;                 //gp.screenWidth - (gp.tileSize * 4);
         int height = 190;                //gp.tileSize * 5;
 
         //Dirty attempt at scaling, remove later i guess
@@ -195,7 +205,7 @@ public class UI {
         drawSubWindow(g2, x, y, width, height);
 
 
-        x = gp.tileSize + 30; //text x position
+        x = 30; //text x position
         y += 2;       //text y position
         if(currentDialogue != null){
             //g2.drawString(currentDialogue, x, y);

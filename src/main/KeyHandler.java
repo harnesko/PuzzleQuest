@@ -329,11 +329,8 @@ public class KeyHandler implements KeyListener {
         if(gp.ui.settingsState == 1){
             if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_BACK_SPACE) {
                 if (gp.ui.commandNumber == 0) {
-                    if (gp.ui.settingsState == 1) {
-                        gp.gameState = gp.optionsState;
-                        gp.ui.settingsState = 0;
-                        gp.playSoundEffect(2);
-                    }
+                    gp.ui.settingsState = 0;
+                    gp.playSoundEffect(2);
                 }
             }
         }

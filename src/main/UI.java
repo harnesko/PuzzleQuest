@@ -188,16 +188,12 @@ public class UI {
         int width = 675;                 //gp.screenWidth - (gp.tileSize * 4);
         int height = 190;                //gp.tileSize * 5;
 
-        //Dirty attempt at scaling, remove later i guess
-        //x = x / 8 * 6 - 20;
-        //y = y / 8 * 6 - 20;
-
         drawSubWindow(g2, x, y, width, height);
-
 
         x = gp.tileSize + 30; //text x position
         y += 2;       //text y position
         if(currentDialogue != null){
+            g2.setFont(new Font(g2.getFont().getName(), Font.PLAIN, 22));
             //g2.drawString(currentDialogue, x, y);
             //fix this later but rn do the ugly version up top
             for(String currentDialogue : currentDialogue.split("\n")){    //Regex magic -> new line
@@ -216,9 +212,6 @@ public class UI {
         if(currentDialogue != null){
             try {
                 g2.drawString(currentDialogue, gp.tileSize * 2 + 20, 600);
-        /*for(String currentDialogue : currentDialogue.split("\n")){    //Regex magic -> new line
-            g2.drawString(currentDialogue, gp.tileSize * 2 + 20, 600);
-        }*/
             } catch (NullPointerException e) {
                //I really don't know why this error occurs or how to fix it so..¯\_(ツ)_/¯   /m
             }

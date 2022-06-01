@@ -1,8 +1,5 @@
 package entity;
 
-import gameObject.Book;
-import gameObject.Stuff;
-import gameObject.Wok;
 import main.Debug;
 import main.GamePanel;
 import main.KeyHandler;
@@ -270,34 +267,24 @@ public class Player extends Entity {
                     quest1Complete = true;
                     System.out.println(quest1Complete);
                     System.out.println(quest2Complete);
-                    gp.obj[1][index] = null;
+                    gp.obj[0][index] = null;
                     System.out.println("Cat: " + hasCat);
                     gp.ui.showMessage("Oh boi is Young-boi Mjau");
-                    if(quest1Complete){
-                        gp.obj[1][2] = new Book();
-                        gp.obj[1][2].worldX = 6 * gp.tileSize + (gp.tileSize/2);
-                        gp.obj[1][2].worldY = 18 * gp.tileSize;
-                    }
                     break;
 
                 case "Book":
                     hasBook = true;
                     quest2Complete = true;
-                    gp.obj[1][index] = null;
+                    gp.obj[0][index] = null;
                     System.out.println("Book: " + hasBook);
                     gp.ui.showMessage("Found the recipe book");
-                    if(quest2Complete){
-                        gp.obj[1][4] = new Stuff();
-                        gp.obj[1][4].worldX = 17 * gp.tileSize + (gp.tileSize / 2);
-                        gp.obj[1][4].worldY = 65 * gp.tileSize;
-                    }
                     break;
 
                 case "Wok":
                     hasWok = true;
                     quest4Complete = true;
-                    hasKey = 1;
-                    gp.obj[1][index] = null;
+                    hasKey++;
+                    gp.obj[0][index] = null;
                     System.out.println("Book: " + hasBook);
                     gp.ui.showMessage("mmm yummy yummy");
                     break;
@@ -305,19 +292,14 @@ public class Player extends Entity {
                 case "Stuff":
                     hasStuff = true;
                     quest3Complete = true;
-                    gp.obj[1][index] = null;
+                    gp.obj[0][index] = null;
                     System.out.println("Book: " + hasBook);
                     gp.ui.showMessage("You retried Stuff");
-                    if(quest3Complete){
-                        gp.obj[1][3] = new Wok();
-                        gp.obj[1][3].worldX = 59 * gp.tileSize + (gp.tileSize / 2);
-                        gp.obj[1][3].worldY = 41 * gp.tileSize;
-                    }
                     break;
 
                 case "Door":
-                    if (hasKey == 1) {
-                        gp.obj[1][index] = null;
+                    if (hasKey > 0) {
+                        gp.obj[0][index] = null;
                         hasKey--;
                     } else {
                         gp.ui.showMessage("hey man you need a key for that");

@@ -166,14 +166,6 @@ public class GamePanel extends JPanel implements Runnable {
         if(gameState == dialogueState) {
             ui.drawDialogueWindow();
         }
-
-            if(gameState == optionsState && ui.settingsState == 0){
-                ui.drawSettingsMenu(g2);
-            }
-
-            if(gameState == optionsState && ui.settingsState == 1){
-                ui.test(g2);
-            }
     }
 
     /**
@@ -215,13 +207,8 @@ public class GamePanel extends JPanel implements Runnable {
             if (gameState == dialogueState) {
                 ui.drawDialogueWindow();
             }
-
-            if(gameState == optionsState && ui.settingsState == 0){
+            if (gameState == optionsState || gameState == noneState) {
                 ui.drawSettingsMenu(g2);
-            }
-
-            if(gameState == optionsState && ui.settingsState == 1){
-                ui.test(g2);
             }
         }
     }

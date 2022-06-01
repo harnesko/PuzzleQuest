@@ -27,6 +27,8 @@ public class Sound {
         soundURL[1] = getClass().getResource("/audio/Error_Audio.wav");
         soundURL[2] = getClass().getResource("/audio/Select_Audio.wav");
         soundURL[3] = getClass().getResource("/audio/Scroll_Audio.wav");
+        soundURL[4] = getClass().getResource("/audio/pickup.wav");
+        soundURL[5] = getClass().getResource("/audio/gameTheme.wav");
     }
 
     /**

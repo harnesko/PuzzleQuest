@@ -100,6 +100,8 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.commandNumber == 0) {
                     //Play
                     gp.gameState = gp.playState;
+                    gp.stopMusik();
+                    gp.playMusik(5);
                     gp.playSoundEffect(2);
                 }
                 if (gp.ui.commandNumber == 1) {
@@ -325,6 +327,7 @@ public class KeyHandler implements KeyListener {
             }
             if (gp.ui.commandNumber == 3) {
                 gp.gameState= gp.titleState;
+                gp.stopMusik();
                 gp.ui.commandNumber = 0;
                 gp.playSoundEffect(2);
             }

@@ -267,10 +267,8 @@ public class Player extends Entity {
                 case "cat":
                     hasCat = true;
                     quest1Complete = true;
-                    System.out.println(quest1Complete);
-                    System.out.println(quest2Complete);
                     gp.obj[1][index] = null;
-                    System.out.println("Cat: " + hasCat);
+                    gp.playSoundEffect(4);
                     gp.ui.showMessage("Oh boi is Young-boi Mjau");
                     if(quest1Complete){
                         gp.obj[1][2] = new Book();
@@ -283,7 +281,7 @@ public class Player extends Entity {
                     hasBook = true;
                     quest2Complete = true;
                     gp.obj[1][index] = null;
-                    System.out.println("Book: " + hasBook);
+                    gp.playSoundEffect(4);
                     gp.ui.showMessage("Found the recipe book");
                     if(quest2Complete){
                         gp.obj[1][4] = new Ingredient();
@@ -297,7 +295,7 @@ public class Player extends Entity {
                     quest4Complete = true;
                     hasKey = 1;
                     gp.obj[1][index] = null;
-                    System.out.println("Book: " + hasBook);
+                    gp.playSoundEffect(4);
                     gp.ui.showMessage("mmm yummy yummy");
                     break;
 
@@ -305,7 +303,7 @@ public class Player extends Entity {
                     hasStuff = true;
                     quest3Complete = true;
                     gp.obj[1][index] = null;
-                    System.out.println("Book: " + hasBook);
+                    gp.playSoundEffect(4);
                     gp.ui.showMessage("You retrieved the ingredient");
                     if(quest3Complete){
                         gp.obj[1][3] = new Wok();
@@ -317,6 +315,7 @@ public class Player extends Entity {
                 case "Door":
                     if (hasKey == 1) {
                         gp.obj[1][index] = null;
+                        gp.playSoundEffect(2);
                         hasKey--;
                     } else {
                         gp.ui.showMessage("hey man you need a key for that");

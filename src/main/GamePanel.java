@@ -167,9 +167,9 @@ public class GamePanel extends JPanel implements Runnable {
             ui.drawDialogueWindow();
         }
 
-            if(gameState == optionsState){
-                ui.drawSettingsMenu(g2);
-            }
+        if(gameState == optionsState){
+            ui.drawSettingsMenu(g2);
+        }
 
     }
 
@@ -186,7 +186,6 @@ public class GamePanel extends JPanel implements Runnable {
             ui.draw(g2);
         }
         else if (gameState == playState) { // allt annat till spelet
-            stopMusik();
             gameState = keyH.escPressed ? optionsState : playState; // @author kinda, checkar om man öppnar elr stänger optionmenyn
 
             tileManager.draw(g2, debugOn); // rita tiles före playern, detta funkar som lager

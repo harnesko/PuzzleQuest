@@ -63,18 +63,18 @@ public class NPC_CatLady extends NPC{
         firstDialogue[1] = "You:\nWhich one?";
         firstDialogue[2] = "Cracy Cat Lady:\nDon’t be ridiculous Mike, I only have like 6.";
         firstDialogue[3] = "You:\nI wasn’t being… never mind where is it?";
-        firstDialogue[4] = "Cracy Cat Lady:\nI don’t know but he likes to hang around Wocks Wok\nfor some odd reason.";
+        firstDialogue[4] = "Cracy Cat Lady:\nI don’t know but he likes to hang around\nWocks Wok for some odd reason.";
 
         //Only available once cat is found
-        secondDialogue[0] = "Cracy cat-lady:\nThere is one more thing you could do for me.";
+        secondDialogue[0] = "Cracy cat-lady:\nThere is one more thing\nyou could do for me.";
         secondDialogue[1] = "Player:\n*Sigh* What?";
-        secondDialogue[2] = "Cracy cat-lady:\nAll this talk of Wocks Wok made me super hungry.\nDo you mind getting me some?";
+        secondDialogue[2] = "Cracy cat-lady:\nAll this talk of Wocks Wok\nmade me super hungry.\nDo you mind getting me some?";
         secondDialogue[3] = "Player:\n*Mutters* Jesus Christ. Fine!";
 
         //Only available once food is brought
         thirdDialogue[0] = "Cracy cat-lady:\nThank you Mike, here is your house key back!";
         thirdDialogue[1] = "Player:\nWait a minute you stole my house key?";
-        thirdDialogue[2] = "Cracy cat-lady:\nWell of course I did.\nI needed you to help me out before you went home.";
+        thirdDialogue[2] = "Cracy cat-lady:\nWell of course I did.\nI needed you to help me out\nbefore you went home.";
         thirdDialogue[3] = "Player:\nJesus christ you really are insane!";
         thirdDialogue[4] = "Cracy cat-lady:\nThank you!";
         thirdDialogue[5] = "Player:\nSo anything else you need doing?";

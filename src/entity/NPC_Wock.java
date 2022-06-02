@@ -64,14 +64,14 @@ public class NPC_Wock extends NPC {
      */
     public void createDialogue() {
         firstDialogue[0] = "You:\nCan i get a Wocks special?";
-        firstDialogue[1] = "Diliam Wock:\nHeya Mike.\nSure can do but you know I’m glad you came!";
+        firstDialogue[1] = "Diliam Wock:\nHeya Mike.\nSure can do but you know\nI’m glad you came!";
         firstDialogue[2] = "You:\nWhy?";
-        firstDialogue[3] = "Diliam Wock:\nWell you know my parents recipe book and I can’t find it.";
-        firstDialogue[4] = "Diliam Wock:\nIt’s a new seasonal special and I can’t remember\nthe exact recipe for this new season.";
+        firstDialogue[3] = "Diliam Wock:\nWell you know my parents recipe book\nand I can’t find it.";
+        firstDialogue[4] = "Diliam Wock:\nIt’s a new seasonal special.\nI can’t remember\nthe exact recipe for this new season.";
         firstDialogue[5] = "Diliam Wock:\nCould you go get it for me?";
         firstDialogue[6] = "You:\n...";
         firstDialogue[7] = "You:\nFine";
-        firstDialogue[8] = "Diliam Wock:\nI think they hid it somewhere around their old house.\nHappy Hunting!";
+        firstDialogue[8] = "Diliam Wock:\nI think they hid it somewhere\naround their old house.\nHappy Hunting!";
 
         secondDialogue[0] = "Diliam Wock:\nThank you thank you… Hmmmm it seems I am out of MSG.\n";
         secondDialogue[1] = "Diliam Wock:\nCould you go by Francesca's store and get me some?";

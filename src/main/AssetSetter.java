@@ -24,6 +24,10 @@ public class AssetSetter {
         gp.obj[1][5].worldX = 47 * gp.tileSize - (gp.tileSize/2);
         gp.obj[1][5].worldY = 61 * gp.tileSize;
 
+        gp.obj[1][6] = new End();
+        gp.obj[1][6].worldX = 47 * gp.tileSize - (gp.tileSize/2);
+        gp.obj[1][6].worldY = 64 * gp.tileSize;
+
         gp.obj[1][7] = new Teleporter();
         gp.obj[1][7].worldX = 60 * gp.tileSize + (gp.tileSize/2);
         gp.obj[1][7].worldY = 10 * gp.tileSize;

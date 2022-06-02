@@ -311,6 +311,10 @@ public class Player extends Entity {
                     }*/
                     break;
 
+                case "End":
+                    gp.gameState = gp.endScreenState;
+                    break;
+
                 case "Door":
                     if (hasKey == 1) {
                         gp.obj[1][index] = null;

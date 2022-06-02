@@ -103,6 +103,7 @@ public class EventHandler {
                 System.out.println("Current map no: " + gp.currentMap);
                 hit = true;
             }
+             
 
             gp.player.solidArea.x = gp.player.solidAreaDefaultX;
             gp.player.solidArea.y = gp.player.solidAreaDefaultY;

@@ -53,6 +53,11 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState;
             }
         }
+        if (gp.gameState == gp.endScreenState){
+            if (code == KeyEvent.VK_ENTER){
+                gp.gameState = gp.titleState;
+            }
+        }
     }
 
     /**

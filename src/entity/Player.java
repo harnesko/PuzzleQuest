@@ -74,47 +74,43 @@ public class Player extends Entity {
     public void getPlayerImage() { // NY
         try {
             // IDLE animations
-            idleDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            idleDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             idleDown1 = idleDown1.getSubimage(48, 0, gp.tileSize, gp.tileSize);
-            idleLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            idleDown2 = idleDown1;
+            idleLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             idleLeft1 = idleLeft1.getSubimage(48, 48, gp.tileSize, gp.tileSize);
-            idleRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            idleLeft2 = idleLeft1;
+            idleRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             idleRight1 = idleRight1.getSubimage(48, 96, gp.tileSize, gp.tileSize);
-            idleUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            idleRight2 = idleRight1;
+            idleUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             idleUp1 = idleUp1.getSubimage(48, 144, gp.tileSize, gp.tileSize);
+            idleUp2 = idleUp1;
 
             // WALK animations
-            walkDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkDown1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             walkDown1 = walkDown1.getSubimage(0, 0, gp.tileSize, gp.tileSize);
-            runDown1 = walkDown1;
 
-            walkDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkDown2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             walkDown2 = walkDown2.getSubimage(96, 0, gp.tileSize, gp.tileSize);
-            runDown2 = walkDown2;
 
-            walkLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             walkLeft1 = walkLeft1.getSubimage(0, 48, gp.tileSize, gp.tileSize);
-            runLeft1 = walkLeft1;
 
-            walkLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             walkLeft2 = walkLeft2.getSubimage(96, 48, gp.tileSize, gp.tileSize);
-            runLeft2 = walkLeft2;
 
-            walkRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             walkRight1 = walkRight1.getSubimage(0, 96, gp.tileSize, gp.tileSize);
-            runRight1 = walkRight1;
 
-            walkRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             walkRight2 = walkRight2.getSubimage(96, 96, gp.tileSize, gp.tileSize);
-            runRight2 = walkRight2;
 
-            walkUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkUp1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             walkUp1 = walkUp1.getSubimage(0, 144, gp.tileSize, gp.tileSize);
-            runUp1 = walkUp1;
 
-            walkUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/mc.png")));
+            walkUp2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/playerAlt/man.png")));
             walkUp2 = walkUp2.getSubimage(96, 144, gp.tileSize, gp.tileSize);
-            runUp2 = walkUp2;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -159,15 +155,13 @@ public class Player extends Entity {
 
     public void update() {
         spriteCounter++;
-        speed = 15;
+        speed = 5;
         if (keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {  // OM NÅN KEY ÄR PRESSED
             //System.out.println("Player pos x : " + worldX / gp.tileSize + "\n Player pos y: " + worldY / gp.tileSize );
-            boolean shiftPressed = false;
 
 
             if (keyH.shiftPressed) { // OM SHIFT ÄR PRESSED
-                shiftPressed = true;
-                speed = 6;
+                speed = 8;
                 // TODO: speed 5, animations run klart. men behöver xtra animation (idle mellan gående animation change)
                 if (spriteCounter > 6) {
                     spriteNum = spriteNum == 1 ? 2 : 1;
@@ -180,7 +174,7 @@ public class Player extends Entity {
                 }
             }
 
-            lastBtnPressed = setMovement(shiftPressed);
+            lastBtnPressed = setMovement();
 
             // CHECK TILE COLLISION
             collisionOn = false;
@@ -216,13 +210,9 @@ public class Player extends Entity {
             if (!collisionOn) {
                 switch (direction) {
                     case "walkup" -> worldY -= speed;
-                    case "runup" -> worldY -= speed;
                     case "walkdown" -> worldY += speed;
-                    case "rundown" -> worldY += speed;
                     case "walkleft" -> worldX -= speed;
-                    case "runleft" -> worldX -= speed;
                     case "walkright" -> worldX += speed;
-                    case "runright" -> worldX += speed;
                 }
             }
 
@@ -267,9 +257,9 @@ public class Player extends Entity {
                     gp.obj[1][index] = null;
                     gp.playSoundEffect(4);
                     gp.ui.showMessage("Oh boi is Young-boi Mjau");
-                    if(quest1Complete){
+                    if (quest1Complete) {
                         gp.obj[1][2] = new Book();
-                        gp.obj[1][2].worldX = 6 * gp.tileSize + (gp.tileSize/2);
+                        gp.obj[1][2].worldX = 6 * gp.tileSize + (gp.tileSize / 2);
                         gp.obj[1][2].worldY = 18 * gp.tileSize;
                         System.out.println("HERERERERERER");
                     }
@@ -281,7 +271,7 @@ public class Player extends Entity {
                     gp.obj[1][index] = null;
                     gp.playSoundEffect(4);
                     gp.ui.showMessage("Found the recipe book");
-                    if(quest2Complete){
+                    if (quest2Complete) {
                         gp.obj[1][4] = new Ingredient();
                         gp.obj[1][4].worldX = 17 * gp.tileSize + (gp.tileSize / 2);
                         gp.obj[1][4].worldY = 67 * gp.tileSize;
@@ -331,38 +321,20 @@ public class Player extends Entity {
         }
     }
 
-    public String setMovement(boolean shift) {
-        if (shift) {
-            if (keyH.upPressed) {
-                direction = "runup";
-                return "idleup";
-            } else if (keyH.downPressed) {
-                direction = "rundown";
-                return "idledown";
-            } else if (keyH.leftPressed) {
-                direction = "runleft";
-                return "idleleft";
-            } else if (keyH.rightPressed) {
-                direction = "runright";
-                return "idleright";
-            }
-
-        } else {
-            if (keyH.upPressed) {
-                direction = "walkup";
-                return "idleup";
-            } else if (keyH.downPressed) {
-                direction = "walkdown";
-                return "idledown";
-            } else if (keyH.leftPressed) {
-                direction = "walkleft";
-                return "idleleft";
-            } else if (keyH.rightPressed) {
-                direction = "walkright";
-                return "idleright";
-            }
+    public String setMovement() {
+        if (keyH.upPressed) {
+            direction = "walkup";
+            return "idleup";
+        } else if (keyH.downPressed) {
+            direction = "walkdown";
+            return "idledown";
+        } else if (keyH.leftPressed) {
+            direction = "walkleft";
+            return "idleleft";
+        } else if (keyH.rightPressed) {
+            direction = "walkright";
+            return "idleright";
         }
-
         return "idledown";
     }
 
@@ -373,123 +345,74 @@ public class Player extends Entity {
 
         switch (direction) {
             case "walkup" -> {
-                if (spriteNum == 1) {
-                    image = walkUp1;
-                    break;
-                }
-                if (spriteNum == 2) {
-                    image = walkUp2;
-                    break;
-                }
+                image = spriteNum == 1 ? walkUp1 : walkUp2;
             }
             case "walkdown" -> {
                 if (spriteNum == 1) {
                     image = walkDown1;
-                    break;
+
                 }
                 if (spriteNum == 2) {
                     image = walkDown2;
-                    break;
+
                 }
             }
             case "walkleft" -> {
                 if (spriteNum == 1) {
                     image = walkLeft1;
-                    break;
+
                 }
                 if (spriteNum == 2) {
                     image = walkLeft2;
-                    break;
+
                 }
             }
             case "walkright" -> {
                 if (spriteNum == 1) {
                     image = walkRight1;
-                    break;
+
                 }
                 if (spriteNum == 2) {
                     image = walkRight2;
-                    break;
-                }
-            }
-            case "runup" -> { // hej
-                if (spriteNum == 1) {
-                    image = runUp1;
-                    break;
-                }
-                if (spriteNum == 2) {
-                    image = runUp2;
-                    break;
-                }
-            }
-            case "rundown" -> {
-                if (spriteNum == 1) {
-                    image = runDown1;
-                    break;
-                }
-                if (spriteNum == 2) {
-                    image = runDown2;
-                    break;
-                }
-            }
-            case "runleft" -> {
-                if (spriteNum == 1) {
-                    image = runLeft1;
-                    break;
-                }
-                if (spriteNum == 2) {
-                    image = runLeft2;
-                    break;
-                }
-            }
-            case "runright" -> {
-                if (spriteNum == 1) {
-                    image = runRight1;
-                    break;
-                }
-                if (spriteNum == 2) {
-                    image = runRight2;
-                    break;
+
                 }
             }
             case "idleup" -> {
                 if (spriteNum == 1) {
                     image = idleUp1;
-                    break;
+
                 }
                 if (spriteNum == 2) {
                     image = idleUp2;
-                    break;
+
                 }
             }
             case "idledown" -> {
                 if (spriteNum == 1) {
                     image = idleDown1;
-                    break;
+
                 }
                 if (spriteNum == 2) {
                     image = idleDown2;
-                    break;
+
                 }
             }
             case "idleleft" -> {
                 if (spriteNum == 1) {
                     image = idleLeft1;
-                    break;
+
                 }
                 if (spriteNum == 2) {
                     image = idleLeft2;
-                    break;
+
                 }
             }
             case "idleright" -> {
                 if (spriteNum == 1) {
                     image = idleRight1;
-                    break;
                 }
                 if (spriteNum == 2) {
                     image = idleRight2;
-                    break;
                 }
             }
         }
@@ -513,8 +436,8 @@ public class Player extends Entity {
         }
         g2.drawImage(image,x,y,gp.tileSize,gp.tileSize,null);
          */
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         if (debugON) { // kan tas bort men ta ej bort rn
             debug.showPlayerCollisionBox(g2, screenX, screenY, solidArea.x, solidArea.y, solidArea.width, solidArea.height);
         }

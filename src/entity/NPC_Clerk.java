@@ -130,6 +130,11 @@ public class NPC_Clerk extends NPC{
         }
     }
 
+    @Override
+    public boolean isQuestDone() {
+        return false;       //Todo måns
+    }
+
     /**
      * Done every frame, 60times / second
      * @author Måns

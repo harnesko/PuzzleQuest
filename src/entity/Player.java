@@ -159,7 +159,7 @@ public class Player extends Entity {
 
     public void update() {
         spriteCounter++;
-        speed = 3;
+        speed = 15;
         if (keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {  // OM NÅN KEY ÄR PRESSED
             //System.out.println("Player pos x : " + worldX / gp.tileSize + "\n Player pos y: " + worldY / gp.tileSize );
             boolean shiftPressed = false;
@@ -303,11 +303,12 @@ public class Player extends Entity {
                     gp.obj[1][index] = null;
                     gp.playSoundEffect(4);
                     gp.ui.showMessage("You retrieved the ingredient");
-                    if(quest3Complete){
+                    System.out.println("Quest is done or not: " + gp.npcList[1][1].isQuestDone());
+                    /*if(gp.npcList[1][1].isQuestDone()){
                         gp.obj[1][3] = new Wok();
                         gp.obj[1][3].worldX = 59 * gp.tileSize + (gp.tileSize / 2);
                         gp.obj[1][3].worldY = 42 * gp.tileSize;
-                    }
+                    }*/
                     break;
 
                 case "Door":

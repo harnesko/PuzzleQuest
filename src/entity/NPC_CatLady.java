@@ -116,6 +116,14 @@ public class NPC_CatLady extends NPC{
             }
         }
     }
+    public boolean isQuestDone(){
+        for (Boolean isCompleted : questProgress){
+            if (!isCompleted){
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Finds the first spot in the array that's not yet been completed, and completes it

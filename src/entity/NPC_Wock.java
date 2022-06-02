@@ -1,5 +1,6 @@
 package entity;
 
+import gameObject.Wok;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -99,6 +100,10 @@ public class NPC_Wock extends NPC {
             gp.ui.currentDialogue = "My ingredients! Thank you";
             progressQuest();
             gp.player.hasIngredients = false;
+            gp.obj[1][3] = new Wok();
+            gp.obj[1][3].worldX = 59 * gp.tileSize + (gp.tileSize / 2);
+            gp.obj[1][3].worldY = 42 * gp.tileSize;
+
         } else {
             getCurrDialogue();
             if (currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
@@ -164,6 +169,14 @@ public class NPC_Wock extends NPC {
     public void update() {
         setDirection();
         //walk();
+    }
+    public boolean isQuestDone(){
+        for (Boolean isCompleted : questProgress){
+            if (!isCompleted){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

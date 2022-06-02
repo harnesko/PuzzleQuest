@@ -28,6 +28,7 @@ public abstract class NPC extends Entity{       //Super class for all npc's
     private int screenY;
     public int directionalDelay = 0;
     int dialogueIndex = 0;
+    public boolean[] questProgress;
     String[] firstDialogue = new String[10];
     String[] stepTwoDialogue = new String[10];
     String[] stepThreeDialogue = new String[10];
@@ -129,6 +130,7 @@ public abstract class NPC extends Entity{       //Super class for all npc's
             dialogueIndex = 1;
         }
     }
+   
 
 
     //Every NPC should say something, this is just to make sure that they know that
@@ -136,4 +138,6 @@ public abstract class NPC extends Entity{       //Super class for all npc's
 
 
     public abstract String getCurrDialogue();
+
+    public abstract boolean isQuestDone();
 }

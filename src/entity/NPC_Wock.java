@@ -48,8 +48,8 @@ public class NPC_Wock extends NPC {
 
 
         try {
-            npcImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_left.png")));
-            npcImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_right.png")));
+            npcImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/NPC_Wock2.png")));
+            npcImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/NPC_Wock2.png")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,6 +105,9 @@ public class NPC_Wock extends NPC {
             gp.obj[1][3].worldY = 42 * gp.tileSize;
 
         } else {
+            if(dialogueIndex == currentDialogue.length - 1){
+                dialogueIndex = 0;
+            }
             getCurrDialogue();
             if (currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
                 System.out.println("Resetting dialogue..");

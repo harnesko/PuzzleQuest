@@ -13,7 +13,7 @@ import java.util.Objects;
  * @version 1.4
  */
 
-public class NPC_Wock extends NPC{
+public class NPC_Wock extends NPC {
     public GamePanel gp;
     public BufferedImage marioLeft, marioRight;
     private int screenX; // Are these needed for an NPC or is it only for Player?
@@ -24,11 +24,12 @@ public class NPC_Wock extends NPC{
     public boolean[] questProgress = {false, false};
     public boolean isQuestDone = false;
     public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
+    private final String[] firstDialogue = new String[10];
     private final String[] secondDialogue = new String[10];
     private final String[] thirdDialogue = new String[20];
     private String[] currentDialogue = new String[20];
 
-    public NPC_Wock(GamePanel gp){
+    public NPC_Wock(GamePanel gp) {
         super(gp);
         this.gp = gp;           //I don't understand why this line needs to be here but if it's not it goes to shit
         direction = "down";
@@ -39,15 +40,16 @@ public class NPC_Wock extends NPC{
         createDialogue();
         loadNpcImage();
     }
-    public BufferedImage loadNpcImage(){
+
+    public BufferedImage loadNpcImage() {
         BufferedImage npcImage1 = null;
         BufferedImage npcImage2 = null;
 
 
-        try{
-           npcImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_left.png")));
-           npcImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_right.png")));
-        }catch (Exception e){
+        try {
+            npcImage1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_left.png")));
+            npcImage2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_right.png")));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return npcImage1;
@@ -59,7 +61,7 @@ public class NPC_Wock extends NPC{
      * Start with displaying dialogue using the already made UI.showMessage() method    - DONE
      * Later work on a dialogue box or something    - NOPE
      */
-    public void createDialogue(){
+    public void createDialogue() {
         firstDialogue[0] = "You:\nCan i get a Wocks special?";
         firstDialogue[1] = "Diliam Wock:\nHeya Mike.\nSure can do but you know I’m glad you came!";
         firstDialogue[2] = "You:\nWhy?";
@@ -84,18 +86,40 @@ public class NPC_Wock extends NPC{
     /**
      * Sets instance varaible dialogue[] to match quest progress in getCurrDialogue()
      * Sets UI dialogue variable to local dialogue array, while keeping track of index
+     *
      * @author Måns
      */
     @Override
     public void speak() {
-        getCurrDialogue();
-        if(currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
-            System.out.println("Resetting dialogue..");
-            dialogueIndex = 0;
-        }else{
-            gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
-            dialogueIndex++;
+        if (gp.player.hasBook) {
+            gp.ui.currentDialogue = "My book! Thank you";
+            progressQuest();
+            gp.player.hasBook = false;
+        }else if(gp.player.hasIngredients){
+            gp.ui.currentDialogue = "My ingredients! Thank you";
+            progressQuest();
+            gp.player.hasIngredients = false;
+        } else {
+            getCurrDialogue();
+            if (currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
+                System.out.println("Resetting dialogue..");
+                dialogueIndex = 0;
+            } else {
+                gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
+                dialogueIndex++;
+            }
         }
+        /*
+        getCurrDialogue();
+        if (dialogueIndex < 10) {
+            if(currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
+                System.out.println("Resetting dialogue..");
+                dialogueIndex = 0;
+            }else{
+                gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
+                dialogueIndex++;
+            }
+        }*/
     }
 
     /**
@@ -125,10 +149,10 @@ public class NPC_Wock extends NPC{
             currentDialogue = thirdDialogue;
         }
 
-        if (dialogueIndex <= currentDialogue.length) {
+        if (dialogueIndex <= currentDialogue.length - 1) {
             return currentDialogue[dialogueIndex];
         } else {
-            return "No more dialogue..";
+            return "Yes...?";
         }
     }
 
@@ -202,8 +226,7 @@ public class NPC_Wock extends NPC{
             }
             case "down" -> {
                 image = marioLeft;
-                //fix this when we have more images
-                //fix this mess later
+                //fix this later when we have more images
             }
         }
         int screenX = worldX - gp.player.worldX + gp.player.screenX;

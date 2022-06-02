@@ -105,7 +105,7 @@ public class NPC_Wock extends NPC {
             gp.obj[1][3].worldY = 42 * gp.tileSize;
 
         } else {
-            if(dialogueIndex == currentDialogue.length - 1){
+            if(dialogueIndex == 10){
                 dialogueIndex = 0;
             }
             getCurrDialogue();

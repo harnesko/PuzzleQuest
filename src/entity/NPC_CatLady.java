@@ -9,7 +9,7 @@ import java.util.Objects;
 
 
 /**
- * Class for npc 2, currently a placeholder .png image. Please don't tell Nintendo
+ * Class for NPC Cracy CatLady
  * @author Måns
  * @version 1.2
  */

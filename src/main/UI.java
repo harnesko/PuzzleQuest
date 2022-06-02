@@ -632,7 +632,7 @@ public class UI {
         g2.drawImage(woodFrame2, halfTile, halfTile + 280, gp.tileSize, gp.tileSize, null); //Box
         //g2.drawRect( gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize); //Box
         g2.drawImage(stuffImage, gp.tileSize / 2 - 1, halfTile + 280 , gp.tileSize, gp.tileSize, null);
-        if(gp.player.hasStuff){
+        if(gp.player.hasIngredients){
             g2.drawString("x " + "1", 100, gp.tileSize + 290);
         }
     }

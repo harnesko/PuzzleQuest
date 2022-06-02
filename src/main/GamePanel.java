@@ -93,7 +93,6 @@ public class GamePanel extends JPanel implements Runnable {
                 player.worldY = mapManager.getMapList().get(i).getPlayerSpawnY();
             }
         }
-
         player.direction = "idledown"; // TODO: fixa så det passar mappen, fixa i Map klassen kanske?
     }
 
@@ -272,8 +271,12 @@ public class GamePanel extends JPanel implements Runnable {
         screenHeight2 = GameStarter.window.getHeight();
     }
 
+    /**
+     * Method used to progress a line of npc dialogue
+     * Method is called after the current dialogue has been sent to the gui
+     * @author Måns
+     */
     public void progressDialogue(){
         npcList[currentMap][currentSpeaker].progressDialogue();
-        //ui.displayNextDialogue(npcList[currentSpeaker].getCurrDialogue());
     }
 }

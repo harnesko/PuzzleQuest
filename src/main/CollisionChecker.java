@@ -26,17 +26,6 @@ public class CollisionChecker {
         int entityBottomRow = entityBottomWorldY / gp.tileSize;
 
         int tileNum1, tileNum2;
-        /*
-        Amers version nedan, lite conflicts atm
-        case "walkup", "runup":
-                entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
-                tileNum1 = gp.tileManager.mapTileNum[gp.curren-wtMap][entityLeftCol][entityTopRow];
-                tileNum2 = gp.tileManager.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
-                if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision) {
-                    entity.collisionOn = true;
-                }
-                break;
-         */
 
         switch (entity.direction) {
             case "walkup", "runup":
@@ -81,7 +70,7 @@ public class CollisionChecker {
     public int checkObject(Entity entity, EntityType type) {
         int index = -1;
 
-        for (int i = 0; i < gp.obj[1].length; i++) {
+        for (int i = 0; i < gp.obj[1].length; i++) {        //Replace 1 with gp.getCurrentMap?
             if (gp.obj[gp.currentMap][i] != null){
 
                 // Get entity's solid area position
@@ -150,14 +139,12 @@ public class CollisionChecker {
                 gp.obj[gp.currentMap][i].solidArea.x = gp.obj[gp.currentMap][i].solidAreaDefaultX;
                 gp.obj[gp.currentMap][i].solidArea.y = gp.obj[gp.currentMap][i].solidAreaDefaultY;
             }
-
         }
         return index;
-
     }
 
     /**
-     * @param entity - player subclass checks this, solidarea (hitbox) calculated
+     * @param entity - player subclass checks this, its solidarea (hitbox) is calculated
      * @param target - An array of the NPCs, calculating their hitbox with the world x/y
      * @return int index of what npc is near. If no npc near return -1
      * @author Måns
@@ -181,7 +168,6 @@ public class CollisionChecker {
                     case "walkup", "runup" -> {
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) { // intersects är en solidArea metod
-
                             entity.collisionOn = true;
                             index = i;
                         }

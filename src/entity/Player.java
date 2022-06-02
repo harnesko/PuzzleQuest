@@ -28,7 +28,7 @@ public class Player extends Entity {
     public boolean hasCat = false;
     public boolean hasBook = false;
     public boolean hasWok = false;
-    public boolean hasStuff = false;
+    public boolean hasIngredients = false;
 
     //Quests
     public boolean quest1Complete = false;
@@ -251,16 +251,13 @@ public class Player extends Entity {
         if (npcIndex != -1) {
             if (keyH.ePressed) {
                 gp.gameState = gp.dialogueState;
-                //gp.npcList[gp.currentMap][npcIndex].speak();
                 gp.currentSpeaker = npcIndex;
-                //keyH.ePressed = false;
             }
         }
     }
 
     public void pickUpObject(int index) {
-        if (index != -1) { // måste ändras om vi nånsin tänker ha objekt på index 999 ..... men basically
-            // om index är ej empty alltså innehåller ett objekt
+        if (index != -1) { // index -1 means no object is near player
             String objectName = gp.obj[gp.currentMap][index].name;
 
             switch (objectName) { // denna funktion tar bort objektet när vi passerar den
@@ -274,6 +271,7 @@ public class Player extends Entity {
                         gp.obj[1][2] = new Book();
                         gp.obj[1][2].worldX = 6 * gp.tileSize + (gp.tileSize/2);
                         gp.obj[1][2].worldY = 18 * gp.tileSize;
+                        System.out.println("HERERERERERER");
                     }
                     break;
 
@@ -300,7 +298,7 @@ public class Player extends Entity {
                     break;
 
                 case "Ingredient":
-                    hasStuff = true;
+                    hasIngredients = true;
                     quest3Complete = true;
                     gp.obj[1][index] = null;
                     gp.playSoundEffect(4);

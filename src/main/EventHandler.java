@@ -103,9 +103,7 @@ public class EventHandler {
                 System.out.println("Current map no: " + gp.currentMap);
                 hit = true;
             }
-             if(tpIndexSawmill == 5 && gp.currentMap == 1){
-                 gp.gameState = gp.endScreenState;
-             }
+             
 
             gp.player.solidArea.x = gp.player.solidAreaDefaultX;
             gp.player.solidArea.y = gp.player.solidAreaDefaultY;

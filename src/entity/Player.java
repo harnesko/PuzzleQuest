@@ -311,7 +311,7 @@ public class Player extends Entity {
                     break;
 
                 case "End":
-
+                    gp.gameState = gp.endScreenState;
                     break;
 
                 case "Door":

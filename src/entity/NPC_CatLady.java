@@ -11,7 +11,6 @@ import java.util.Objects;
 /**
  * Class for NPC Cracy CatLady
  * @author Måns
- * @version 1.2
  */
 public class NPC_CatLady extends NPC{
     public GamePanel gp;

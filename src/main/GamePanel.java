@@ -28,13 +28,9 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels horizontalt
     public int currentMap = 0;
 
-    // WORLD SETTINGS dessa kan ändras // TODO: Update automatically?
-    public int maxWorldRow = 40;        //65 för main_town, 40 för sawmill (probably outdated)
-    public final int maxWorldCol = 42;  //65 för main_town, 42 för sawmill
-
     // EXTRA SETTINGS
     MapManager mapManager = new MapManager(this);
-    boolean debugOn; // kan tas bort @author Kinda
+    boolean debugOn;
     public int maxMap = 10;
     public int currentSpeaker;
 

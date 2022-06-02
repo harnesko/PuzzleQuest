@@ -310,6 +310,10 @@ public class Player extends Entity {
                     }
                     break;
 
+                case "End":
+
+                    break;
+
                 case "Door":
                     if (hasKey == 1) {
                         gp.obj[1][index] = null;

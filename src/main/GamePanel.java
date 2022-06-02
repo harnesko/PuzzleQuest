@@ -52,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int optionsState = 2;
     public final int dialogueState = 3;
     public final int noneState = 4;
+    public final int endScreenState = 5;
     // ===================================
 
     // FPS
@@ -129,6 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
             update();
             drawToTempScreen(); //ritar allt till image buffer
             drawToScreen(); // ritar av det som finns i bufferten till skärmen
+            drawEndScreen(); // Ritar slutskärmen när spelet är avklarat
 
             try {
                 // dessa saker säkerställer att FPS är 60 och inte 6092318492174...
@@ -173,6 +175,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    public void drawEndScreen(){
+        if (gameState == endScreenState){
+            ui.drawEndScreen(g2);
+        }
+    }
+
     /**
      * This is method used to temporarily draw everything so that resizing becomes smoother and more effective.
      * if the gameStare = titleState then the MainMenu is drawn else the game is drawn.
@@ -213,6 +221,10 @@ public class GamePanel extends JPanel implements Runnable {
 
             if(gameState == optionsState){
                 ui.drawSettingsMenu(g2);
+            }
+
+            if (gameState == endScreenState){
+                ui.drawEndScreen(g2);
             }
 
         }

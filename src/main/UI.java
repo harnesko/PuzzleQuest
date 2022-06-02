@@ -24,6 +24,7 @@ public class UI {
 
     //Images
     //Images
+    private final Image endScreenImage = new ImageIcon("resource/Images/TheEndScreen.png").getImage();
     private final Image woodPlankImage = new ImageIcon("resource/Images/woodplank.png").getImage();
     private final Image woodBackground = new ImageIcon("resource/Images/woodframe.png").getImage();
     private final Image woodFrame = new ImageIcon("resource/Images/woodframe.png").getImage();
@@ -110,6 +111,20 @@ public class UI {
             if (gp.gameState == gp.dialogueState) {
                 drawDialogueWindow();
             }
+            if (gp.gameState == gp.endScreenState){
+                drawEndScreen(g2);
+            }
+        }
+    }
+
+    public void drawEndScreen(Graphics2D g2){
+        int frameX = gp.tileSize-48;
+        int frameY = gp.tileSize-48;
+        int frameWidth = gp.screenWidth;
+        int frameHeight = gp.screenHeight;
+
+        if (gp.gameState == gp.endScreenState){
+            g2.drawImage(endScreenImage, frameX,frameY,frameWidth,frameHeight,null);
         }
     }
 

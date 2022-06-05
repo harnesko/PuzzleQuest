@@ -199,26 +199,18 @@ public class UI {
      */
     public void drawDialogueWindow(){
         //Position
-        int x = 0;    //gp.tileSize * 2; //x position
-        int y = gp.tileSize * 9;    //gp.tileSize / 2; //y position
+        int x = 0;
+        int y = gp.tileSize * 9;
         //Size
-        int width = gp.screenWidth2;                 //gp.screenWidth - (gp.tileSize * 4);
-        int height = 190;                //gp.tileSize * 5;
-
-        //Dirty attempt at scaling, remove later i guess
-        //x = x / 8 * 6 - 20;
-        //y = y / 8 * 6 - 20;
-
+        int width = gp.screenWidth2;
+        int height = 190;
         drawSubWindow(g2, x, y, width, height);
 
-
-        x = 30; //text x position
+        x = 30;        //text x position
         y += 2;       //text y position
         if(currentDialogue != null){
-            //g2.drawString(currentDialogue, x, y);
-            //fix this later but rn do the ugly version up top
             for(String currentDialogue : currentDialogue.split("\n")){    //Regex magic -> new line
-                g2.drawString(currentDialogue, x, y += g2.getFontMetrics().getHeight());     //I know it's not centered, but it's really late rn
+                g2.drawString(currentDialogue, x, y += g2.getFontMetrics().getHeight());
             }
         }
     }
@@ -233,9 +225,6 @@ public class UI {
         if(currentDialogue != null){
             try {
                 g2.drawString(currentDialogue, gp.tileSize * 2 + 20, 600);
-        /*for(String currentDialogue : currentDialogue.split("\n")){    //Regex magic -> new line
-            g2.drawString(currentDialogue, gp.tileSize * 2 + 20, 600);
-        }*/
             } catch (NullPointerException e) {
                //I really don't know why this error occurs or how to fix it so..¯\_(ツ)_/¯   /m
             }

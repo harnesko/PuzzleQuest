@@ -18,11 +18,7 @@ public class NPC_Wock extends NPC {
     public GamePanel gp;
     public BufferedImage wokLeft, wokRight;
 
-    //Move this copy pasted mess to npc abstract class when there's time lol
-    public String[] npcMarioDialogue = new String[5];
     public boolean[] questProgress = {false, false};
-    public boolean isQuestDone = false;
-    public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
     private final String[] firstDialogue = new String[10];
     private final String[] secondDialogue = new String[10];
     private final String[] thirdDialogue = new String[20];
@@ -107,7 +103,7 @@ public class NPC_Wock extends NPC {
                 System.out.println("Resetting dialogue..");
                 dialogueIndex = 0;
             } else {
-                gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
+                gp.ui.currentDialogue = currentDialogue[dialogueIndex];
                 dialogueIndex++;
             }
         }

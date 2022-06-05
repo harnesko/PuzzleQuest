@@ -26,7 +26,7 @@ public class NPC_CatLady extends NPC{
 
     public NPC_CatLady(GamePanel gp) {
         super(gp);
-        this.gp = gp;           //I dont understand why this line needs to be here but if it's not it goes to shit
+        this.gp = gp;
         direction = "walkdown";
         speed = 1;
 
@@ -101,7 +101,7 @@ public class NPC_CatLady extends NPC{
                 System.out.println("Resetting dialogue..");
                 dialogueIndex = 0;
             }else{
-                gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
+                gp.ui.currentDialogue = currentDialogue[dialogueIndex];
                 dialogueIndex++;
             }
         }

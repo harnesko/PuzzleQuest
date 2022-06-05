@@ -14,9 +14,9 @@ https://github.com/harnesko/PuzzleQuest.git
 
 Made by:
 **********************
-Amer Sabaredzovic
-Gustav Englund
-Kinda Hassan
-Kristoffer Leal
-Måns Harnesk
+Amer Sabaredzovic,
+Gustav Englund,
+Kinda Hassan,
+Kristoffer Leal,
+Måns Harnesk,
 **********************

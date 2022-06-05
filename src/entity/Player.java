@@ -186,15 +186,9 @@ public class Player extends Entity {
 
             // CHECK EVENT
             gp.eHandler.checkEvent();
-            /*
-            Funkar av någon anledning inte att starta spelet då man ska checka event.
-            Kan vara pga av rendering issues. Får testa
-             */
-
             //CHECK NPC COLLISION
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcList);
             interactWithNpc(npcIndex);
-            //Checka igenom CollisionChecker
             if (keyH.ePressed) {
                 if (npcIndex != -1) {
                     gp.npcList[gp.currentMap][npcIndex].speak();
@@ -202,10 +196,6 @@ public class Player extends Entity {
                 keyH.ePressed = false;
                 System.out.println("Key E pressed");
             }
-
-            // System.out.println("Npc index = " + npcIndex);
-
-
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
                 switch (direction) {
@@ -221,20 +211,6 @@ public class Player extends Entity {
                 direction = lastBtnPressed;
             }
         }
-
-
-        /*if (spriteCounter > 30) {
-            spriteNum = spriteNum == 1 ? 2 : 1; // kinda
-            spriteCounter = 0;
-        }*/
-
-
-        // flytta denna upp till första if-satsen om ni inte vill ha animerad-medan-stilla gubbe
-
-        // denna metod låter sprite gubben ändra walk animation. spriteCounter räknar hur många
-        // frames innan man typ "checkar" vilket håll man ska ändra till. hela update() kallas ju
-        // 60 ggn per sekund så man kan säga att varje 30 frames så ändras animation till up2 eller right1, osv..
-
     }
 
     private void interactWithNpc(int npcIndex) {
@@ -250,7 +226,7 @@ public class Player extends Entity {
         if (index != -1) { // index -1 means no object is near player
             String objectName = gp.obj[gp.currentMap][index].name;
 
-            switch (objectName) { // denna funktion tar bort objektet när vi passerar den
+            switch (objectName) { //This removes the object when walked on
                 case "cat":
                     hasCat = true;
                     quest1Complete = true;
@@ -261,7 +237,6 @@ public class Player extends Entity {
                         gp.obj[1][2] = new Book();
                         gp.obj[1][2].worldX = 6 * gp.tileSize + (gp.tileSize / 2);
                         gp.obj[1][2].worldY = 18 * gp.tileSize;
-                        System.out.println("HERERERERERER");
                     }
                     break;
 
@@ -293,12 +268,6 @@ public class Player extends Entity {
                     gp.obj[1][index] = null;
                     gp.playSoundEffect(4);
                     gp.ui.showMessage("You retrieved the ingredient");
-                    System.out.println("Quest is done or not: " + gp.npcList[1][1].isQuestDone());
-                    /*if(gp.npcList[1][1].isQuestDone()){
-                        gp.obj[1][3] = new Wok();
-                        gp.obj[1][3].worldX = 59 * gp.tileSize + (gp.tileSize / 2);
-                        gp.obj[1][3].worldY = 42 * gp.tileSize;
-                    }*/
                     break;
 
                 case "End":
@@ -416,26 +385,6 @@ public class Player extends Entity {
                 }
             }
         }
-        /*
-        Conflict från amertest merge nedan, testa sen
-         int x = screenX;
-        int y = screenY;
-        if (screenX > worldX){
-            x = worldX;
-        }
-        if (screenY > worldY){
-            y = worldY;
-        }
-        int rightOffset = gp.screenWidth - screenX;
-        if (rightOffset > gp.worldWidth - worldX){
-            x = gp.screenWidth - gp.worldWidth - worldX;
-        }
-        int downOffset = gp.screenHeight - screenY;
-        if (downOffset > gp.worldHeight - worldY){
-            y = gp.screenHeight - gp.worldHeight - worldY;
-        }
-        g2.drawImage(image,x,y,gp.tileSize,gp.tileSize,null);
-         */
 
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         if (debugON) { // kan tas bort men ta ej bort rn

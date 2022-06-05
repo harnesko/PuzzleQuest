@@ -9,23 +9,14 @@ import java.util.Objects;
 
 
 /**
- * Class for npc 2, currently a placeholder .png image. Please don't tell Nintendo
+ * Class for npc 3, Francesca.
+ * Due to project time constraints, her full questline isn't implemented.
  * @author Måns
- * @version 1.2
  */
 public class NPC_Clerk extends NPC{
     public GamePanel gp;
-    BufferedImage luigi_image1 = null;
-    /*
-    Step 1: Speak to Cracy to start quest, get the objective to fetch her cat, return cat to complete step 1
-    Step 2: Cracy sends player to collect food from  William Dock, step is complete when food is returned (complete docks quest first!)
-    Step 3: Profit
-     */
+    BufferedImage npc_clerkImage = null;
     public boolean[] questProgress = {false, false};
-    public boolean isQuestDone = false;
-    public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
-    private final String[] secondDialogue = new String[10];
-    private final String[] thirdDialogue = new String[20];
     private String[] currentDialogue = new String[20];
 
     public NPC_Clerk(GamePanel gp) {
@@ -40,18 +31,12 @@ public class NPC_Clerk extends NPC{
         loadNpcImage();
     }
     public BufferedImage loadNpcImage(){
-        //BufferedImage luigi_image1 = null;
-        BufferedImage npcImage2 = null;
-
         try{
-            luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcFrancesca/NPC_Francesca.png")));
-            if(luigi_image1 == null){
-                System.out.println("Load image failed..");
-            }
+            npc_clerkImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcFrancesca/NPC_Francesca.png")));
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return luigi_image1;
+        return npc_clerkImage;
     }
 
     /**
@@ -73,27 +58,13 @@ public class NPC_Clerk extends NPC{
      */
     @Override
     public void speak() {
-        if (gp.player.hasCat) {
-            gp.ui.currentDialogue = "My cat! Thank you!";
-            progressQuest();
-            System.out.println("Quest progressed..");
-            gp.player.hasCat = false;
-            System.out.println("Cat returned");
-        } else if(gp.player.hasWok){
-            gp.ui.currentDialogue = "My food! Thank you!";
-            progressQuest();
-            System.out.println("Quest progressed..");
-            gp.player.hasWok = false;
-            System.out.println("Wok lost..");
-        }else {
-            getCurrDialogue();
-            if(currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
-                System.out.println("Resetting dialogue..");
-                dialogueIndex = 0;
-            }else{
-                gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
-                dialogueIndex++;
-            }
+        getCurrDialogue();
+        if (currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
+            System.out.println("Resetting dialogue..");
+            dialogueIndex = 0;
+        } else {
+            gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
+            dialogueIndex++;
         }
     }
 
@@ -111,28 +82,17 @@ public class NPC_Clerk extends NPC{
     }
 
     /**
-     * Checks current quest progress and returns the corresponding dialogue
+     * Checks current quest progress and returns the corresponding dialogue, currently Clerk has no quests available
      * @return Current string of dialogue from the array
      * @author Måns
      */
     public String getCurrDialogue(){
-        if (!questProgress[0]) {
-            currentDialogue = firstDialogue;
-        }else if(!questProgress[1]){
-            currentDialogue = secondDialogue;
-        }else{
-            currentDialogue = thirdDialogue;
-        }
-        if (dialogueIndex <= currentDialogue.length) {
-            return currentDialogue[dialogueIndex];
-        } else {
-            return "Cracy cat-lady:\nOh my lovely Young-boi.\nThank you Mike for getting him!";
-        }
+        return currentDialogue[dialogueIndex];
     }
 
     @Override
     public boolean isQuestDone() {
-        return false;       //Todo måns
+        return false;
     }
 
     /**
@@ -174,45 +134,42 @@ public class NPC_Clerk extends NPC{
             spriteCounter = 0;
         }
     }
+    /**
+     * This method is intended for NPCs that have more than 1 picture each, changing it depending on their direction
+     * Project time ran out before this could be implemented however
+     * @param g2 - the Graphics2D object that draws
+     */
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         switch (direction) {
 
             case "walkleft" -> {
                 if (spriteNum == 1) {
-                    image = luigi_image1;
+                    image = npc_clerkImage;
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = luigi_image1;          //fix luigiLeft2 later
+                    image = npc_clerkImage;
                     break;
                 }
             }
             case "walkright" -> {
                 if (spriteNum == 1) {
-                    image = luigi_image1;
-                    break;
-                }
-                if (spriteNum == 2) {
-                    image = luigi_image1;
-                    System.out.println();
+                    image = npc_clerkImage;
                     break;
                 }
             }
             case "up" -> {
-                image = luigi_image1;
+                image = npc_clerkImage;
                 break;
             }
             case "down" -> {
-                image = luigi_image1;
-                //fix this when we have more images
-                //fix this mess later
+                image = npc_clerkImage;
             }
         }
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
         image = loadNpcImage();     //only for debug purposes, replace this with the switch case above later
         g2.drawImage(image, screenX, screenY, 32, 32, null);
-
     }
 }

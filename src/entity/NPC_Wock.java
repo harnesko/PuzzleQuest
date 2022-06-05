@@ -16,9 +16,7 @@ import java.util.Objects;
 
 public class NPC_Wock extends NPC {
     public GamePanel gp;
-    public BufferedImage marioLeft, marioRight;
-    private int screenX; // Are these needed for an NPC or is it only for Player?
-    private int screenY;
+    public BufferedImage wokLeft, wokRight;
 
     //Move this copy pasted mess to npc abstract class when there's time lol
     public String[] npcMarioDialogue = new String[5];
@@ -55,16 +53,13 @@ public class NPC_Wock extends NPC {
         }
         return npcImage1;
     }
-
     /**
-     * (Notes)
-     * Fix broken npc detection and collision - DONE
-     * Start with displaying dialogue using the already made UI.showMessage() method    - DONE
-     * Later work on a dialogue box or something    - NOPE
+     * Messy array that sets up all npc dialogue
+     * @author Måns code, Gustav dialogue
      */
     public void createDialogue() {
         firstDialogue[0] = "You:\nCan i get a Wocks special?";
-        firstDialogue[1] = "Diliam Wock:\nHeya Mike.\nSure can do but you know\nI’m glad you came!";
+        firstDialogue[1] = "Diliam Wock:\nHeya Mike.Sure can do but you know\nI’m glad you came!";
         firstDialogue[2] = "You:\nWhy?";
         firstDialogue[3] = "Diliam Wock:\nWell you know my parents recipe book\nand I can’t find it.";
         firstDialogue[4] = "Diliam Wock:\nIt’s a new seasonal special.\nI can’t remember\nthe exact recipe for this new season.";
@@ -87,7 +82,6 @@ public class NPC_Wock extends NPC {
     /**
      * Sets instance varaible dialogue[] to match quest progress in getCurrDialogue()
      * Sets UI dialogue variable to local dialogue array, while keeping track of index
-     *
      * @author Måns
      */
     @Override
@@ -117,17 +111,6 @@ public class NPC_Wock extends NPC {
                 dialogueIndex++;
             }
         }
-        /*
-        getCurrDialogue();
-        if (dialogueIndex < 10) {
-            if(currentDialogue[dialogueIndex] == null || (dialogueIndex >= currentDialogue.length - 1)) {
-                System.out.println("Resetting dialogue..");
-                dialogueIndex = 0;
-            }else{
-                gp.ui.currentDialogue = currentDialogue[dialogueIndex]; //use e to go through dialaogue lines later
-                dialogueIndex++;
-            }
-        }*/
     }
 
     /**
@@ -211,38 +194,34 @@ public class NPC_Wock extends NPC {
             spriteCounter = 0;
         }
     }
+    /**
+     * This method is intended for NPCs that have more than 1 picture each, changing it depending on their direction
+     * Project time ran out before this could be implemented however
+     * @param g2 - the Graphics2D object that draws
+     */
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         switch (direction) {
 
             case "walkleft" -> {
                 if (spriteNum == 1) {
-                    image = marioLeft;
+                    image = wokLeft;
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = marioRight;          //fix luigiLeft2 later
+                    image = wokRight;
                     break;
                 }
             }
             case "walkright" -> {
                 if (spriteNum == 1) {
-                    image = marioLeft;
+                    image = wokLeft;
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = marioLeft;
-                    System.out.println();
+                    image = wokLeft;
                     break;
                 }
-            }
-            case "up" -> {
-                image = marioLeft;
-                break;
-            }
-            case "down" -> {
-                image = marioLeft;
-                //fix this later when we have more images
             }
         }
         int screenX = worldX - gp.player.worldX + gp.player.screenX;

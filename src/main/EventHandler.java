@@ -11,13 +11,7 @@ public class EventHandler {
 
     int previousEventX, previousEventY;
     boolean canTouchEvent = false;
-/*
-        solidArea = new Rectangle();        //Hitbox
-        solidArea.x = 8;                    //Defines center of hitbox
-        solidArea.y = 16;
-        solidArea.width = 32;               //Smaller size than a tile to avoid collision problems
-        solidArea.height = 32;              //Check solidAreaFörklaring.png for guide
- */
+
     public EventHandler(GamePanel gp){
         this.gp = gp;
 
@@ -52,7 +46,6 @@ public class EventHandler {
     }
 
     public void checkEvent(){
-
         //Check if the player character is more than 1 tile away from the last event
         int xDistance = Math.abs(gp.player.worldX - previousEventX);
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
@@ -61,27 +54,49 @@ public class EventHandler {
             canTouchEvent = true;
         }
         if (canTouchEvent){
-            //It could be this line below that's messing it up IDK
-            if (hit(0, 23, 40, "any")){     //Set teleport entry point
-                teleport(1,60,10);                    //Set target map and teleport exit point
+            //if (hit(0, 22, 40, "any")){     //Set teleport entry point
+            if (hit(0)){
+                System.out.println("Trying to teleport from map 0 to 1..");
+                teleport(1,60,10);                            //Set target map and teleport exit point
+            }else if(hit (1)){
+                System.out.println("Trying to teleport from map 1 to 0..");
+                teleport(0, 22, 38);
             }
-            if (hit(1, 18, 16, "any")){     //Same as comment above but for another map
+           /* if (hit(1, 18, 16, "any")){     //Same as comment above but for another map
                 teleport(0,22,39);
-            }
+            }*/
         }
-    }/*
-    mapList.get(i).setPlayerSpawnX(tileSize * 26);
-                mapList.get(i).setPlayerSpawnY(tileSize * 19);
+    }
 
-    /**
-     *
-     * @param map - What map is currently played on
-     * @param col - A set x position on where the teleporter is
-     * @param row - A set y position on where the teleporter is
-     * @param reqDirection - Sets if player needs to move a certain direction to allow teleport
-     * @return - Boolean, if true -> allow teleport
-     * @author - Amer, Måns
-     */
+    public boolean hit(int map){
+        //I guess clean up this method a little, remove un-used parameters and stuff when there is time
+        boolean hit = false;
+
+        if (map == gp.currentMap) {
+            gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
+            gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+
+            int tpIndexMainTown = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
+            int tpIndexSawmill = gp.collisionChecker.checkObject(gp.player, EntityType.PLAYER);
+
+            if (tpIndexMainTown == 7 && gp.currentMap == 1){     //Teleporter 1 is in obj[7]
+                System.out.println("TRUE");
+                hit = true;
+            }else if(tpIndexSawmill == 7 && gp.currentMap == 0){
+                System.out.println("Current map no: " + gp.currentMap);
+                hit = true;
+            }
+
+
+            gp.player.solidArea.x = gp.player.solidAreaDefaultX;
+            gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+            //Everything eventRect[][][] is commented our rn, maybe it can be removed completely?
+//            eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
+//            eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
+        }
+        return hit;
+    }
+
     public boolean hit(int map, int col, int row, String reqDirection){
         //I guess clean up this method a little, remove un-used parameters and stuff when there is time
         boolean hit = false;
@@ -96,10 +111,7 @@ public class EventHandler {
             if (tpIndexMainTown == 7 && gp.currentMap == 1){     //Teleporter 1 is in obj[7]
                 System.out.println("TRUE");
                 hit = true;
-            }
-             else if(tpIndexSawmill == 7 && gp.currentMap == 0){
-                System.out.println("Current map no: " + gp.currentMap);
-                //teleport2(0,  23,23);     //Target map and position
+            }else if(tpIndexSawmill == 7 && gp.currentMap == 0){
                 System.out.println("Current map no: " + gp.currentMap);
                 hit = true;
             }
@@ -115,8 +127,8 @@ public class EventHandler {
     }
     /**
      * @param map - Set target map to teleport into
-     * @param col - Set x position on teleport
-     * @param row - Set y position on teleport
+     * @param col - Set x position on teleport destination
+     * @param row - Set y position on teleport destination
      * @author - Amer
      */
     public void teleport(int map, int col, int row){ //The parameters are used to update the players position

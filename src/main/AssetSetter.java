@@ -15,7 +15,6 @@ public class AssetSetter {
 
 
     public void setObjects(){
-        int mapNum = 0;
         gp.obj[1][1] = new Cat();
         gp.obj[1][1].worldX = 70 * gp.tileSize + (gp.tileSize/2);
         gp.obj[1][1].worldY = 38 * gp.tileSize;
@@ -40,6 +39,10 @@ public class AssetSetter {
         //                mapList.get(i).setPlayerSpawnY(tileSize * 9);
     }
 
+    /**
+     * Helper method to initialize the NPC list
+     * @author Måns
+     */
     public void setNPC(){
 
         int mainTown = 1;
@@ -52,7 +55,6 @@ public class AssetSetter {
         gp.npcList[mainTown][1] = new NPC_CatLady(gp);
         gp.npcList[mainTown][1].worldX = 62 * gp.tileSize;
         gp.npcList[mainTown][1].worldY = 21 * gp.tileSize + (gp.tileSize / 2);
-
 
         gp.npcList[mainTown][2] = new NPC_Clerk(gp);
         gp.npcList[mainTown][2].worldX = 17 * gp.tileSize + (gp.tileSize / 2);

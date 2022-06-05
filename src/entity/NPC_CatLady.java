@@ -10,19 +10,16 @@ import java.util.Objects;
 
 /**
  * Class for NPC Cracy CatLady
+ *   Step 1: Speak to Cracy to start quest, get the objective to fetch her cat, return cat to complete step 1
+ *   Step 2: Cracy sends player to collect food from  William Dock, step is complete when food is returned (complete docks quest first!)
+ *   Step 3: Cracy returns players housekey and player can go home to finish the game
  * @author Måns
  */
 public class NPC_CatLady extends NPC{
     public GamePanel gp;
-    BufferedImage luigi_image1 = null;
-    /*
-    Step 1: Speak to Cracy to start quest, get the objective to fetch her cat, return cat to complete step 1
-    Step 2: Cracy sends player to collect food from  William Dock, step is complete when food is returned (complete docks quest first!)
-    Step 3: Profit
-     */
+    BufferedImage npc_catladyImage = null;
+
     public boolean[] questProgress = {false, false};
-    public boolean isQuestDone = false;
-    public boolean isQuestStarted = false;      //only the first interaction should give quest. This could be redundant, depending on how we do the dialogue window
     private final String[] secondDialogue = new String[10];
     private final String[] thirdDialogue = new String[20];
     private String[] currentDialogue = new String[20];
@@ -39,18 +36,12 @@ public class NPC_CatLady extends NPC{
         loadNpcImage();
     }
     public BufferedImage loadNpcImage(){
-        //BufferedImage luigi_image1 = null;
-        BufferedImage npcImage2 = null;
-
         try{
-            luigi_image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcCatlady/NPC_Catlady.png")));
-            if(luigi_image1 == null){
-                System.out.println("Load image failed..");
-            }
+            npc_catladyImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcCatlady/NPC_Catlady.png")));
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return luigi_image1;
+        return npc_catladyImage;
     }
 
     /**
@@ -115,6 +106,12 @@ public class NPC_CatLady extends NPC{
             }
         }
     }
+
+    /**
+     * Check quest progress and return result
+     * @return true if all steps are completed, false if not
+     * @author Måns
+     */
     public boolean isQuestDone(){
         for (Boolean isCompleted : questProgress){
             if (!isCompleted){
@@ -196,39 +193,43 @@ public class NPC_CatLady extends NPC{
             spriteCounter = 0;
         }
     }
+
+    /**
+     * This method is intended for NPCs that have more than 1 picture each, changing it depending on their direction
+     * Project time ran out before this could be implemented however
+     * @param g2 - the Graphics2D object that draws
+     */
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         switch (direction) {
 
             case "walkleft" -> {
                 if (spriteNum == 1) {
-                    image = luigi_image1;
+                    image = npc_catladyImage;
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = luigi_image1;          //fix luigiLeft2 later
+                    image = npc_catladyImage;
                     break;
                 }
             }
             case "walkright" -> {
                 if (spriteNum == 1) {
-                    image = luigi_image1;
+                    image = npc_catladyImage;
                     break;
                 }
                 if (spriteNum == 2) {
-                    image = luigi_image1;
+                    image = npc_catladyImage;
                     System.out.println();
                     break;
                 }
             }
             case "up" -> {
-                image = luigi_image1;
+                image = npc_catladyImage;
                 break;
             }
             case "down" -> {
-                image = luigi_image1;
-                //fix this when we have more images
-                //fix this mess later
+                image = npc_catladyImage;
             }
         }
         int screenX = worldX - gp.player.worldX + gp.player.screenX;

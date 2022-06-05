@@ -68,55 +68,6 @@ public class TileManager {
         setupNewMap(currentMap);
     }
 
-    public void getTileImagesTEST() {
-        try {
-            //Kom ihåg att 0 innebär null tile, så börja listan på index + 1 när vi lägger in .tmx filer
-            tile[0] = new Tile(); // Background
-            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/black.png")));
-            tile[0].collision = true;
-
-            tile[1] = new Tile(); // Bushtest
-            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/bush_test.png")));
-            tile[1].collision = true;
-
-            tile[2] = new Tile(); // Sand
-            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
-            tile[2].collision = false;
-
-            tile[3] = new Tile(); // Tree
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
-            tile[3].collision = true;
-
-            tile[4] = new Tile(); // Wall
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
-            tile[4].collision = true;
-
-            tile[5] = new Tile(); // Water
-            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
-            tile[5].collision = true;
-
-            tile[6] = new Tile(); // Grass
-            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
-
-            tile[7] = new Tile(); // Sand
-            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
-
-            tile[10] = new Tile(); // MARIO TEST, TA BORT OM DU VILL
-            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/npc/npcWock/npc_mario_left.png")));
-            tile[10].collision = true;
-
-            tile[11] = new Tile(); // MARIO TEST, TA BORT OM DU VILL
-            tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/transparent.png")));
-
-            tile[12] = new Tile();
-            tile[12].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/mainTiles/Outside_A2.png")));
-            tile[12].image = tile[12].image.getSubimage(0, 0, 48, 48);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void getTileImage() {
         /***
